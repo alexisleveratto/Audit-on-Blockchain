@@ -29,3 +29,12 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError("Utilice otro email.")
+
+class EmailForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+
+class PasswordForm(FlaskForm):
+    password = PasswordField("Contraseña", validators=[DataRequired()])
+    password2 = PasswordField(
+        "Repita Contraseña", validators=[DataRequired(), EqualTo("password")]
+    )
