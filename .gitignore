@@ -1,3 +1,4 @@
 migrations/
 venv/
 *.pyc
+src/app/config.py

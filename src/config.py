@@ -5,8 +5,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     MAIL_SERVER = "smtp.gmail.com"
-    MAIL_USERNAME = "beratbozkurt1999@gmail.com"
-    MAIL_PASSWORD = "[password]"
+    MAIL_USERNAME = "chinoleveratto2@gmail.com"
+    MAIL_PASSWORD = "password"
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
 
