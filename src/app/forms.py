@@ -30,11 +30,15 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError("Utilice otro email.")
 
+
 class EmailForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Recuperar Contraseña")
+
 
 class PasswordForm(FlaskForm):
     password = PasswordField("Contraseña", validators=[DataRequired()])
     password2 = PasswordField(
         "Repita Contraseña", validators=[DataRequired(), EqualTo("password")]
     )
+    submit = SubmitField("Cambiar Contraseña")

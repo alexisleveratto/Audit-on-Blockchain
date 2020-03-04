@@ -1,8 +1,10 @@
-from app import app, db
-from app.forms import LoginForm, RegistrationForm
+from app import app, db, posta
+from app.forms import EmailForm, LoginForm, PasswordForm, RegistrationForm
 from app.models import User
+from app.utilsfunctions import get_random_string
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
+from flask_mail import Message
 from werkzeug.urls import url_parse
 
 
@@ -11,12 +13,7 @@ from werkzeug.urls import url_parse
 @login_required
 def index():
     title = "Menu Principal"
-    posts = [
-        {"author": {"username": "John"}, "body": "Beautiful day in Portland!"},
-        {"author": {"username": "Susan"}, "body": "The Avengers movie was so cool!"},
-    ]
-    # return render_template('index.html', title=title, user=user)
-    return render_template("index.html", title=title, posts=posts)
+    return render_template("index.html", title=title)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -42,7 +39,8 @@ def logout():
     logout_user()
     return redirect(url_for("index"))
 
-@app.route('/register', methods=["GET", "POST"])
+
+@app.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
@@ -52,6 +50,50 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Registrado')
-        return redirect(url_for('login'))
-    return render_template('register.html', title='Registro', form=form)
+        flash("Registrado")
+        return redirect(url_for("login"))
+    return render_template("register.html", title="Registro", form=form)
+
+
+@app.route("/forgot-password", methods=["GET", "POST"])
+def forgot():
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    form = EmailForm()
+    if form.validate_on_submit():
+        mail = form.email.data
+        check_mail = User.query.filter_by(email=mail).first()
+        if check_mail:
+            hashCode = get_random_string()
+            check_mail.hashCode = hashCode
+            db.session.commit()
+            msg = Message(
+                "Confirm Password Change",
+                sender="alexis.leveratto@github.com",
+                recipients=[mail],
+            )
+            msg.body = (
+                "Hello,\nWe've received a request to reset your password. If you want to reset your password, click the link below and enter your new password\n http://localhost:5000/"
+                + check_mail.hashCode
+            )
+            posta.send(msg)
+            flash("Revise su email")
+            return redirect(url_for("forgot"))
+    return render_template(
+        "forgot_password.html", title="Recuperar Contraseña", form=form
+    )
+
+
+@app.route("/<string:hashCode>", methods=["GET", "POST"])
+def hashcode(hashCode):
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    check_by_hashCode = User.query.filter_by(hashCode=hashCode).first()
+    if check_by_hashCode:
+        form = PasswordForm()
+        if form.validate_on_submit():
+            check_by_hashCode.set_password(form.password.data)
+            check_by_hashCode.hashCode = None
+            db.session.commit()
+            flash("Contraseña Recuperada con Éxito")
+            return redirect(url_for("login"))
