@@ -73,7 +73,7 @@ def forgot():
                 recipients=[mail],
             )
             msg.body = (
-                "Hello,\nWe've received a request to reset your password. If you want to reset your password, click the link below and enter your new password\n http://localhost:5000/"
+                "Hello,\nWe've received a request to reset your password. If you want to reset your password, click the link below and enter your new password\n http://127.0.0.1:5000/"
                 + check_mail.hashCode
             )
             posta.send(msg)
@@ -97,3 +97,7 @@ def hashcode(hashCode):
             db.session.commit()
             flash("Contraseña Recuperada con Éxito")
             return redirect(url_for("login"))
+        return render_template(
+            "change_password.html", title="Cambiar Contraseña", form=form
+        )
+    return redirect(url_for("index"))
