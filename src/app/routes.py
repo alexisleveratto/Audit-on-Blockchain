@@ -115,15 +115,12 @@ def change():
     form = ChangePasswordForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        print("logout_1")
         if user.check_password(form.old_password.data):
             user.set_password(form.password.data)
             db.session.commit()
             logout_user()
-            print("logout")
             return redirect(url_for("index"))
         else:
-            print("O ACA")
             flash("Repita correctamente su contraseña anterior")
     return render_template(
         "user_change_password.html", title="Cambiar Contraseña", form=form
