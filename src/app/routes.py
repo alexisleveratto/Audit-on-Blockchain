@@ -1,5 +1,6 @@
 from app import app, db, posta
 from app.forms import (
+    AuditIndexForm,
     ChangePasswordForm,
     EmailForm,
     LoginForm,
@@ -19,7 +20,11 @@ from werkzeug.urls import url_parse
 @login_required
 def index():
     title = "Menu Principal"
-    return render_template("index.html", title=title)
+    form = AuditIndexForm()
+    if form.validate_on_submit():
+        if form.RegistrarCliente.data():
+            return redirect(url_for("new_client"))
+    return render_template("index.html", title=title, form=form)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -125,3 +130,9 @@ def change():
     return render_template(
         "user_change_password.html", title="Cambiar Contraseña", form=form
     )
+
+@app.route("/new-client", methods=["GET", "POST"])
+def new_client():
+    if not current_user.is_authenticated:
+        return redirect(url_for("index"))
+    form = 

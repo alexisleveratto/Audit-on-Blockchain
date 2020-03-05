@@ -2,7 +2,12 @@
 
 {% block content %}
     <h1>Hola, {{ current_user.username }}!</h1>
-    {% for post in posts %}
-    <div><p>{{ post.author.username }} dijo: <b>{{ post.body }}</b></p></div>
-    {% endfor %}
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.RegistrarCliente(size=32) }}<br>
+            {% for error in form.RegistrarCliente.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
 {% endblock %}

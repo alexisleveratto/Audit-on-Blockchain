@@ -40,13 +40,19 @@
         {% endfor %}
     </p>
     <p>
-        {{ form.cuit.label }}<br>
-        {{ form.cuit(size=32) }}<br>
-        {% for error in form.cuit.errors %}
+        {{ form.submit.label }}<br>
+        {{ form.submit(size=32) }}<br>
+        {% for error in form.submit.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
-    
+    <p>
+        {{ form.cancel.label }}<br>
+        {{ form.cancel(size=32) }}<br>
+        {% for error in form.cancel.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
 </form>
 
 {% endblock %}

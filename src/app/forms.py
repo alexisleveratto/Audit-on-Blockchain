@@ -66,3 +66,5 @@ class RegisterClientForm(FlaskForm):
     initial_balance = FloatField(
         "Saldo Inicial de la Cuenta Deudores por Venta", validators=[DataRequired()]
     )
+    submit = SubmitField("Registrar Cliente")
+    cancel = SubmitField("Cancelar")
