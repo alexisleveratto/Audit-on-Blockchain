@@ -43,9 +43,12 @@ class PasswordForm(FlaskForm):
     )
     submit = SubmitField("Cambiar Contraseña")
 
+
 class ChangePasswordForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
     old_password = PasswordField("Antigua Contraseña", validators=[DataRequired()])
     password = PasswordField("Contraseña Nueva", validators=[DataRequired()])
-    password2 = PasswordField("Repita Contraseña", validators=[DataRequired(), EqualTo("password")])
+    password2 = PasswordField(
+        "Repita Contraseña", validators=[DataRequired(), EqualTo("password")]
+    )
     submit = SubmitField("Cambiar Contraseña")

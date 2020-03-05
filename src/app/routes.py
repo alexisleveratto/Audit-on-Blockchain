@@ -1,5 +1,11 @@
 from app import app, db, posta
-from app.forms import ChangePasswordForm, EmailForm, LoginForm, PasswordForm, RegistrationForm
+from app.forms import (
+    ChangePasswordForm,
+    EmailForm,
+    LoginForm,
+    PasswordForm,
+    RegistrationForm,
+)
 from app.models import User
 from app.utilsfunctions import get_random_string
 from flask import flash, redirect, render_template, request, url_for
@@ -102,6 +108,7 @@ def hashcode(hashCode):
         )
     return redirect(url_for("index"))
 
+
 @app.route("/change-password", methods=["GET", "POST"])
 @login_required
 def change():
@@ -118,4 +125,6 @@ def change():
         else:
             print("O ACA")
             flash("Repita correctamente su contraseña anterior")
-    return render_template("user_change_password.html", title="Cambiar Contraseña", form=form)
+    return render_template(
+        "user_change_password.html", title="Cambiar Contraseña", form=form
+    )
