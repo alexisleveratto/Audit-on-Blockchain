@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Registrar Cliente</h1>
+<form action="" method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.cuit.label }}<br>
+        {{ form.cuit(size=32) }}<br>
+        {% for error in form.cuit.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.client_name.label }}<br>
+        {{ form.client_name(size=32) }}<br>
+        {% for error in form.client_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.contact.label }}<br>
+        {{ form.contact(size=32) }}<br>
+        {% for error in form.contact.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.country.label }}<br>
+        {{ form.country(size=32) }}<br>
+        {% for error in form.country.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.initial_balance.label }}<br>
+        {{ form.initial_balance(size=32) }}<br>
+        {% for error in form.initial_balance.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.cuit.label }}<br>
+        {{ form.cuit(size=32) }}<br>
+        {% for error in form.cuit.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    
+</form>
+
+{% endblock %}

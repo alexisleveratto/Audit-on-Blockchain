@@ -1,6 +1,6 @@
 from app.models import User
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, FloatField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 
@@ -52,3 +52,17 @@ class ChangePasswordForm(FlaskForm):
         "Repita Contraseña", validators=[DataRequired(), EqualTo("password")]
     )
     submit = SubmitField("Cambiar Contraseña")
+
+
+class AuditIndexForm(FlaskForm):
+    RegistrarCliente = SubmitField("Registrar Cliente")
+
+
+class RegisterClientForm(FlaskForm):
+    cuit = StringField("CUIT Cliente", validators=[DataRequired()])
+    client_name = StringField("Nombre Cliente", validators=[DataRequired()])
+    contact = StringField("Email de Contacto", validators=[DataRequired(), Email()])
+    country = StringField("País Cliente", validators=[DataRequired()])
+    initial_balance = FloatField(
+        "Saldo Inicial de la Cuenta Deudores por Venta", validators=[DataRequired()]
+    )
