@@ -5,6 +5,7 @@ from app.forms import (
     EmailForm,
     LoginForm,
     PasswordForm,
+    RegisterClientForm,
     RegistrationForm,
 )
 from app.models import User
@@ -15,14 +16,14 @@ from flask_mail import Message
 from werkzeug.urls import url_parse
 
 
-@app.route("/")
-@app.route("/index")
+@app.route("/", methods=["GET", "POST"])
+@app.route("/index", methods=["GET", "POST"])
 @login_required
 def index():
     title = "Menu Principal"
     form = AuditIndexForm()
     if form.validate_on_submit():
-        if form.RegistrarCliente.data():
+        if form.RegistrarCliente.data:
             return redirect(url_for("new_client"))
     return render_template("index.html", title=title, form=form)
 
@@ -131,8 +132,15 @@ def change():
         "user_change_password.html", title="Cambiar Contraseña", form=form
     )
 
+
 @app.route("/new-client", methods=["GET", "POST"])
 def new_client():
     if not current_user.is_authenticated:
         return redirect(url_for("index"))
-    form = 
+    form = RegisterClientForm()
+    if form.validate_on_submit():
+        if form.submit.data:
+            pass
+        elif form.cancel.data:
+            return redirect(url_for("index"))
+    return render_template("client_register.html", form=form)

@@ -62,9 +62,14 @@ class RegisterClientForm(FlaskForm):
     cuit = StringField("CUIT Cliente", validators=[DataRequired()])
     client_name = StringField("Nombre Cliente", validators=[DataRequired()])
     contact = StringField("Email de Contacto", validators=[DataRequired(), Email()])
-    country = StringField("País Cliente", validators=[DataRequired()])
+    client_address = StringField("Domicilio Fiscal", validators=[DataRequired()])
+    client_localidad = StringField("Localidad", validators=[DataRequired()])
+    client_codPostal = StringField("Codigo Postal", validators=[DataRequired()])
+    client_provincia = StringField("Provincia", validators=[DataRequired()])
+    country = StringField("País", validators=[DataRequired()])
     initial_balance = FloatField(
         "Saldo Inicial de la Cuenta Deudores por Venta", validators=[DataRequired()]
     )
+
     submit = SubmitField("Registrar Cliente")
     cancel = SubmitField("Cancelar")
