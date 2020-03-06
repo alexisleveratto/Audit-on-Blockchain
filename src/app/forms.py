@@ -1,6 +1,13 @@
 from app.models import User
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, FloatField
+from wtforms import (
+    StringField,
+    PasswordField,
+    BooleanField,
+    SubmitField,
+    FloatField,
+    TextField,
+)
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 
@@ -58,18 +65,27 @@ class AuditIndexForm(FlaskForm):
     RegistrarCliente = SubmitField("Registrar Cliente")
 
 
-class RegisterClientForm(FlaskForm):
+class VerifyClientForm(FlaskForm):
     cuit = StringField("CUIT Cliente", validators=[DataRequired()])
-    client_name = StringField("Nombre Cliente")
-    client_email = StringField("Email de Contacto")
-    client_address = StringField("Domicilio Fiscal")
-    client_localidad = StringField("Localidad")
-    client_codPostal = StringField("Codigo Postal")
-    client_provincia = StringField("Provincia")
-    country = StringField("País")
+    submit = SubmitField("Verificar")
+    cancel = SubmitField("Cancelar")
+
+
+class RegisterClientForm(FlaskForm):
+    cuit = StringField(
+        "CUIT Cliente", validators=[DataRequired()], render_kw={"disabled": ""}
+    )
+    client_name = StringField("Nombre Cliente", validators=[DataRequired()])
+    client_email = StringField(
+        "Email de Contacto", validators=[DataRequired(), Email()]
+    )
+    client_address = StringField("Domicilio Fiscal", validators=[DataRequired()])
+    client_localidad = StringField("Localidad", validators=[DataRequired()])
+    client_codPostal = TextField("Codigo Postal", validators=[DataRequired()])
+    client_provincia = StringField("Provincia", validators=[DataRequired()])
+    country = StringField("País", validators=[DataRequired()])
     initial_balance = FloatField(
         "Saldo Inicial de la Cuenta Deudores por Venta", validators=[DataRequired()]
     )
-
     submit = SubmitField("Registrar Cliente")
     cancel = SubmitField("Cancelar")

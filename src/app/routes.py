@@ -7,6 +7,7 @@ from app.forms import (
     PasswordForm,
     RegisterClientForm,
     RegistrationForm,
+    VerifyClientForm,
 )
 from app.models import User
 from app.utilsfunctions import get_random_string
@@ -25,7 +26,7 @@ def index():
     form = AuditIndexForm()
     if form.validate_on_submit():
         if form.RegistrarCliente.data:
-            return redirect(url_for("new_client"))
+            return redirect(url_for("verify_client"))
     return render_template("index.html", title=title, form=form)
 
 
@@ -134,26 +135,46 @@ def change():
     )
 
 
-@app.route("/new-client", methods=["GET", "POST"])
-def new_client():
+@app.route("/verify-client", methods=["GET", "POST"])
+def verify_client():
     if not current_user.is_authenticated:
         return redirect(url_for("index"))
-    form = RegisterClientForm()
+    form = VerifyClientForm()
     if form.validate_on_submit():
         if form.submit.data:
             if AfipManager.get_persona_juridica(form.cuit.data):
-                form.client_name.data = AfipManager.client_name
-                form.client_email.data = AfipManager.client_email
-                form.client_address.data = AfipManager.client_address
-                form.client_localidad.data = AfipManager.client_localidad
-                form.client_codPostal.data = AfipManager.client_codPostal
-                form.client_provincia.data = AfipManager.client_provincia
-                form.country.data = "Argentina"
-                flash(
-                    "Chequee que los datos coincidan con los del cliente que desea registrar"
-                )
+                return redirect(url_for("new_client"))
             else:
                 flash("No se encuentra ninguna persona con el CUIT brindado")
     if form.cancel.data:
         return redirect(url_for("index"))
+    return render_template("verify_client.html", form=form)
+
+
+@app.route("/new-client", methods=["GET", "POST"])
+def new_client():
+    form = RegisterClientForm()
+    form.cuit.data = AfipManager.client_cuit
+    if not form.client_name.data:
+        form.client_name.data = AfipManager.client_name
+    if not form.client_email.data:
+        form.client_email.data = AfipManager.client_email
+    if not form.client_address.data:
+        form.client_address.data = AfipManager.client_address
+    if not form.client_localidad.data:
+        form.client_localidad.data = AfipManager.client_localidad
+    if not form.client_codPostal.data:
+        form.client_codPostal.data = AfipManager.client_codPostal
+    if not form.client_provincia.data:
+        form.client_provincia.data = AfipManager.client_provincia
+    if form.validate_on_submit():
+        print("ADDED CLIENT")
+        # user = User(username=form.cuit.data, email=form.client_email.data)
+        # user.set_password(form.cuit.data)
+        # db.session.add(user)
+        # db.session.commit()
+        return redirect(url_for("index"))
+    if form.cancel.data:
+        return redirect(url_for("index"))
+    flash("Verifique y complete la información de su cliente")
     return render_template("client_register.html", form=form)
