@@ -142,9 +142,18 @@ def new_client():
     if form.validate_on_submit():
         if form.submit.data:
             if AfipManager.get_persona_juridica(form.cuit.data):
-                print("YES")
+                form.client_name.data = AfipManager.client_name
+                form.client_email.data = AfipManager.client_email
+                form.client_address.data = AfipManager.client_address
+                form.client_localidad.data = AfipManager.client_localidad
+                form.client_codPostal.data = AfipManager.client_codPostal
+                form.client_provincia.data = AfipManager.client_provincia
+                form.country.data = "Argentina"
+                flash(
+                    "Chequee que los datos coincidan con los del cliente que desea registrar"
+                )
             else:
-                print("NO")
+                flash("No se encuentra ninguna persona con el CUIT brindado")
     if form.cancel.data:
         return redirect(url_for("index"))
     return render_template("client_register.html", form=form)

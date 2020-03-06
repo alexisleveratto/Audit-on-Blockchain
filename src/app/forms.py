@@ -60,13 +60,13 @@ class AuditIndexForm(FlaskForm):
 
 class RegisterClientForm(FlaskForm):
     cuit = StringField("CUIT Cliente", validators=[DataRequired()])
-    client_name = StringField("Nombre Cliente", validators=[DataRequired()])
-    contact = StringField("Email de Contacto", validators=[DataRequired(), Email()])
-    client_address = StringField("Domicilio Fiscal", validators=[DataRequired()])
-    client_localidad = StringField("Localidad", validators=[DataRequired()])
-    client_codPostal = StringField("Codigo Postal", validators=[DataRequired()])
-    client_provincia = StringField("Provincia", validators=[DataRequired()])
-    country = StringField("País", validators=[DataRequired()])
+    client_name = StringField("Nombre Cliente")
+    client_email = StringField("Email de Contacto")
+    client_address = StringField("Domicilio Fiscal")
+    client_localidad = StringField("Localidad")
+    client_codPostal = StringField("Codigo Postal")
+    client_provincia = StringField("Provincia")
+    country = StringField("País")
     initial_balance = FloatField(
         "Saldo Inicial de la Cuenta Deudores por Venta", validators=[DataRequired()]
     )

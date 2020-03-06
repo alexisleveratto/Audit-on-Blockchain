@@ -19,9 +19,9 @@
         {% endfor %}
     </p>
     <p>
-        {{ form.contact.label }}<br>
-        {{ form.contact(size=32) }}<br>
-        {% for error in form.contact.errors %}
+        {{ form.client_email.label }}<br>
+        {{ form.client_email(size=32) }}<br>
+        {% for error in form.client_email.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
@@ -67,20 +67,8 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
-    <p>
-        {{ form.submit.label }}<br>
-        {{ form.submit(size=32) }}<br>
-        {% for error in form.submit.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.cancel.label }}<br>
-        {{ form.cancel(size=32) }}<br>
-        {% for error in form.cancel.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
+    <p>{{ form.submit() }}</p>
+    <p>{{ form.cancel() }}</p>
 </form>
 
 {% endblock %}
