@@ -141,6 +141,6 @@ def new_client():
     if form.validate_on_submit():
         if form.submit.data:
             pass
-        elif form.cancel.data:
-            return redirect(url_for("index"))
+    if form.cancel.data:
+        return redirect(url_for("index"))
     return render_template("client_register.html", form=form)
