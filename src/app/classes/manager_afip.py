@@ -14,12 +14,13 @@ class ManagerAfip:
         self.client_email = None
 
     def get_persona_juridica(self, cuit):
+        # test_cuit = 30505779858
         payload = '{\r\n\t"cuit": %s \r\n\t\r\n}' % str(cuit)
         headers = {"Content-Type": "application/json"}
-        try:
-            response = requests.request("GET", self.url, headers=headers, data=payload)
-        except Exception as e:
-            self.exception = e
+
+        response = requests.request("GET", self.url, headers=headers, data=payload)
+        if response.json()["errorGetData"]:
+            return False
         self.client_cuit = response.json()["Contribuyente"]["idPersona"]
         self.client_name = response.json()["Contribuyente"]["nombre"]
         self.client_address = response.json()["Contribuyente"]["domicilioFiscal"][
@@ -34,3 +35,4 @@ class ManagerAfip:
         self.client_provincia = response.json()["Contribuyente"]["domicilioFiscal"][
             "nombreProvincia"
         ]
+        return True

@@ -10,6 +10,7 @@ from app.forms import (
 )
 from app.models import User
 from app.utilsfunctions import get_random_string
+from .classes import AfipManager
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
@@ -140,7 +141,10 @@ def new_client():
     form = RegisterClientForm()
     if form.validate_on_submit():
         if form.submit.data:
-            pass
+            if AfipManager.get_persona_juridica(form.cuit.data):
+                print("YES")
+            else:
+                print("NO")
     if form.cancel.data:
         return redirect(url_for("index"))
     return render_template("client_register.html", form=form)

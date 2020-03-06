@@ -26,6 +26,34 @@
         {% endfor %}
     </p>
     <p>
+        {{ form.client_address.label }}<br>
+        {{ form.client_address(size=32) }}<br>
+        {% for error in form.client_address.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.client_localidad.label }}<br>
+        {{ form.client_localidad(size=32) }}<br>
+        {% for error in form.client_localidad.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.client_codPostal.label }}<br>
+        {{ form.client_codPostal(size=32) }}<br>
+        {% for error in form.country.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.client_provincia.label }}<br>
+        {{ form.client_provincia(size=32) }}<br>
+        {% for error in form.client_provincia.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
         {{ form.country.label }}<br>
         {{ form.country(size=32) }}<br>
         {% for error in form.country.errors %}
