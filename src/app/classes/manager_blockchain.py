@@ -1,5 +1,6 @@
 import requests
 
+
 class ManagerBlockchain:
     def __init__(self):
         self.url = "http://localhost:3000"
@@ -12,21 +13,16 @@ class ManagerBlockchain:
     def getAll(self, ns_name):
         url = self.url + self.action_url + ns_name
         payload = {}
-        response = requests.request("GET", url, headers=self.headers, data = payload)
+        response = requests.request("GET", url, headers=self.headers, data=payload)
         return response
-    
+
     def getSingle(self, ns_name, id):
         url = self.url + self.action_url + ns_name + id
         payload = {}
-        response = requests.request("GET", url, headers=self.headers, data = payload)
+        response = requests.request("GET", url, headers=self.headers, data=payload)
         print(response.json())
-    
+
     def add(self, ns_name, payload):
         url = self.url + self.action_url + ns_name
-        response = requests.request("POST", url, headers=self.headers, data = payload)
+        response = requests.request("POST", url, headers=self.headers, data=payload)
         print(response.json())
-
-payload = '{\n  "$class": "org.example.biznet.Compania",\n  "companiaId": "b0001",\n  "companiaName": "string",\n  "companiaConutry": "string",\n  "companiaAddres": "string",\n  "companiaBalance": 0\n}'
-mgBC = ManagerBlockchain()
-mgBC.add(ns_name="/Compania", payload=payload)
-
