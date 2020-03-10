@@ -9,7 +9,8 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "pythonPath": "venv/bin/python",
+            // "pythonPath": "venv/bin/python",
+            "pythonPath": "/usr/bin/python3",
             "program": "venv/bin/flask",
             "env": {
                 "FLASK_APP": "src/blockchainaudit.py",
