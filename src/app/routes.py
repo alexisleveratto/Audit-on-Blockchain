@@ -203,5 +203,5 @@ def client_table():
 @app.route('/clients/<client_id>')
 @login_required
 def client_page(client_id):
-    client = BlockchainManager.getSingle(ns_name='/Compania', id=client_id)
+    client = BlockchainManager.getSingle(ns_name='/Compania', id=str('/' + client_id))
     return render_template("client_page.html", client=client)
