@@ -174,14 +174,17 @@ def new_client():
         # user.set_password(form.cuit.data)
         # db.session.add(user)
         # db.session.commit()
-        client = Cliente(client_cuit=form.cuit.data, client_name=form.client_name.data,
-        client_email=form.client_email.data,
-        client_address=form.client_address.data,
-        client_localidad=form.client_localidad.data,
-        client_codPostal=form.client_codPostal.data,
-        client_provincia=form.client_provincia.data,
-        country=form.country.data,
-        initial_balance=form.initial_balance.data)
+        client = Cliente(
+            client_cuit=form.cuit.data,
+            client_name=form.client_name.data,
+            client_email=form.client_email.data,
+            client_address=form.client_address.data,
+            client_localidad=form.client_localidad.data,
+            client_codPostal=form.client_codPostal.data,
+            client_provincia=form.client_provincia.data,
+            country=form.country.data,
+            initial_balance=form.initial_balance.data,
+        )
         client.add_cliente()
         return redirect(url_for("index"))
     if form.cancel.data:

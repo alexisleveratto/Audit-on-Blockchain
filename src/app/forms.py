@@ -63,6 +63,7 @@ class ChangePasswordForm(FlaskForm):
 
 class AuditIndexForm(FlaskForm):
     RegistrarCliente = SubmitField("Registrar Cliente")
+    GestinarClientes = SubmitField("Clientes")
 
 
 class VerifyClientForm(FlaskForm):

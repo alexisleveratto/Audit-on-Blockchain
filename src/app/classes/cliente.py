@@ -2,6 +2,7 @@ from .manager_blockchain import ManagerBlockchain
 
 BlockchainManager = ManagerBlockchain()
 
+
 class Cliente:
     def __init__(
         self,
@@ -42,8 +43,7 @@ class Cliente:
                 self.companiaBalance,
             )
         )
-    
+
     def add_cliente(self):
         self.set_payload()
         BlockchainManager.add("/Compania", self.payload)
-
