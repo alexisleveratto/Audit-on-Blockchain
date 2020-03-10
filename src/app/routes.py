@@ -11,7 +11,7 @@ from app.forms import (
 )
 from app.models import User
 from app.utilsfunctions import get_random_string
-from .classes import AfipManager
+from .classes import AfipManager, BlockchainManager
 from .classes.cliente import Cliente
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
@@ -28,6 +28,8 @@ def index():
     if form.validate_on_submit():
         if form.RegistrarCliente.data:
             return redirect(url_for("verify_client"))
+        if form.GestionarClientes.data:
+            return redirect(url_for("client_table"))
     return render_template("index.html", title=title, form=form)
 
 
@@ -169,7 +171,6 @@ def new_client():
     if not form.client_provincia.data:
         form.client_provincia.data = AfipManager.client_provincia
     if form.validate_on_submit():
-        print("ADDED CLIENT")
         # user = User(username=form.cuit.data, email=form.client_email.data)
         # user.set_password(form.cuit.data)
         # db.session.add(user)
@@ -191,3 +192,11 @@ def new_client():
         return redirect(url_for("index"))
     flash("Verifique y complete la información de su cliente")
     return render_template("client_register.html", form=form)
+
+@app.route('/client_table')
+@login_required
+def client_table():
+    # user = User.query.filter_by(username=username).first_or_404()
+    clientes = BlockchainManager.getAll(ns_name="/Compania")
+    return render_template("client_table.html", clientes=clientes)
+

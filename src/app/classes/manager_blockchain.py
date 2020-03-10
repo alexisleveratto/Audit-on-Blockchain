@@ -14,7 +14,7 @@ class ManagerBlockchain:
         url = self.url + self.action_url + ns_name
         payload = {}
         response = requests.request("GET", url, headers=self.headers, data=payload)
-        return response
+        return response.json()
 
     def getSingle(self, ns_name, id):
         url = self.url + self.action_url + ns_name + id
