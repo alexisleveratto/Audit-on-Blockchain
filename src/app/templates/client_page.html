@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>{{ client.companiaName }}</h1>
+    <hr>
+    <p> CUIT: {{ client.companiaId }} </p>
+    <p> Contacto: {{ client.companiaAddres }} </p>
+    <p> Pais: {{ client.companiaConutry }} </p>
+    <p> Saldo Actual{{ client.companiaBalance }} </p>
+{% endblock %}
