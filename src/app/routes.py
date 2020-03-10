@@ -171,10 +171,10 @@ def new_client():
     if not form.client_provincia.data:
         form.client_provincia.data = AfipManager.client_provincia
     if form.validate_on_submit():
-        # user = User(username=form.cuit.data, email=form.client_email.data)
-        # user.set_password(form.cuit.data)
-        # db.session.add(user)
-        # db.session.commit()
+        user = User(username=form.cuit.data, email=form.client_email.data)
+        user.set_password(form.cuit.data)
+        db.session.add(user)
+        db.session.commit()
         client = Cliente(
             client_cuit=form.cuit.data,
             client_name=form.client_name.data,
@@ -193,10 +193,15 @@ def new_client():
     flash("Verifique y complete la información de su cliente")
     return render_template("client_register.html", form=form)
 
-@app.route('/client_table')
+@app.route('/clients')
 @login_required
 def client_table():
     # user = User.query.filter_by(username=username).first_or_404()
     clientes = BlockchainManager.getAll(ns_name="/Compania")
     return render_template("client_table.html", clientes=clientes)
 
+@app.route('/clients/<client_id>')
+@login_required
+def client_page(client_id):
+    client = BlockchainManager.getSingle(ns_name='/Compania', id=client_id)
+    return render_template("client_page.html", client=client)

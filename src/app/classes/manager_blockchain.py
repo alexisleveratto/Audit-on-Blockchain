@@ -20,9 +20,9 @@ class ManagerBlockchain:
         url = self.url + self.action_url + ns_name + id
         payload = {}
         response = requests.request("GET", url, headers=self.headers, data=payload)
-        print(response.json())
+        return response.json()
 
     def add(self, ns_name, payload):
         url = self.url + self.action_url + ns_name
         response = requests.request("POST", url, headers=self.headers, data=payload)
-        print(response.json())
+        return response.json()

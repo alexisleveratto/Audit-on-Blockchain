@@ -2,6 +2,7 @@
 
 {% block app_content %}
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
         table, th, td {
         border: 1px solid black;
@@ -10,21 +11,21 @@
 </head>
 <table style="width:100%">
     <tr>
-        <th align="center">ID</th>
-        <th align="center">Nombre</th>
-        <th align="center">Contacto</th>
-        <th align="center">País</th>
-        <th align="center">Saldo - Deudores por Venta</th>
-        <th align="center">Accion</th>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Contacto</th>
+        <th>País</th>
+        <th>Saldo - Deudores por Venta</th>
+        <th>Accion</th>
     </tr>
     <tbody>
         {% for cliente in clientes %}
-        <tr>
+        <tr class='clickable-row'>
             <td title="{{ cliente.companiaId }}">{{ cliente.companiaId }}</td>
             <td title="{{ cliente.companiaName }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaName }}</td>
             <td title="{{ cliente.companiaAddres }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaAddres }}</td>
             <td title="{{ cliente.companiaConutry }}">{{ cliente.companiaConutry }}</td>
-            <td title="{{ cliente.companiaBalance }}" align="right">{{ cliente.companiaBalance }}</td>
+            <td title="{{ cliente.companiaBalance }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaBalance }}</td>
             <td title="Action">{{ cliente.companiaBalance }}</td>
         </tr>
         {% endfor %}
