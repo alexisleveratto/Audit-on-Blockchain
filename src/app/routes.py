@@ -5,6 +5,7 @@ from app.forms import (
     ClientPageForm,
     EmailForm,
     LoginForm,
+    ModifyClientForm,
     PasswordForm,
     RegisterClientForm,
     RegistrationForm,
@@ -194,26 +195,74 @@ def new_client():
     flash("Verifique y complete la información de su cliente")
     return render_template("client_register.html", form=form)
 
-@app.route('/clients')
+
+@app.route("/clients", methods=["GET", "POST"])
 @login_required
 def client_table():
     # user = User.query.filter_by(username=username).first_or_404()
     clientes = BlockchainManager.getAll(ns_name="/Compania")
     return render_template("client_table.html", clientes=clientes)
 
-@app.route('/clients/<client_id>')
+
+@app.route("/clients/<client_id>", methods=["GET", "POST"])
 @login_required
 def client_page(client_id):
-    client = BlockchainManager.getSingle(ns_name='/Compania', id=str('/' + client_id))
+    client = BlockchainManager.getSingle(ns_name="/Compania", id=str("/" + client_id))
     form = ClientPageForm()
     if form.validate_on_submit():
         if form.modify.data:
             return redirect(url_for("modify_client", client_id=client_id))
     if form.cancel.data:
         return redirect(url_for("index"))
-    return render_template("client_page.html", client=client)
+    return render_template("client_page.html", client=client, form=form)
 
-@app.route('clients/<client_id>/modify')
+
+@app.route("/clients/<string:client_id>/modify", methods=["GET", "POST"])
 @login_required
 def modify_client(client_id):
-    
+    form = ModifyClientForm()
+    client = BlockchainManager.getSingle(ns_name="/Compania", id=str("/" + client_id))
+    client_address = client["companiaAddres"].split(", ")
+    form.cuit.data = client_id
+    if not form.client_name.data:
+        form.client_name.data = client["companiaName"]
+    if not form.client_email.data:
+        form.client_email.data = client_address[0]
+    if not form.client_address.data:
+        form.client_address.data = client_address[1]
+    if not form.client_localidad.data:
+        form.client_localidad.data = client_address[2]
+    if not form.client_codPostal.data:
+        form.client_codPostal.data = client_address[3]
+    if not form.client_provincia.data:
+        form.client_provincia.data = client_address[4]
+    if not form.country.data:
+        form.country.data = client["companiaConutry"]
+    if not form.initial_balance.data:
+        form.initial_balance.data = client["companiaBalance"]
+    if form.validate_on_submit():
+        client = Cliente(
+            client_cuit=form.cuit.data,
+            client_name=form.client_name.data,
+            client_email=form.client_email.data,
+            client_address=form.client_address.data,
+            client_localidad=form.client_localidad.data,
+            client_codPostal=form.client_codPostal.data,
+            client_provincia=form.client_provincia.data,
+            country=form.country.data,
+            initial_balance=form.initial_balance.data,
+        )
+        client.update_cliente(
+            companiaName=form.client_name.data,
+            companiaConutry=form.country.data,
+            client_email=form.client_email.data,
+            client_address=form.client_address.data,
+            client_localidad=form.client_localidad.data,
+            client_codPostal=form.client_codPostal.data,
+            client_provincia=form.client_provincia.data,
+        )
+        form_client_page = ClientPageForm()
+        return render_template("client_page.html", client=client, form=form_client_page)
+    if form.cancel.data:
+        return redirect(url_for("index"))
+    return render_template("client_modify.html", form=form)

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<h1>Registrar Cliente</h1>
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.cuit.label }}<br>
+        {{ form.cuit(size=32) }}<br>
+        {% for error in form.cuit.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.client_name.label }}<br>
+        {{ form.client_name(size=32) }}<br>
+        {% for error in form.client_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.client_email.label }}<br>
+        {{ form.client_email(size=32) }}<br>
+        {% for error in form.client_email.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.client_address.label }}<br>
+        {{ form.client_address(size=32) }}<br>
+        {% for error in form.client_address.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.client_localidad.label }}<br>
+        {{ form.client_localidad(size=32) }}<br>
+        {% for error in form.client_localidad.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.client_codPostal.label }}<br>
+        {{ form.client_codPostal(size=32) }}<br>
+        {% for error in form.country.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.client_provincia.label }}<br>
+        {{ form.client_provincia(size=32) }}<br>
+        {% for error in form.client_provincia.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.country.label }}<br>
+        {{ form.country(size=32) }}<br>
+        {% for error in form.country.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.initial_balance.label }}<br>
+        {{ form.initial_balance(size=32) }}<br>
+        {% for error in form.initial_balance.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+    <p>{{ form.cancel() }}</p>
+</form>
+
+{% endblock %}

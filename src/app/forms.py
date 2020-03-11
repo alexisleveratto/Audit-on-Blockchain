@@ -91,7 +91,30 @@ class RegisterClientForm(FlaskForm):
     submit = SubmitField("Registrar Cliente")
     cancel = SubmitField("Cancelar")
 
+
 class ClientPageForm(FlaskForm):
     ledger = SubmitField("Libro Mayor")
     modify = SubmitField("Modificar")
+    cancel = SubmitField("Cancelar")
+
+
+class ModifyClientForm(FlaskForm):
+    cuit = StringField(
+        "CUIT Cliente", validators=[DataRequired()], render_kw={"disabled": ""}
+    )
+    client_name = StringField("Nombre Cliente", validators=[DataRequired()])
+    client_email = StringField(
+        "Email de Contacto", validators=[DataRequired(), Email()]
+    )
+    client_address = StringField("Domicilio Fiscal", validators=[DataRequired()])
+    client_localidad = StringField("Localidad", validators=[DataRequired()])
+    client_codPostal = TextField("Codigo Postal", validators=[DataRequired()])
+    client_provincia = StringField("Provincia", validators=[DataRequired()])
+    country = StringField("País", validators=[DataRequired()])
+    initial_balance = FloatField(
+        "Saldo Inicial de la Cuenta Deudores por Venta",
+        validators=[DataRequired()],
+        render_kw={"disabled": ""},
+    )
+    submit = SubmitField("Modificar Cliente")
     cancel = SubmitField("Cancelar")

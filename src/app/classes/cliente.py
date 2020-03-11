@@ -34,7 +34,7 @@ class Cliente:
 
     def set_own_payload(self):
         self.payload = (
-            '{\n  "$class": "org.example.biznet.Compania",\n  "companiaId": "%s",\n  "companiaName": "%s",\n  "companiaConutry": "%s",\n  "companiaAddres": "%s",\n  "companiaBalance": %f\n}'
+            '{\n  "$class": "org.example.biznet.Compania",\n  "companiaId": \"%s\", "companiaName": "%s",\n  "companiaConutry": "%s",\n  "companiaAddres": "%s",\n  "companiaBalance": %f\n}'
             % (
                 str(self.companiaId),
                 str(self.companiaName),
@@ -46,9 +46,18 @@ class Cliente:
 
     def add_cliente(self):
         self.set_own_payload()
-        BlockchainManager.add("/Compania", self.payload)
+        return BlockchainManager.add("/Compania", self.payload)
 
-    def update_cliente(self,  companiaName, companiaConutry, client_email, client_address, client_localidad, client_codPostal, client_provincia):
+    def update_cliente(
+        self,
+        companiaName,
+        companiaConutry,
+        client_email,
+        client_address,
+        client_localidad,
+        client_codPostal,
+        client_provincia,
+    ):
         self.companiaName = companiaName
         self.companiaConutry = companiaConutry
         self.companiaAddres = (
@@ -62,17 +71,10 @@ class Cliente:
             + ", "
             + client_provincia
         )
-        
-        self.payload = (
-            '{\n  "$class": "org.example.biznet.Compania",\n  "companiaId": "%s",\n  "companiaName": "%s",\n  "companiaConutry": "%s",\n  "companiaAddres": "%s",\n  "companiaBalance": %f\n}'
-            % (
-                str(self.companiaId),
-                str(self.companiaName),
-                str(self.companiaConutry),
-                str(self.companiaAddres),
-                self.companiaBalance,
-            )
+
+        self.set_own_payload()
+       
+        response = BlockchainManager.update(
+            ns_name="/Compania", id=str("/" + self.companiaId), payload=str(self.payload)
         )
-        BlockchainManager.update(ns_name="/Compania", id="/" + self.companiaId, payload=self.payload)
-
-
+        return response

@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 
 {% block app_content %}
+<form action="/clients/{{ client.companiaId }}/modify" method="POST">
     <h1>{{ client.companiaName }}</h1>
     <hr>
     <p> CUIT: {{ client.companiaId }} </p>
     <p> Contacto: {{ client.companiaAddres }} </p>
     <p> Pais: {{ client.companiaConutry }} </p>
     <p> Saldo Actual: {{ client.companiaBalance }} </p>
+    <p>{{ form.ledger() }}</p>
+    <p>{{ form.modify() }}</p>
+    <p>{{ form.delete() }}</p>
+    <p>{{ form.cancel() }}</p>
+</form>
 {% endblock %}

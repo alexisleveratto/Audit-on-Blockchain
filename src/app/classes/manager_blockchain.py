@@ -26,9 +26,8 @@ class ManagerBlockchain:
         url = self.url + self.action_url + ns_name
         response = requests.request("POST", url, headers=self.headers, data=payload)
         return response.json()
-    
+
     def update(self, ns_name, id, payload):
         url = self.url + self.action_url + ns_name + id
-        response = requests.request("POST", url, headers=self.headers, data=payload)
+        response = requests.request("PUT", url, headers=self.headers, data=payload)
         return response.json()
-
