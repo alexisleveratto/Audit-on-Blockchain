@@ -95,6 +95,7 @@ class RegisterClientForm(FlaskForm):
 class ClientPageForm(FlaskForm):
     ledger = SubmitField("Libro Mayor")
     modify = SubmitField("Modificar")
+    delete = SubmitField("Eliminar")
     cancel = SubmitField("Cancelar")
 
 

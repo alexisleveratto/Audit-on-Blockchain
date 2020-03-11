@@ -78,3 +78,6 @@ class Cliente:
             ns_name="/Compania", id=str("/" + self.companiaId), payload=str(self.payload)
         )
         return response
+
+    def delete_cliente(self):
+        BlockchainManager.delete("/Compania", self.companiaId)

@@ -31,3 +31,9 @@ class ManagerBlockchain:
         url = self.url + self.action_url + ns_name + id
         response = requests.request("PUT", url, headers=self.headers, data=payload)
         return response.json()
+    
+    def delete(self, ns_name, id):
+        url = self.url + self.action_url + ns_name + id
+        response = requests.request("DELETE", url, headers=self.headers)
+        return response.json()
+
