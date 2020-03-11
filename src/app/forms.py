@@ -90,3 +90,8 @@ class RegisterClientForm(FlaskForm):
     )
     submit = SubmitField("Registrar Cliente")
     cancel = SubmitField("Cancelar")
+
+class ClientPageForm(FlaskForm):
+    ledger = SubmitField("Libro Mayor")
+    modify = SubmitField("Modificar")
+    cancel = SubmitField("Cancelar")

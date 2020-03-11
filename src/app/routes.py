@@ -2,6 +2,7 @@ from app import app, db, posta
 from app.forms import (
     AuditIndexForm,
     ChangePasswordForm,
+    ClientPageForm,
     EmailForm,
     LoginForm,
     PasswordForm,
@@ -204,4 +205,15 @@ def client_table():
 @login_required
 def client_page(client_id):
     client = BlockchainManager.getSingle(ns_name='/Compania', id=str('/' + client_id))
+    form = ClientPageForm()
+    if form.validate_on_submit():
+        if form.modify.data:
+            return redirect(url_for("modify_client", client_id=client_id))
+    if form.cancel.data:
+        return redirect(url_for("index"))
     return render_template("client_page.html", client=client)
+
+@app.route('clients/<client_id>/modify')
+@login_required
+def modify_client(client_id):
+    
