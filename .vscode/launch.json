@@ -9,12 +9,12 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            // "pythonPath": "venv/bin/python",
-            "pythonPath": "/usr/bin/python3",
+            "pythonPath": "venv/bin/python",
+            // "pythonPath": "/usr/bin/python3",
             "program": "venv/bin/flask",
             "env": {
                 "FLASK_APP": "src/blockchainaudit.py",
-                // "FLASK_ENV": "development",
+                "FLASK_ENV": "development",
                 "FLASK_DEBUG": "0"
             },
             "args": [
