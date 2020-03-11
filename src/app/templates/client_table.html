@@ -2,12 +2,9 @@
 
 {% block app_content %}
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <style>
-        table, th, td {
-        border: 1px solid black;
-        }
-    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+     <link rel="stylesheet" href="/static/css/table.css">
 </head>
 <table style="width:100%">
     <tr>
@@ -20,7 +17,7 @@
     </tr>
     <tbody>
         {% for cliente in clientes %}
-        <tr class='clickable-row' href="{{ url_for('client_page', client_id=cliente.companiaId) }}">
+        <tr data-href="{{ url_for('client_page', client_id=cliente.companiaId) }}">
             <td title="{{ cliente.companiaId }}">{{ cliente.companiaId }}</td>
             <td title="{{ cliente.companiaName }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaName }}</td>
             <td title="{{ cliente.companiaAddres }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaAddres }}</td>
@@ -31,5 +28,6 @@
         {% endfor %}
     </tbody>
 </table>
+<script src="/static/js/client_table.js"></script>
 
 {% endblock %}
