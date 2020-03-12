@@ -33,7 +33,7 @@ class Cliente:
         self.companiaBalance = initial_balance
 
     def set_own_payload(self):
-        self.payload = (
+        payload = (
             '{\n  "$class": "org.example.biznet.Compania",\n  "companiaId": "%s", "companiaName": "%s",\n  "companiaConutry": "%s",\n  "companiaAddres": "%s",\n  "companiaBalance": %f\n}'
             % (
                 str(self.companiaId),
@@ -43,10 +43,23 @@ class Cliente:
                 self.companiaBalance,
             )
         )
+        return payload
+
+    def set_update_payload(self):
+        payload = (
+            '{\n    "$class": "org.example.biznet.Compania",\n    "companiaName": "%s",\n    "companiaConutry": "%s",\n    "companiaAddres": "%s",\n    "companiaBalance": %f\n}'
+            % (
+                str(self.companiaName),
+                str(self.companiaConutry),
+                str(self.companiaAddres),
+                self.companiaBalance,
+            )
+        )
+        return payload
 
     def add_cliente(self):
-        self.set_own_payload()
-        return BlockchainManager.add("/Compania", self.payload)
+        payload = self.set_own_payload()
+        return BlockchainManager.add("/Compania", payload)
 
     def update_cliente(
         self,
@@ -72,12 +85,10 @@ class Cliente:
             + client_provincia
         )
 
-        self.set_own_payload()
+        payload = self.set_update_payload()
 
         response = BlockchainManager.update(
-            ns_name="/Compania",
-            id=str("/" + self.companiaId),
-            payload=str(self.payload),
+            ns_name="/Compania", id=str("/" + self.companiaId), payload=payload,
         )
         return response
 
