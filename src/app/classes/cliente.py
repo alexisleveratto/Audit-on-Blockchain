@@ -34,7 +34,7 @@ class Cliente:
 
     def set_own_payload(self):
         self.payload = (
-            '{\n  "$class": "org.example.biznet.Compania",\n  "companiaId": \"%s\", "companiaName": "%s",\n  "companiaConutry": "%s",\n  "companiaAddres": "%s",\n  "companiaBalance": %f\n}'
+            '{\n  "$class": "org.example.biznet.Compania",\n  "companiaId": "%s", "companiaName": "%s",\n  "companiaConutry": "%s",\n  "companiaAddres": "%s",\n  "companiaBalance": %f\n}'
             % (
                 str(self.companiaId),
                 str(self.companiaName),
@@ -73,9 +73,11 @@ class Cliente:
         )
 
         self.set_own_payload()
-       
+
         response = BlockchainManager.update(
-            ns_name="/Compania", id=str("/" + self.companiaId), payload=str(self.payload)
+            ns_name="/Compania",
+            id=str("/" + self.companiaId),
+            payload=str(self.payload),
         )
         return response
 

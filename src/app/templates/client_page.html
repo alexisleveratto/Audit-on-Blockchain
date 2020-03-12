@@ -1,16 +1,36 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<form action="/clients/{{ client.companiaId }}/modify" method="POST">
+<form>
     <h1>{{ client.companiaName }}</h1>
     <hr>
     <p> CUIT: {{ client.companiaId }} </p>
     <p> Contacto: {{ client.companiaAddres }} </p>
     <p> Pais: {{ client.companiaConutry }} </p>
     <p> Saldo Actual: {{ client.companiaBalance }} </p>
-    <p>{{ form.ledger() }}</p>
-    <p>{{ form.modify() }}</p>
-    <p>{{ form.delete() }}</p>
+    <p><a>Libro Mayor</a></p>
+    <p><a href="{{ url_for('modify_client', client_id=client.companiaId) }}">Modificar</a></p>
+    <p><a onclick="ConfirmDelete(this)">Eliminar</a></p>
     <p>{{ form.cancel() }}</p>
 </form>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align:center;">
+                <h4 class="modal-title" id="deleteModalLabel">Desea Eliminar el cliente {{ client.companiaName }}</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary"><a style="color:white;" href="{{ url_for('delete_client', client_id=client.companiaId) }}" method="POST">Eliminar</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ConfirmDelete(elm){
+        $('#deleteModal').modal();
+    }
+</script>
 {% endblock %}

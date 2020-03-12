@@ -173,10 +173,10 @@ def new_client():
     if not form.client_provincia.data:
         form.client_provincia.data = AfipManager.client_provincia
     if form.validate_on_submit():
-        user = User(username=form.cuit.data, email=form.client_email.data)
-        user.set_password(form.cuit.data)
-        db.session.add(user)
-        db.session.commit()
+        # user = User(username=form.cuit.data, email=form.client_email.data)
+        # user.set_password(str(form.cuit.data))
+        # db.session.add(user)
+        # db.session.commit()
         client = Cliente(
             client_cuit=form.cuit.data,
             client_name=form.client_name.data,
@@ -212,8 +212,6 @@ def client_page(client_id):
     if form.validate_on_submit():
         if form.modify.data:
             return redirect(url_for("modify_client", client_id=client_id))
-    if form.delete.data:
-        BlockchainManager.delete(ns_name="/Compania", id=str("/" + client_id))
     if form.cancel.data:
         return redirect(url_for("index"))
     return render_template("client_page.html", client=client, form=form)
@@ -268,3 +266,11 @@ def modify_client(client_id):
     if form.cancel.data:
         return redirect(url_for("index"))
     return render_template("client_modify.html", form=form)
+
+
+@app.route("/clients/<string:client_id>/delete", methods=["GET", "POST"])
+@login_required
+def delete_client(client_id):
+    # DO SOME DB SHIT HERE
+    BlockchainManager.delete(ns_name="/Compania", id=str("/" + client_id))
+    return redirect(url_for("client_table"))
