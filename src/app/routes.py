@@ -199,7 +199,6 @@ def new_client():
 @app.route("/clients", methods=["GET", "POST"])
 @login_required
 def client_table():
-    # user = User.query.filter_by(username=username).first_or_404()
     clientes = BlockchainManager.getAll(ns_name="/Compania")
     return render_template("client_table.html", clientes=clientes)
 
@@ -274,3 +273,8 @@ def delete_client(client_id):
     # DO SOME DB SHIT HERE
     BlockchainManager.delete(ns_name="/Compania", id=str("/" + client_id))
     return redirect(url_for("client_table"))
+
+@app.route("/transactions/<string:client_id>", methods=["GET", "POST"])
+@login_required
+def transaction_table(client_id):
+    
