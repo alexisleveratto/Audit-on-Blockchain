@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/table.css">
+</head>
+<table style="width:100%">
+    <tr>
+        <th>Codigo Cuenta</th>
+        <th>Nombre Cuenta</th>
+        <th>D/H</th>
+        <th>Número Minuta</th>
+        <th>Concepto</th>
+        <th>Detalle</th>
+        <th>Fecha Movimiento</th>
+        <th>Monto</th>
+    </tr>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr style="cursor:pointer">
+            <td title="{{ transaction.codigo_cuenta }}">{{ transaction.codigo_cuenta }}</td>
+            <td title="{{ transaction.nombre_cuenta }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ transaction.nombre_cuenta }}</td>
+            <td title="{{ transaction.d_h }}">{{ transaction.D_H }}</td>
+            <td title="{{ transaction.numero_minuta }}">{{ transaction.numero_minuta }}</td>
+            <td title="{{ transaction.concepto }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ transaction.concepto }}</td>
+            <td title="{{ transaction.detalle }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ transaction.detalle }}</td>
+            <td title="{{ transaction.fecha_movimiento }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ transaction.fecha_movimiento }}</td>
+            <td title="{{ transaction.monto }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ transaction.monto }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

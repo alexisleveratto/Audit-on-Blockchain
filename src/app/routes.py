@@ -302,3 +302,9 @@ def record_transaction(client_id):
         return redirect(url_for("index"))
 
     return render_template("record_transaction.html", form=form)
+
+@app.route("/clients/<string:client_id>/transactions", methods=["GET", "POST"])
+@login_required
+def transaction_table(client_id):
+    transactions = TransaccionManager.get_transaction_for_client(client_id)
+    return render_template("transactions_table.html", transactions=transactions)

@@ -35,3 +35,11 @@ class ManagerTransaccion:
             )
         )
         return BlockchainManager.add("/TransactionBalanceGeneral", payload)
+    
+    def get_transaction_for_client(self, client_id):
+        all_transactions = BlockchainManager.getAll(ns_name="/TransactionBalanceGeneral")
+        filtered_transactions = []
+        for transaction in all_transactions:
+            if transaction["Company_BalanceGeneral"]["companiaId"] == client_id:
+                filtered_transactions.append(transaction)
+        return filtered_transactions
