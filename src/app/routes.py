@@ -1,5 +1,6 @@
 from app import app, db, posta
 from app.forms import (
+    AddTransaccionForm,
     AuditIndexForm,
     ChangePasswordForm,
     ClientPageForm,
@@ -13,7 +14,7 @@ from app.forms import (
 )
 from app.models import User
 from app.utilsfunctions import get_random_string
-from .classes import AfipManager, BlockchainManager
+from .classes import AfipManager, BlockchainManager, TransaccionManager
 from .classes.cliente import Cliente
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
@@ -274,7 +275,30 @@ def delete_client(client_id):
     BlockchainManager.delete(ns_name="/Compania", id=str("/" + client_id))
     return redirect(url_for("client_table"))
 
-@app.route("/transactions/<string:client_id>", methods=["GET", "POST"])
+
+@app.route("/clients/<string:client_id>/record-transaction", methods=["GET", "POST"])
 @login_required
-def transaction_table(client_id):
-    
+def record_transaction(client_id):
+    form = AddTransaccionForm()
+
+    if form.validate_on_submit():
+        client = BlockchainManager.getSingle(
+            ns_name="/Compania", id=str("/" + client_id)
+        )
+        added_transaction = TransaccionManager.add_transaccion(
+            client,
+            form.codigo_cuenta.data,
+            form.nombre_cuenta.data,
+            form.d_h.data,
+            form.numero_minuta.data,
+            form.concepto.data,
+            form.detalle.data,
+            form.fecha_movimiento.data,
+            form.monto.data,
+        )
+        flash("Transaccion Agregada con el ID " + added_transaction["transactionId"])
+        return render_template("record_transaction.html", form=form)
+    if form.cancel.data:
+        return redirect(url_for("index"))
+
+    return render_template("record_transaction.html", form=form)

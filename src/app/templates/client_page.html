@@ -8,7 +8,8 @@
     <p> Contacto: {{ client.companiaAddres }} </p>
     <p> Pais: {{ client.companiaConutry }} </p>
     <p> Saldo Actual: {{ client.companiaBalance }} </p>
-    <p><a>Libro Mayor</a></p>
+    <p><a href="{{ url_for('record_transaction', client_id=client.companiaId) }}">Registrar Transaccion</a></p>
+    <p><a href="{{ url_for('record_transaction', client_id=client.companiaId) }}">Libro Mayor</a></p>
     <p><a href="{{ url_for('modify_client', client_id=client.companiaId) }}">Modificar</a></p>
     <p><a onclick="ConfirmDelete(this)">Eliminar</a></p>
     <p>{{ form.cancel() }}</p>

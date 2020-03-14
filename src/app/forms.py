@@ -7,6 +7,8 @@ from wtforms import (
     SubmitField,
     FloatField,
     TextField,
+    RadioField,
+    IntegerField,
 )
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
@@ -118,4 +120,17 @@ class ModifyClientForm(FlaskForm):
         render_kw={"disabled": ""},
     )
     submit = SubmitField("Modificar Cliente")
+    cancel = SubmitField("Cancelar")
+
+
+class AddTransaccionForm(FlaskForm):
+    codigo_cuenta = StringField("Codigo de Cuenta", validators=[DataRequired()])
+    nombre_cuenta = StringField("Nombre de Cuenta", validators=[DataRequired()])
+    d_h = RadioField("Tipo de Cuenta", choices=[("D", "Debe"), ("H", "Haber")])
+    numero_minuta = IntegerField("Numero Minuta", validators=[DataRequired()])
+    concepto = StringField("Concepto", validators=[DataRequired()])
+    detalle = StringField("Detalle", validators=[DataRequired()])
+    fecha_movimiento = StringField("Fecha Movimiento", validators=[DataRequired()])
+    monto = FloatField("Monto", validators=[DataRequired()])
+    submit = SubmitField("Grabar Transaccion")
     cancel = SubmitField("Cancelar")
