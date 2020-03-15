@@ -32,5 +32,31 @@
     </tbody>
 </table>
 
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h2>Seleccione el/los Documento/s</h2>
+            <div class="row">
+                <div class="col-sm-4">
+                    <form method="post" enctype="multipart/form-data">
+                        <dl>
+                            <p>
+                                <input id="file_input" type="file" name="files[]" multiple="true" autocomplete="off" required>
+                            </p>
+                        </dl>
+                        <p>
+                            <input id="upload_ds_btn" type="submit" name="main" value="Submit">
+                        </p>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary"><a style="color:white;" href="{{ url_for() }}" method="POST">Subir</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
