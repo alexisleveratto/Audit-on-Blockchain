@@ -303,8 +303,30 @@ def record_transaction(client_id):
 
     return render_template("record_transaction.html", form=form)
 
+
 @app.route("/clients/<string:client_id>/transactions", methods=["GET", "POST"])
 @login_required
 def transaction_table(client_id):
     transactions = TransaccionManager.get_transaction_for_client(client_id)
     return render_template("transactions_table.html", transactions=transactions)
+
+
+@app.route("/clients/<string:client_id>/audit-results", methods=["GET", "POST"])
+@login_required
+def upload_audit_resultus(client_id):
+    if "files[]" not in request.files:
+        flash("No file part")
+        return redirect(request.url)
+    files = request.files.getlist("files[]")
+
+    for file in files:
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            if filename[-4:] == ".zip":
+                with ZipFile(file, "r") as zip_ref:
+                    zip_ref.extractall(TEMP_PDFS_FOLDER)
+            else:
+                file.save(os.path.join(TEMP_PDFS_FOLDER, filename))
+        else:
+            flash("Some files are not allowed")
+    return render_template("upload.html")
