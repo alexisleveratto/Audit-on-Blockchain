@@ -13,14 +13,15 @@ from app.forms import (
     VerifyClientForm,
 )
 from app.models import User
-from app.utilsfunctions import get_random_string
+from app.utilsfunctions import allowed_file, get_random_string
 from .classes import AfipManager, BlockchainManager, TransaccionManager
 from .classes.cliente import Cliente
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
+import os
 from werkzeug.urls import url_parse
-
+from werkzeug.utils import secure_filename
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/index", methods=["GET", "POST"])
@@ -308,25 +309,32 @@ def record_transaction(client_id):
 @login_required
 def transaction_table(client_id):
     transactions = TransaccionManager.get_transaction_for_client(client_id)
-    return render_template("transactions_table.html", transactions=transactions)
+    return render_template("transactions_table.html", transactions=transactions, client_id=client_id)
 
 
-@app.route("/clients/<string:client_id>/audit-results", methods=["GET", "POST"])
+# @app.route("/clients/<string:client_id>/audit-results", methods=["GET", "POST"])
+@app.route("/clients/<string:client_id>/audit-results", methods=["POST"])
 @login_required
-def upload_audit_resultus(client_id):
-    if "files[]" not in request.files:
-        flash("No file part")
-        return redirect(request.url)
-    files = request.files.getlist("files[]")
+def upload_audit_results(client_id):
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No hay ningún archivo seleccionado')
+            return redirect(request.url)
+        file = request.files['file']
 
-    for file in files:
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No se seleccionó ningún archivo')
+            return redirect(request.url)
+
+        if not os.path.isdir(os.path.join(app.config['UPLOAD_FOLDER'], client_id)):
+            client_id_folder = secure_filename(client_id)
+            os.mkdir(os.path.join(app.config['UPLOAD_FOLDER'], client_id_folder) + '/')
+
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            if filename[-4:] == ".zip":
-                with ZipFile(file, "r") as zip_ref:
-                    zip_ref.extractall(TEMP_PDFS_FOLDER)
-            else:
-                file.save(os.path.join(TEMP_PDFS_FOLDER, filename))
-        else:
-            flash("Some files are not allowed")
-    return render_template("upload.html")
+            file.save(os.path.join(os.path.join(app.config['UPLOAD_FOLDER'], client_id), filename))
+            flash("Documento Guardado con Exito")
+    return redirect(url_for('transaction_table', client_id=client_id))

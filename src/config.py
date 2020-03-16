@@ -19,5 +19,5 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
-    UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER") or "/app/audit_results/"
+    UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER") or os.path.join(os.path.dirname(os.path.abspath(__file__)) ,"app/audit_results")
     MAX_CONTENT_LENGTH = os.environ.get("MAX_CONTENT_LENGTH") or 16 * 1024 * 1024
