@@ -41,12 +41,8 @@
             <h1>Subir Documentacion</h1>
             <form action="{{ url_for('upload_audit_results', client_id=client_id) }}" method="POST" enctype=multipart/form-data>
                 <input type=file name=file>
-                <input type=submit value=Upload>
+                <input type=submit value=Subir>
             </form>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button id="upload_ds_btn" type="submit" class="btn btn-primary" name="main"><a style="color:white;" href="{{ url_for('upload_audit_results', client_id=client_id) }}" method="POST">Subir</a></button>
-            </div> -->
         </div>
     </div>
 </div>
