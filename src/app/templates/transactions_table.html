@@ -5,7 +5,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/table.css">
 </head>
-<table style="width:100%">
+<table id="TransactionTable" style="width:100%">
     <tr>
         <th>Codigo Cuenta</th>
         <th>Nombre Cuenta</th>
@@ -31,9 +31,11 @@
         {% endfor %}
     </tbody>
 </table>
-
+<br>
 <button type="button" onclick="UploadResults(this)">Subir Resultados</button>
-
+<br>
+<button type="button" onclick="exportTableToExcel('TransactionTable', 'libro-mayor - ' + {{client_id}})">Descargar Libro Mayor</button>
+<br>
 
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -47,9 +49,5 @@
     </div>
 </div>
 
-<script>
-    function UploadResults(elm){
-        $('#deleteModal').modal();
-    }
-</script>
+<script src="/static/js/transactions_table.js"></script>
 {% endblock %}
