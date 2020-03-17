@@ -318,7 +318,6 @@ def transaction_table(client_id):
     )
 
 
-# @app.route("/clients/<string:client_id>/audit-results", methods=["GET", "POST"])
 @app.route("/clients/<string:client_id>/audit-results", methods=["POST"])
 @login_required
 def upload_audit_results(client_id):
@@ -351,6 +350,7 @@ def upload_audit_results(client_id):
 
 
 @app.route("/clients/<string:client_id>/upload-transactions", methods=["POST"])
+@login_required
 def upload_transactions(client_id):
     raw_data = request.files["file"].read()
     dataset = Dataset().load(raw_data)
@@ -372,3 +372,20 @@ def upload_transactions(client_id):
         )
 
     return redirect(url_for("transaction_table", client_id=client_id))
+
+def upload_documentation():
+    # check if the post request has the file part
+    if "file" not in request.files:
+        flash("No hay ningún archivo seleccionado")
+        return redirect(request.url)
+    file = request.files["file"]
+
+    # if user does not select file, browser also
+    # submit an empty part without filename
+    if file.filename == "":
+        flash("No se seleccionó ningún archivo")
+        return redirect(request.url)
+
+    if not os.path.isdir(os.path.join(app.config["UPLOAD_FOLDER"], client_id)):
+        client_id_folder = secure_filename(client_id)
+        os.mkdir(os.path.join(app.config["UPLOAD_FOLDER"], client_id_folder) + "/")
