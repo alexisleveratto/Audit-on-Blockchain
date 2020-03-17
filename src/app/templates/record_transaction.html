@@ -2,67 +2,81 @@
 
 {% block app_content %}
 <h1>Registrar Transacción</h1>
-    <form action="" method="POST" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.codigo_cuenta.label }}<br>
-            {{ form.codigo_cuenta(size=32) }}<br>
-            {% for error in form.codigo_cuenta.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.nombre_cuenta.label }}<br>
-            {{ form.nombre_cuenta(size=32) }}<br>
-            {% for error in form.nombre_cuenta.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.d_h.label }}<br>
-            {{ form.d_h(size=32) }}<br>
-            {% for error in form.d_h.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.numero_minuta.label }}<br>
-            {{ form.numero_minuta(size=32) }}<br>
-            {% for error in form.numero_minuta.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.concepto.label }}<br>
-            {{ form.concepto(size=32) }}<br>
-            {% for error in form.concepto.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.detalle.label }}<br>
-            {{ form.detalle(size=32) }}<br>
-            {% for error in form.detalle.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.fecha_movimiento.label }}<br>
-            {{ form.fecha_movimiento(size=32) }}<br>
-            {% for error in form.fecha_movimiento.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.monto.label }}<br>
-            {{ form.monto(size=32) }}<br>
-            {% for error in form.monto.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-        <p>{{ form.cancel() }}</p>
-    </form>
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.codigo_cuenta.label }}<br>
+        {{ form.codigo_cuenta(size=32) }}<br>
+        {% for error in form.codigo_cuenta.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.nombre_cuenta.label }}<br>
+        {{ form.nombre_cuenta(size=32) }}<br>
+        {% for error in form.nombre_cuenta.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.d_h.label }}<br>
+        {{ form.d_h(size=32) }}<br>
+        {% for error in form.d_h.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.numero_minuta.label }}<br>
+        {{ form.numero_minuta(size=32) }}<br>
+        {% for error in form.numero_minuta.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.concepto.label }}<br>
+        {{ form.concepto(size=32) }}<br>
+        {% for error in form.concepto.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.detalle.label }}<br>
+        {{ form.detalle(size=32) }}<br>
+        {% for error in form.detalle.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.fecha_movimiento.label }}<br>
+        {{ form.fecha_movimiento(size=32) }}<br>
+        {% for error in form.fecha_movimiento.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.monto.label }}<br>
+        {{ form.monto(size=32) }}<br>
+        {% for error in form.monto.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+    <p>{{ form.cancel() }}</p>
+</form>
 
-    <p><a href="{{ url_for('record_transaction', client_id=client.companiaId) }}">Subir .xsl</a></p>
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h1>Subir Transacciones</h1>
+            <form action="{{ url_for('upload_transactions', client_id=client_id) }}" method="POST" enctype=multipart/form-data>
+                <input type=file name=file>
+                <input type=submit value=Subir>
+            </form>
+        </div>
+    </div>
+</div>
+
+<button type="button" onclick="UploadTransaction(this)">Subir .xsl</button>
+
+<script src="/static/js/record_transaction.js"></script>
 {% endblock %}

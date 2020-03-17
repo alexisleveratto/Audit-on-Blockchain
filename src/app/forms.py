@@ -132,5 +132,6 @@ class AddTransaccionForm(FlaskForm):
     detalle = StringField("Detalle", validators=[DataRequired()])
     fecha_movimiento = StringField("Fecha Movimiento", validators=[DataRequired()])
     monto = FloatField("Monto", validators=[DataRequired()])
+    documentation = StringField("Factura", validators=[DataRequired()], render_kw={"disabled": ""},)
     submit = SubmitField("Grabar Transaccion")
     cancel = SubmitField("Cancelar")

@@ -19,7 +19,10 @@ from .classes.cliente import Cliente
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
+import json
+from openpyxl import Workbook
 import os
+from tablib import Dataset
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 
@@ -299,11 +302,11 @@ def record_transaction(client_id):
             form.monto.data,
         )
         flash("Transaccion Agregada con el ID " + added_transaction["transactionId"])
-        return render_template("record_transaction.html", form=form)
+        return render_template("record_transaction.html", form=form, client_id=client_id)
     if form.cancel.data:
         return redirect(url_for("index"))
 
-    return render_template("record_transaction.html", form=form)
+    return render_template("record_transaction.html", form=form, client_id=client_id)
 
 
 @app.route("/clients/<string:client_id>/transactions", methods=["GET", "POST"])
@@ -344,4 +347,28 @@ def upload_audit_results(client_id):
                 )
             )
             flash("Documento Guardado con Exito")
+    return redirect(url_for("transaction_table", client_id=client_id))
+
+
+@app.route("/clients/<string:client_id>/upload-transactions", methods=["POST"])
+def upload_transactions(client_id):
+    raw_data = request.files["file"].read()
+    dataset = Dataset().load(raw_data)
+    transactions =  json.loads(dataset.export("json"))
+    client = BlockchainManager.getSingle(
+            ns_name="/Compania", id=str("/" + client_id)
+        )
+    for transaction in transactions:
+        TransaccionManager.add_transaccion(
+            client,
+            transaction["codigo_cuenta"],
+            transaction["nombre_cuenta"],
+            transaction["D_H"],
+            transaction["numero_minuta"],
+            transaction["concepto"],
+            transaction["detalle"],
+            transaction["fecha_movimiento"],
+            transaction["monto"]
+        )
+
     return redirect(url_for("transaction_table", client_id=client_id))
