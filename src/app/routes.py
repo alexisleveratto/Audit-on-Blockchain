@@ -282,9 +282,11 @@ def delete_client(client_id):
 
 
 @app.route("/clients/<string:client_id>/record-transaction", methods=["GET", "POST"])
+@app.route("/clients/<string:client_id>/<string:filename>/record-transaction", methods=["GET", "POST"])
 @login_required
-def record_transaction(client_id):
+def record_transaction(client_id, filename=""):
     form = AddTransaccionForm()
+    form.documentation.data = filename
     if form.validate_on_submit():
         client = BlockchainManager.getSingle(
             ns_name="/Compania", id=str("/" + client_id)
@@ -387,14 +389,14 @@ def upload_documentation(client_id):
     if file.filename == "":
         flash("No se seleccionó ningún archivo")
         return redirect(request.url)
-
+    
+    client_id_folder = secure_filename(client_id)
     if not os.path.isdir(os.path.join(app.config["UPLOAD_FOLDER"], client_id)):
         client_id_folder = secure_filename(client_id)
         os.makedirs(
             os.path.join(app.config["UPLOAD_FOLDER"], client_id_folder)
             + "/transactions_doc/"
         )
-    # form = AddTransaccionForm()
     filename = ""
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
@@ -405,9 +407,8 @@ def upload_documentation(client_id):
                 filename,
             )
         )
-        # form.documentation.data = filename
         flash("Factura Guardada con Exito")
     else:
         flash("La extension de la documentación no es aceptada")
 
-    return redirect(url_for("record_transaction", client_id=client_id))
+    return redirect(url_for("record_transaction", client_id=client_id, filename=filename))
