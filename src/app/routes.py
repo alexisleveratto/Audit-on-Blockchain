@@ -282,7 +282,10 @@ def delete_client(client_id):
 
 
 @app.route("/clients/<string:client_id>/record-transaction", methods=["GET", "POST"])
-@app.route("/clients/<string:client_id>/<string:filename>/record-transaction", methods=["GET", "POST"])
+@app.route(
+    "/clients/<string:client_id>/<string:filename>/record-transaction",
+    methods=["GET", "POST"],
+)
 @login_required
 def record_transaction(client_id, filename=""):
     form = AddTransaccionForm()
@@ -389,7 +392,7 @@ def upload_documentation(client_id):
     if file.filename == "":
         flash("No se seleccionó ningún archivo")
         return redirect(request.url)
-    
+
     client_id_folder = secure_filename(client_id)
     if not os.path.isdir(os.path.join(app.config["UPLOAD_FOLDER"], client_id)):
         client_id_folder = secure_filename(client_id)
@@ -411,4 +414,6 @@ def upload_documentation(client_id):
     else:
         flash("La extension de la documentación no es aceptada")
 
-    return redirect(url_for("record_transaction", client_id=client_id, filename=filename))
+    return redirect(
+        url_for("record_transaction", client_id=client_id, filename=filename)
+    )
