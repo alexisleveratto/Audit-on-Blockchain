@@ -1,6 +1,6 @@
 import random
 
-ALLOWED_EXTENSIONS = set(["pdf", "zip", "xlsx"])
+ALLOWED_EXTENSIONS = set(["jpg", "jpeg", "pdf", "xlsx", "zip"])
 
 
 def allowed_file(filename):

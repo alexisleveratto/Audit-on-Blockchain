@@ -285,7 +285,6 @@ def delete_client(client_id):
 @login_required
 def record_transaction(client_id):
     form = AddTransaccionForm()
-
     if form.validate_on_submit():
         client = BlockchainManager.getSingle(
             ns_name="/Compania", id=str("/" + client_id)
@@ -302,7 +301,9 @@ def record_transaction(client_id):
             form.monto.data,
         )
         flash("Transaccion Agregada con el ID " + added_transaction["transactionId"])
-        return render_template("record_transaction.html", form=form, client_id=client_id)
+        return render_template(
+            "record_transaction.html", form=form, client_id=client_id
+        )
     if form.cancel.data:
         return redirect(url_for("index"))
 
@@ -354,10 +355,8 @@ def upload_audit_results(client_id):
 def upload_transactions(client_id):
     raw_data = request.files["file"].read()
     dataset = Dataset().load(raw_data)
-    transactions =  json.loads(dataset.export("json"))
-    client = BlockchainManager.getSingle(
-            ns_name="/Compania", id=str("/" + client_id)
-        )
+    transactions = json.loads(dataset.export("json"))
+    client = BlockchainManager.getSingle(ns_name="/Compania", id=str("/" + client_id))
     for transaction in transactions:
         TransaccionManager.add_transaccion(
             client,
@@ -368,12 +367,15 @@ def upload_transactions(client_id):
             transaction["concepto"],
             transaction["detalle"],
             transaction["fecha_movimiento"],
-            transaction["monto"]
+            transaction["monto"],
         )
 
     return redirect(url_for("transaction_table", client_id=client_id))
 
-def upload_documentation():
+
+@app.route("/clients/<string:client_id>/documentation-transactions", methods=["POST"])
+@login_required
+def upload_documentation(client_id):
     # check if the post request has the file part
     if "file" not in request.files:
         flash("No hay ningún archivo seleccionado")
@@ -388,4 +390,24 @@ def upload_documentation():
 
     if not os.path.isdir(os.path.join(app.config["UPLOAD_FOLDER"], client_id)):
         client_id_folder = secure_filename(client_id)
-        os.mkdir(os.path.join(app.config["UPLOAD_FOLDER"], client_id_folder) + "/")
+        os.makedirs(
+            os.path.join(app.config["UPLOAD_FOLDER"], client_id_folder)
+            + "/transactions_doc/"
+        )
+    # form = AddTransaccionForm()
+    filename = ""
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(
+            os.path.join(
+                os.path.join(app.config["UPLOAD_FOLDER"], client_id_folder)
+                + "/transactions_doc/",
+                filename,
+            )
+        )
+        # form.documentation.data = filename
+        flash("Factura Guardada con Exito")
+    else:
+        flash("La extension de la documentación no es aceptada")
+
+    return redirect(url_for("record_transaction", client_id=client_id))
