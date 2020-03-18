@@ -481,16 +481,17 @@ def download_docs(client_id):
         directory=app.config["UPLOAD_DOC_FOLDER"], filename=ZIP_NAME
     )
 
+
 @app.route("/countries", methods=["GET", "POST"])
 @login_required
 def countries():
     form = AddCountryForm()
     countries = Country.query.all()
     if form.validate_on_submit():
-        country = Country(country_name = form.country_name.data)
+        country = Country(country_name=form.country_name.data)
         db.session.add(country)
         db.session.commit()
-    
+
     if form.cancel.data:
         return render_template("admin_page.html")
     return render_template("countries.html", form=form, countries=countries)

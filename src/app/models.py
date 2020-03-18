@@ -27,12 +27,22 @@ class User(UserMixin, db.Model):
     def set_client_name(self, client_name):
         self.client_name = client_name
 
+
 class Country(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     country_name = db.Column(db.String(64), index=True, unique=True)
+    city = db.relationship('City', backref='country', lazy='dynamic')
     
     def __repr__(self):
         return "<User {}>".format(self.country_name)
+
+
+class City(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    zip_code = db.Column(db.Integer, index=True, unique=True)
+    city_name = db.Column(db.String(64), index=True)
+    country_id = db.Column(db.Integer, db.ForeignKey("country.id"))
+
 
 @login.user_loader
 def load_user(id):

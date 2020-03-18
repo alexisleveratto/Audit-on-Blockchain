@@ -140,6 +140,7 @@ class AddTransaccionForm(FlaskForm):
     submit = SubmitField("Grabar Transaccion")
     cancel = SubmitField("Cancelar")
 
+
 class AddCountryForm(FlaskForm):
     country_name = StringField("Nombre", validators=[DataRequired()])
     submit = SubmitField("Agregar")
