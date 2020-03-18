@@ -4,12 +4,14 @@
     <h1>Hola, {{ current_user.username }}!</h1>
     <form action="" method="POST">
         {{ form.hidden_tag() }}
+        {{% if current_user.role == "Audit"% }}
         <p>
             {{ form.RegistrarCliente(size=32) }}<br>
             {% for error in form.RegistrarCliente.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        {{% endif %}}
         <p>
             {{ form.GestionarClientes(size=32) }}<br>
             {% for error in form.GestionarClientes.errors %}

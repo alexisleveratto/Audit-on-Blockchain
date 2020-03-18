@@ -9,10 +9,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     hashCode = db.Column(db.String(120))
-
-    roles = db.relationship(
-        "Role", secondary="user_roles", backref=db.backref("users", lazy="dynamic")
-    )
+    role = db.Column(db.String(50), unique=False)
 
     def __repr__(self):
         return "<User {}>".format(self.username)
@@ -23,14 +20,8 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-
-# Define the Role DataModel
-class Role(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(50), unique=True)
-
-    def __repr__(self):
-        return "<Role {}>".format(self.name)
+    def ser_role(self, role):
+        self.role = role
 
 
 @login.user_loader
