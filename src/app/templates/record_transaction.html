@@ -70,6 +70,8 @@
     </p>
     <p><a href="javascript:UploadFactura(this)">Subir Factura</a></p>
     <p>{{ form.submit() }}</p>
+    <button type="button" onclick="UploadTransaction(this)">Subir .xsl</button>
+    <br>
     <p>{{ form.cancel() }}</p>
 </form>
 
@@ -97,7 +99,7 @@
     </div>
 </div>
 
-<button type="button" onclick="UploadTransaction(this)">Subir .xsl</button>
+
 
 <script src="/static/js/record_transaction.js"></script>
 <script type="text/javascript">

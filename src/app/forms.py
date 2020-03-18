@@ -63,9 +63,10 @@ class ChangePasswordForm(FlaskForm):
     submit = SubmitField("Cambiar Contraseña")
 
 
-class AuditIndexForm(FlaskForm):
+class IndexForm(FlaskForm):
     RegistrarCliente = SubmitField("Registrar Cliente")
     GestionarClientes = SubmitField("Gestionar Clientes")
+    ClientMainPage = SubmitField("Tu Cuenta")
 
 
 class VerifyClientForm(FlaskForm):

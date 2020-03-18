@@ -1,10 +1,10 @@
 from app import app, db, posta
 from app.forms import (
     AddTransaccionForm,
-    AuditIndexForm,
     ChangePasswordForm,
     ClientPageForm,
     EmailForm,
+    IndexForm,
     LoginForm,
     ModifyClientForm,
     PasswordForm,
@@ -32,12 +32,15 @@ from werkzeug.utils import secure_filename
 @login_required
 def index():
     title = "Menu Principal"
-    form = AuditIndexForm()
+    form = IndexForm()
     if form.validate_on_submit():
         if form.RegistrarCliente.data:
             return redirect(url_for("verify_client"))
         if form.GestionarClientes.data:
             return redirect(url_for("client_table"))
+        if form.ClientMainPage.data:
+            user = User.query.filter_by(username=current_user.username).first()
+            return redirect(url_for("client_page", client_id=user.username))
     return render_template("index.html", title=title, form=form)
 
 
@@ -179,10 +182,12 @@ def new_client():
     if not form.client_provincia.data:
         form.client_provincia.data = AfipManager.client_provincia
     if form.validate_on_submit():
-        # user = User(username=form.cuit.data, email=form.client_email.data)
-        # user.set_password(str(form.cuit.data))
-        # db.session.add(user)
-        # db.session.commit()
+        user = User(username=form.cuit.data, email=form.client_email.data)
+        user.set_password(str(form.cuit.data))
+        user.set_role("Client")
+        user.set_client_name(client_name=form.client_name.data)
+        db.session.add(user)
+        db.session.commit()
         client = Cliente(
             client_cuit=form.cuit.data,
             client_name=form.client_name.data,

@@ -32,8 +32,10 @@
     </tbody>
 </table>
 <br>
+{% if current_user.role == "Audit" %}
 <button type="button" onclick="UploadResults(this)">Subir Resultados</button>
 <br>
+{% endif %}
 <button type="button" onclick="exportTableToExcel('TransactionTable', 'libro-mayor - ' + {{ client_id }})">Descargar Libro Mayor</button>
 <br>
 
