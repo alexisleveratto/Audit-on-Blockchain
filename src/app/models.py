@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
 
     def set_role(self, role):
         self.role = role
-    
+
     def set_client_name(self, client_name):
         self.client_name = client_name
 

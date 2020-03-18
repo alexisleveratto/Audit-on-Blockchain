@@ -22,5 +22,7 @@ class Config(object):
     UPLOAD_AUDIT_FOLDER = os.environ.get("UPLOAD_AUDIT_FOLDER") or os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "app/audit_results"
     )
-    UPLOAD_DOC_FOLDER = os.environ.get("UPLOAD_DOC_FOLDER") or os.path.join(os.path.dirname(os.path.abspath(__file__)), "app/transactions_documentation")
+    UPLOAD_DOC_FOLDER = os.environ.get("UPLOAD_DOC_FOLDER") or os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "app/transactions_documentation"
+    )
     MAX_CONTENT_LENGTH = os.environ.get("MAX_CONTENT_LENGTH") or 16 * 1024 * 1024

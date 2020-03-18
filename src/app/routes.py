@@ -16,7 +16,14 @@ from app.models import User
 from app.utilsfunctions import allowed_file, get_random_string
 from .classes import AfipManager, BlockchainManager, TransaccionManager
 from .classes.cliente import Cliente
-from flask import flash, redirect, render_template, request, send_from_directory, url_for
+from flask import (
+    flash,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    url_for,
+)
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 import json
@@ -229,7 +236,9 @@ def client_page(client_id):
             return redirect(url_for("modify_client", client_id=client_id))
     if form.cancel.data:
         return redirect(url_for("index"))
-    return render_template("client_page.html", client=client, form=form, results=results)
+    return render_template(
+        "client_page.html", client=client, form=form, results=results
+    )
 
 
 @app.route("/clients/<string:client_id>/modify", methods=["GET", "POST"])
@@ -335,7 +344,10 @@ def transaction_table(client_id):
     if os.path.isdir(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id)):
         documentation = True
     return render_template(
-        "transactions_table.html", transactions=transactions, client_id=client_id, documentation=documentation
+        "transactions_table.html",
+        transactions=transactions,
+        client_id=client_id,
+        documentation=documentation,
     )
 
 
@@ -355,13 +367,19 @@ def upload_audit_results(client_id):
             flash("No se seleccionó ningún archivo")
             return redirect(request.url)
         client_id_folder = secure_filename(client_id)
-        if not os.path.isdir(os.path.join(app.config["UPLOAD_AUDIT_FOLDER"], client_id_folder)):
-            os.mkdir(os.path.join(app.config["UPLOAD_AUDIT_FOLDER"], client_id_folder) + "/")
+        if not os.path.isdir(
+            os.path.join(app.config["UPLOAD_AUDIT_FOLDER"], client_id_folder)
+        ):
+            os.mkdir(
+                os.path.join(app.config["UPLOAD_AUDIT_FOLDER"], client_id_folder) + "/"
+            )
 
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(
-                os.path.join(os.path.join(app.config["UPLOAD_AUDIT_FOLDER"], client_id), filename)
+                os.path.join(
+                    os.path.join(app.config["UPLOAD_AUDIT_FOLDER"], client_id), filename
+                )
             )
             flash("Documento Guardado con Exito")
     return redirect(url_for("transaction_table", client_id=client_id))
@@ -408,15 +426,14 @@ def upload_documentation(client_id):
     client_id_folder = secure_filename(client_id)
     if not os.path.isdir(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id)):
         client_id_folder = secure_filename(client_id)
-        os.makedirs(
-            os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder)
-        )
+        os.makedirs(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder))
     filename = ""
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(
             os.path.join(
-                os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder), filename
+                os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder),
+                filename,
             )
         )
         flash("Factura Guardada con Exito")
@@ -427,26 +444,36 @@ def upload_documentation(client_id):
         url_for("record_transaction", client_id=client_id, filename=filename)
     )
 
+
 @app.route("/clients/<string:client_id>/download_results", methods=["GET"])
 @login_required
 def downlad_results(client_id):
     client_id_folder = secure_filename(client_id)
-    RESULTS_CLIENT_AUDIT_FOLDER = os.path.join(app.config["UPLOAD_AUDIT_FOLDER"], client_id_folder)
+    RESULTS_CLIENT_AUDIT_FOLDER = os.path.join(
+        app.config["UPLOAD_AUDIT_FOLDER"], client_id_folder
+    )
     ZIP_NAME = "resultados_" + str(client_id) + ".zip"
     zf = ZipFile(os.path.join(app.config["UPLOAD_AUDIT_FOLDER"], ZIP_NAME), mode="w")
-    for entry in  os.listdir(RESULTS_CLIENT_AUDIT_FOLDER):
+    for entry in os.listdir(RESULTS_CLIENT_AUDIT_FOLDER):
         zf.write(os.path.join(RESULTS_CLIENT_AUDIT_FOLDER, entry))
     zf.close()
-    return send_from_directory(directory=app.config["UPLOAD_AUDIT_FOLDER"], filename=ZIP_NAME)
+    return send_from_directory(
+        directory=app.config["UPLOAD_AUDIT_FOLDER"], filename=ZIP_NAME
+    )
+
 
 @app.route("/clients/<string:client_id>/download_docs", methods=["GET"])
 @login_required
 def download_docs(client_id):
     client_id_folder = secure_filename(client_id)
-    DOCS_CLIENT_AUDIT_FOLDER = os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder)
+    DOCS_CLIENT_AUDIT_FOLDER = os.path.join(
+        app.config["UPLOAD_DOC_FOLDER"], client_id_folder
+    )
     ZIP_NAME = "docs_" + str(client_id) + ".zip"
     zf = ZipFile(os.path.join(app.config["UPLOAD_DOC_FOLDER"], ZIP_NAME), mode="w")
-    for entry in  os.listdir(DOCS_CLIENT_AUDIT_FOLDER):
+    for entry in os.listdir(DOCS_CLIENT_AUDIT_FOLDER):
         zf.write(os.path.join(DOCS_CLIENT_AUDIT_FOLDER, entry))
     zf.close()
-    return send_from_directory(directory=app.config["UPLOAD_DOC_FOLDER"], filename=ZIP_NAME)
+    return send_from_directory(
+        directory=app.config["UPLOAD_DOC_FOLDER"], filename=ZIP_NAME
+    )
