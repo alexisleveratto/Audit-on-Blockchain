@@ -94,3 +94,21 @@ class Cliente:
 
     def delete_cliente(self):
         BlockchainManager.delete("/Compania", self.companiaId)
+
+    def set_descripcion(self, descripcion):
+        self.descripcion = descripcion
+
+    def get_cliente(self):
+        return self.companiaId
+
+    def set_auditor(self, id_auditor):
+        self.id_auditor = id_auditor
+
+    def get_auditr(self):
+        return self.id_auditor
+
+    def set_ciudad(self, id_ciudad):
+        self.id_ciudad = id_ciudad
+
+    def get_ciudad(self):
+        return self.id_ciudad

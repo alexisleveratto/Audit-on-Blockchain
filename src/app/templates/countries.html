@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/table.css">
+</head>
+<h1>Paises</h1>
+<table style="width:100%">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+    </tr>
+    <tbody>
+        {% for country in countries %}
+        <tr>
+            <td title="{{ country.id }}">{{ country.id }}</td>
+            <td title="{{ country.country_name }}">{{ country.country_name }}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+
+    <p>
+        {{ form.country_name.label }}<br>
+        {{ form.country_name(size=32) }}<br>
+        {% for error in form.country_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+    <p>{{ form.cancel() }}</p>
+</form>
+{% endblock %}

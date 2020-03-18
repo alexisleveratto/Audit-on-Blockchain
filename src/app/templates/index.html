@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    {% if current_user.role == "Audit" %}
-    <h1> {{ current_user.username }}</h1>
+    {% if current_user.role == "Client" %}
+    <h1> {{ current_user.client_name }}</h1>
     {% else %}
-    <h1> {{ current_user.client_name }}!</h1>
+    <h1> {{ current_user.username }}!</h1>
     {% endif %}
     <form action="" method="POST">
         {{ form.hidden_tag() }}
@@ -26,6 +26,14 @@
         <p>
             {{ form.ClientMainPage(size=32) }}<br>
             {% for error in form.ClientMainPage.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% if current_user.role == "Admin" %}
+        <p>
+            {{ form.ManagerPage(size=32) }}<br>
+            {% for error in form.ManagerPage.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>

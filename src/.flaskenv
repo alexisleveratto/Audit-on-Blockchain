@@ -1,1 +1,1 @@
-FLASK_APP=blockchainaudit.py
+FLASK_APP=src/blockchainaudit.py

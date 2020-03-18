@@ -67,6 +67,7 @@ class IndexForm(FlaskForm):
     RegistrarCliente = SubmitField("Registrar Cliente")
     GestionarClientes = SubmitField("Gestionar Clientes")
     ClientMainPage = SubmitField("Tu Cuenta")
+    ManagerPage = SubmitField("Administrar Sitio")
 
 
 class VerifyClientForm(FlaskForm):
@@ -137,4 +138,9 @@ class AddTransaccionForm(FlaskForm):
         "Factura", validators=[DataRequired()], render_kw={"disabled": ""},
     )
     submit = SubmitField("Grabar Transaccion")
+    cancel = SubmitField("Cancelar")
+
+class AddCountryForm(FlaskForm):
+    country_name = StringField("Nombre", validators=[DataRequired()])
+    submit = SubmitField("Agregar")
     cancel = SubmitField("Cancelar")

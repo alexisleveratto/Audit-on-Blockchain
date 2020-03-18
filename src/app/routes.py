@@ -1,5 +1,6 @@
 from app import app, db, posta
 from app.forms import (
+    AddCountryForm,
     AddTransaccionForm,
     ChangePasswordForm,
     ClientPageForm,
@@ -12,7 +13,7 @@ from app.forms import (
     RegistrationForm,
     VerifyClientForm,
 )
-from app.models import User
+from app.models import Country, User
 from app.utilsfunctions import allowed_file, get_random_string
 from .classes import AfipManager, BlockchainManager, TransaccionManager
 from .classes.cliente import Cliente
@@ -49,6 +50,8 @@ def index():
         if form.ClientMainPage.data:
             user = User.query.filter_by(username=current_user.username).first()
             return redirect(url_for("client_page", client_id=user.username))
+        if form.ManagerPage.data:
+            return render_template("admin_page.html")
     return render_template("index.html", title=title, form=form)
 
 
@@ -477,3 +480,17 @@ def download_docs(client_id):
     return send_from_directory(
         directory=app.config["UPLOAD_DOC_FOLDER"], filename=ZIP_NAME
     )
+
+@app.route("/countries", methods=["GET", "POST"])
+@login_required
+def countries():
+    form = AddCountryForm()
+    countries = Country.query.all()
+    if form.validate_on_submit():
+        country = Country(country_name = form.country_name.data)
+        db.session.add(country)
+        db.session.commit()
+    
+    if form.cancel.data:
+        return render_template("admin_page.html")
+    return render_template("countries.html", form=form, countries=countries)
