@@ -281,7 +281,9 @@ def modify_client(client_id):
 @app.route("/clients/<string:client_id>/delete", methods=["GET", "POST"])
 @login_required
 def delete_client(client_id):
-    # DO SOME DB SHIT HERE
+    user = User.query.filter_by(username=client_id).first()
+    db.session.delete(user)
+    db.session.commit()
     BlockchainManager.delete(ns_name="/Compania", id=str("/" + client_id))
     return redirect(url_for("client_table"))
 
