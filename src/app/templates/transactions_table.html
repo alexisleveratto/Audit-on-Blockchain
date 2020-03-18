@@ -33,6 +33,10 @@
 </table>
 <br>
 {% if current_user.role == "Audit" %}
+{% if documentation %}
+<p><a href="{{ url_for('download_docs', client_id=client_id) }}">Descargar Facturas</a></p>
+<br>
+{% endif %}
 <button type="button" onclick="UploadResults(this)">Subir Resultados</button>
 <br>
 {% endif %}
