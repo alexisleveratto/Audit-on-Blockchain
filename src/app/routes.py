@@ -516,3 +516,4 @@ def cities():
     if form.cancel.data:
         return render_template("admin_page.html")
     return render_template("cities.html", form=form, cities=cities)
+
