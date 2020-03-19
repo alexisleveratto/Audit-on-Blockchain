@@ -15,7 +15,7 @@ from app.forms import (
     RegistrationForm,
     VerifyClientForm,
 )
-from app.models import City, Country, User
+from app.models import City, Country, Office, User
 from app.utilsfunctions import allowed_file, get_random_string
 from .classes import AfipManager, BlockchainManager, TransaccionManager
 from .classes.cliente import Cliente
@@ -508,12 +508,27 @@ def cities():
     ]
     cities = City.query.all()
     if form.validate_on_submit():
-        city_country = Country.query.filter_by(id=form.country_name.data).first()
+        country_city = Country.query.filter_by(id=form.country_name.data).first()
         city = City(zip_code=form.zip_code.data, city_name=form.city_name.data)
-        city.country = city_country
+        city.country = country_city
         db.session.add(city)
         db.session.commit()
     if form.cancel.data:
         return render_template("admin_page.html")
     return render_template("cities.html", form=form, cities=cities)
 
+@app.route("/offices", methods=["GET", "POST"])
+@login_required
+def offices():
+    form = AddOfficeForm()
+    form.city_name.choices = [(city.id, city.city_name) for city in City.query.all()]
+    offices = Office.query.all()
+    if form.validate_on_submit():
+        city_office = City.query.filter_by(id=form.city_name.data).first()
+        office = Office(address=form.address.data)
+        office.city = city_office
+        db.session.add(office)
+        db.session.commit()
+    if form.cancel.data:
+        return render_template("admin_page.html")
+    return render_template("offices.html", form=form, offices=offices)
