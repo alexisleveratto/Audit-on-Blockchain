@@ -9,6 +9,7 @@ from wtforms import (
     TextField,
     RadioField,
     IntegerField,
+    SelectField,
 )
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
@@ -142,6 +143,23 @@ class AddTransaccionForm(FlaskForm):
 
 
 class AddCountryForm(FlaskForm):
-    country_name = StringField("Nombre", validators=[DataRequired()])
+    country_name = StringField("Nombre Pais", validators=[DataRequired()])
+    submit = SubmitField("Agregar")
+    cancel = SubmitField("Cancelar")
+
+
+class AddCityForm(FlaskForm):
+    zip_code = StringField("Codigo Postal", validators=[DataRequired()])
+    city_name = StringField("Nombre Ciudad", validators=[DataRequired()])
+    country_name = SelectField(
+        "Nombre Pais", coerce=int, choices=[], validators=[DataRequired()]
+    )
+    submit = SubmitField("Agregar")
+    cancel = SubmitField("Cancelar")
+
+
+class AddOfficeForm(FlaskForm):
+    address = StringField("Direccion Oficina", validators=[DataRequired()])
+    city_id = SelectField("Ciudad", coerce=int, choices=[], validators=[DataRequired()])
     submit = SubmitField("Agregar")
     cancel = SubmitField("Cancelar")

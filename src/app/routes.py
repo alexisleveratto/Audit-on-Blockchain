@@ -1,6 +1,8 @@
 from app import app, db, posta
 from app.forms import (
+    AddCityForm,
     AddCountryForm,
+    AddOfficeForm,
     AddTransaccionForm,
     ChangePasswordForm,
     ClientPageForm,
@@ -13,7 +15,7 @@ from app.forms import (
     RegistrationForm,
     VerifyClientForm,
 )
-from app.models import Country, User
+from app.models import City, Country, User
 from app.utilsfunctions import allowed_file, get_random_string
 from .classes import AfipManager, BlockchainManager, TransaccionManager
 from .classes.cliente import Cliente
@@ -495,3 +497,22 @@ def countries():
     if form.cancel.data:
         return render_template("admin_page.html")
     return render_template("countries.html", form=form, countries=countries)
+
+
+@app.route("/cities", methods=["GET", "POST"])
+@login_required
+def cities():
+    form = AddCityForm()
+    form.country_name.choices = [
+        (country.id, country.country_name) for country in Country.query.all()
+    ]
+    cities = City.query.all()
+    if form.validate_on_submit():
+        city_country = Country.query.filter_by(id=form.country_name.data).first()
+        city = City(zip_code=form.zip_code.data, city_name=form.city_name.data)
+        city.country = city_country
+        db.session.add(city)
+        db.session.commit()
+    if form.cancel.data:
+        return render_template("admin_page.html")
+    return render_template("cities.html", form=form, cities=cities)
