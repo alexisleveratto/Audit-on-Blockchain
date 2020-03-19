@@ -31,8 +31,8 @@ class User(UserMixin, db.Model):
 class Country(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     country_name = db.Column(db.String(64), index=True, unique=True)
-    city = db.relationship('City', backref='country', lazy='dynamic')
-    
+    city = db.relationship("City", backref="country", lazy="dynamic")
+
     def __repr__(self):
         return "<User {}>".format(self.country_name)
 
@@ -42,6 +42,13 @@ class City(UserMixin, db.Model):
     zip_code = db.Column(db.Integer, index=True, unique=True)
     city_name = db.Column(db.String(64), index=True)
     country_id = db.Column(db.Integer, db.ForeignKey("country.id"))
+    office = db.relationship("Office", backref="city", lazy="dynamic")
+
+
+class Office(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    address = db.Column(db.String(128), index=True, unique=True)
+    city_id = db.Column(db.Integer, db.ForeignKey("city.id"))
 
 
 @login.user_loader
