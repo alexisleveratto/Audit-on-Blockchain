@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<form>
+<form action="" method="POST">
+    {{ form.hidden_tag() }}
     <h1>{{ client.companiaName }}</h1>
     <hr>
     <p> CUIT: {{ client.companiaId }} </p>

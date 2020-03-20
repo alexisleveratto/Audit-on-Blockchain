@@ -4,7 +4,7 @@
     {% if current_user.role == "Client" %}
     <h1> {{ current_user.client_name }}</h1>
     {% else %}
-    <h1> {{ current_user.username }}!</h1>
+    <h1> {{ current_user.username }}</h1>
     {% endif %}
     <form action="" method="POST">
         {{ form.hidden_tag() }}

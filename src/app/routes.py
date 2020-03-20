@@ -114,7 +114,8 @@ def forgot():
                 recipients=[mail],
             )
             msg.body = (
-                "Hello,\nWe've received a request to reset your password. If you want to reset your password, click the link below and enter your new password\n http://127.0.0.1:5000/"
+                # "Hello,\nWe've received a request to reset your password. If you want to reset your password, click the link below and enter your new password\n http://127.0.0.1:5000/"
+                "Recibimos su pedido de cambio de contraseña. Si desea hacerlo, haga clic en el siguiente link e ingrese su nueva contraseña\n http://127.0.0.1:5000/"
                 + check_mail.hashCode
             )
             posta.send(msg)
