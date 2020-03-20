@@ -23,11 +23,34 @@
             <td title="{{ cliente.companiaAddres }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaAddres }}</td>
             <td title="{{ cliente.companiaConutry }}">{{ cliente.companiaConutry }}</td>
             <td title="{{ cliente.companiaBalance }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaBalance }}</td>
-            <td title="Action">{{ cliente.companiaBalance }}</td>
+            <td>
+                <a title="Modificar" href="{{ url_for('modify_client', client_id=cliente.companiaId) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a title="Eliminar" href="" onclick="ConfirmDelete(this)"><span class="glyphicon glyphicon-trash"></span></a>
+            </td>
         </tr>
+
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="text-align:center;">
+                        <h4 class="modal-title" id="deleteModalLabel">Desea Eliminar el cliente {{ cliente.companiaName }}</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary"><a style="color:white;" href="{{ url_for('delete_client', client_id=cliente.companiaId) }}" method="POST">Eliminar</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endfor %}
     </tbody>
 </table>
+
+<script>
+    function ConfirmDelete(elm){
+        $('#deleteModal').modal();
+    }
+</script>
 <script src="/static/js/client_table.js"></script>
 
 {% endblock %}

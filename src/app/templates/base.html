@@ -26,14 +26,34 @@
                 <li><a href="{{ url_for('login') }}">Iniciar Sesion</a></li>
               {% else %}
                 <li><a href="{{ url_for('change') }}">Cambiar Contraseña</a></li>  
-                <li><a href="{{ url_for('logout') }}">Cerrar Sesion</a></li>
+                <!-- <li><a href="{{ url_for('logout') }}">Cerrar Sesion</a></li> -->
+                <li><a onclick="ConfirmCloseSession(this)">Cerrar Sesion</a></li>
               {% endif %}
             </ul>
         </div>
-    </div>
-      
+      </div>
     </div>
   </nav>
+
+  <div class="modal fade" id="closeSessionModal" tabindex="-1" role="dialog" aria-labelledby="closeSessionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align:center;">
+                <h4 class="modal-title" id="closeSessionModalLabel">Cerrar Sesión?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary"><a style="color:white;" href="{{ url_for('logout') }}" method="POST">Aceptar</a></button>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  <script>
+    function ConfirmCloseSession(elm){
+        $('#closeSessionModal').modal();
+    }
+  </script>
 {% endblock %}
 {% block content %}
 <div class="container">

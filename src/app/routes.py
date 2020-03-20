@@ -314,7 +314,7 @@ def delete_client(client_id):
     methods=["GET", "POST"],
 )
 @login_required
-def record_transaction(client_id, filename=""):
+def record_transaction(client_id, filename=None):
     form = AddTransaccionForm()
     form.documentation.data = filename
     if form.validate_on_submit():
@@ -332,10 +332,18 @@ def record_transaction(client_id, filename=""):
             form.fecha_movimiento.data,
             form.monto.data,
         )
+        # CREATE TRANSACTION DOC FOLDER
+        client_id_folder = secure_filename(client_id)
+        transaction_folder = os.path.join(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder), added_transaction["transactionId"])
+        if not os.path.isdir(transaction_folder):
+            os.makedirs(transaction_folder)
+        # Move file
+        file_current_path = os.path.join(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder), filename)
+        file_new_path = os.path.join(transaction_folder, filename)
+        os.rename(file_current_path, file_new_path)
+
         flash("Transaccion Agregada con el ID " + added_transaction["transactionId"])
-        return render_template(
-            "record_transaction.html", form=form, client_id=client_id
-        )
+        return redirect(url_for("client_page", client_id=client_id))
     if form.cancel.data:
         return redirect(url_for("index"))
 
@@ -430,8 +438,7 @@ def upload_documentation(client_id):
         return redirect(request.url)
 
     client_id_folder = secure_filename(client_id)
-    if not os.path.isdir(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id)):
-        client_id_folder = secure_filename(client_id)
+    if not os.path.isdir(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder)):
         os.makedirs(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder))
     filename = ""
     if file and allowed_file(file.filename):
