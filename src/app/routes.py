@@ -334,11 +334,16 @@ def record_transaction(client_id, filename=None):
         )
         # CREATE TRANSACTION DOC FOLDER
         client_id_folder = secure_filename(client_id)
-        transaction_folder = os.path.join(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder), added_transaction["transactionId"])
+        transaction_folder = os.path.join(
+            os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder),
+            added_transaction["transactionId"],
+        )
         if not os.path.isdir(transaction_folder):
             os.makedirs(transaction_folder)
         # Move file
-        file_current_path = os.path.join(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder), filename)
+        file_current_path = os.path.join(
+            os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder), filename
+        )
         file_new_path = os.path.join(transaction_folder, filename)
         os.rename(file_current_path, file_new_path)
 
@@ -438,7 +443,9 @@ def upload_documentation(client_id):
         return redirect(request.url)
 
     client_id_folder = secure_filename(client_id)
-    if not os.path.isdir(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder)):
+    if not os.path.isdir(
+        os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder)
+    ):
         os.makedirs(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder))
     filename = ""
     if file and allowed_file(file.filename):
@@ -524,6 +531,7 @@ def cities():
     if form.cancel.data:
         return render_template("admin_page.html")
     return render_template("cities.html", form=form, cities=cities)
+
 
 @app.route("/offices", methods=["GET", "POST"])
 @login_required

@@ -160,6 +160,8 @@ class AddCityForm(FlaskForm):
 
 class AddOfficeForm(FlaskForm):
     address = StringField("Direccion Oficina", validators=[DataRequired()])
-    city_name = SelectField("Ciudad", coerce=int, choices=[], validators=[DataRequired()])
+    city_name = SelectField(
+        "Ciudad", coerce=int, choices=[], validators=[DataRequired()]
+    )
     submit = SubmitField("Agregar")
     cancel = SubmitField("Cancelar")
