@@ -1,10 +1,12 @@
 from app.models import User
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileRequired
 from wtforms import (
     StringField,
     PasswordField,
     BooleanField,
     SubmitField,
+    FileField,
     FloatField,
     TextField,
     RadioField,
@@ -165,3 +167,36 @@ class AddOfficeForm(FlaskForm):
     )
     submit = SubmitField("Agregar")
     cancel = SubmitField("Cancelar")
+
+
+class XslTransactionsForm(FlaskForm):
+    file_path = FileField(
+        "Hoja de Cálcuĺo",
+        validators=[
+            FileRequired(),
+            FileAllowed(
+                [
+                    "xlsx",
+                    "xlsm",
+                    "xlsb",
+                    "xltx",
+                    "xltm",
+                    "xls",
+                    "xlt",
+                    "xml",
+                    "xlam",
+                    "xlw",
+                    "csv",
+                ],
+                "Hoja de calculo",
+            ),
+        ],
+    )
+    zip_file_path = FileField(
+        "Facturas",
+        validators=[
+            FileRequired(),
+            FileAllowed(["jpg", "png", "zip", "pdf"], "No es una extension válida"),
+        ],
+    )
+    submit = SubmitField("Subir")

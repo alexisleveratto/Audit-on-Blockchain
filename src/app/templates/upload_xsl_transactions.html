@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>Subir Hoja de Cálculo de Transacciones</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <small></small> <br>
+        <p>
+            {{ form.file_path.label }}<br>
+            {{ form.file_path(size=64) }}<br>
+            {% for error in form.file_path.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.zip_file_path.label }}<br>
+            {{ form.zip_file_path(size=64) }}<br>
+            {% for error in form.zip_file_path.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

@@ -14,6 +14,7 @@ from app.forms import (
     RegisterClientForm,
     RegistrationForm,
     VerifyClientForm,
+    XslTransactionsForm,
 )
 from app.models import City, Country, Office, User
 from app.utilsfunctions import allowed_file, get_random_string
@@ -404,27 +405,32 @@ def upload_audit_results(client_id):
     return redirect(url_for("transaction_table", client_id=client_id))
 
 
-@app.route("/clients/<string:client_id>/upload-transactions", methods=["POST"])
+@app.route("/clients/<string:client_id>/upload-transactions", methods=["GET", "POST"])
 @login_required
 def upload_transactions(client_id):
-    raw_data = request.files["file"].read()
-    dataset = Dataset().load(raw_data)
-    transactions = json.loads(dataset.export("json"))
-    client = BlockchainManager.getSingle(ns_name="/Compania", id=str("/" + client_id))
-    for transaction in transactions:
-        TransaccionManager.add_transaccion(
-            client,
-            transaction["codigo_cuenta"],
-            transaction["nombre_cuenta"],
-            transaction["D_H"],
-            transaction["numero_minuta"],
-            transaction["concepto"],
-            transaction["detalle"],
-            transaction["fecha_movimiento"],
-            transaction["monto"],
+    form = XslTransactionsForm()
+    if form.validate_on_submit():
+        # raw_data = request.files["file"].read()
+        raw_data = form.file_path.data.read()
+        dataset = Dataset().load(raw_data)
+        transactions = json.loads(dataset.export("json"))
+        client = BlockchainManager.getSingle(
+            ns_name="/Compania", id=str("/" + client_id)
         )
-
-    return redirect(url_for("transaction_table", client_id=client_id))
+        for transaction in transactions:
+            TransaccionManager.add_transaccion(
+                client,
+                transaction["codigo_cuenta"],
+                transaction["nombre_cuenta"],
+                transaction["D_H"],
+                transaction["numero_minuta"],
+                transaction["concepto"],
+                transaction["detalle"],
+                transaction["fecha_movimiento"],
+                transaction["monto"],
+            )
+        return redirect(url_for("transaction_table", client_id=client_id))
+    return render_template("upload_xsl_transactions.html", form=form)
 
 
 @app.route("/clients/<string:client_id>/documentation-transactions", methods=["POST"])
