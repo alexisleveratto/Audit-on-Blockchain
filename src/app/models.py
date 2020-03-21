@@ -45,7 +45,7 @@ class City(UserMixin, db.Model):
     city_name = db.Column(db.String(64), index=True)
     country_id = db.Column(db.Integer, db.ForeignKey("country.id"))
     office = db.relationship("Office", backref="city", lazy="dynamic")
-    
+
     def __repr__(self):
         return "<City {}>".format(self.city_name)
 
@@ -58,6 +58,7 @@ class Office(UserMixin, db.Model):
     def __repr__(self):
         return "<Office {}>".format(self.address)
 
+
 class Contract(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fee = db.Column(db.Float, index=True)
@@ -67,8 +68,6 @@ class Contract(UserMixin, db.Model):
 
     def __repr__(self):
         return "<Contract {}>".format(self.init_date)
-
-
 
 
 @login.user_loader

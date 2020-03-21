@@ -554,3 +554,11 @@ def offices():
     if form.cancel.data:
         return render_template("admin_page.html")
     return render_template("offices.html", form=form, offices=offices)
+
+
+@app.route("/download-example-sheet", methods=["GET"])
+@login_required
+def download_sheet():
+    return send_from_directory(
+        directory=app.config["EXAMPLE_FOLDER"], filename="hoja de transacciones.xls"
+    )

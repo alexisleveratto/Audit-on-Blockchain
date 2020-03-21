@@ -4,4 +4,11 @@ from app.models import City, Country, Contract, Office, User
 
 @app.shell_context_processor
 def make_shell_context():
-    return {"db": db, "City": City, "Country": Country, "Contract": Contract, "Office": Office, "User": User}
+    return {
+        "db": db,
+        "City": City,
+        "Country": Country,
+        "Contract": Contract,
+        "Office": Office,
+        "User": User,
+    }

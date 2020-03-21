@@ -4,7 +4,20 @@
     <h1>Subir Hoja de Cálculo de Transacciones</h1>
     <form action="" method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <small></small> <br>
+
+        <p>Asegurese que la hoja de cálculo que suba tenga los siguientes nombres de columnas:</p>
+        <ul>
+            <li>codigo_cuenta</li>
+            <li>nombre_cuenta</li>
+            <li>D_H</li>
+            <li>numero_minuta</li>
+            <li>concepto</li>
+            <li>detalle</li>
+            <li>fecha_movimiento</li>
+            <li>monto</li>
+        </ul>
+        <small>Descargar una hoja de cálculo de ejemplo</small> <br>
+        <p><a href="{{ url_for('download_sheet')}}">Descargar</a></p>
         <p>
             {{ form.file_path.label }}<br>
             {{ form.file_path(size=64) }}<br>

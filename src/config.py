@@ -25,4 +25,7 @@ class Config(object):
     UPLOAD_DOC_FOLDER = os.environ.get("UPLOAD_DOC_FOLDER") or os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "app/transactions_documentation"
     )
+    EXAMPLE_FOLDER = os.environ.get("EXAMPLE_FOLDER") or os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "app/example_sheet"
+    )
     MAX_CONTENT_LENGTH = os.environ.get("MAX_CONTENT_LENGTH") or 16 * 1024 * 1024
