@@ -15,6 +15,7 @@
         <th>Detalle</th>
         <th>Fecha Movimiento</th>
         <th>Monto</th>
+        <th>Factura</th>
     </tr>
     <tbody>
         {% for transaction in transactions %}
@@ -27,6 +28,7 @@
             <td title="{{ transaction.detalle }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ transaction.detalle }}</td>
             <td title="{{ transaction.fecha_movimiento }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ transaction.fecha_movimiento }}</td>
             <td title="{{ transaction.monto }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ transaction.monto }}</td>
+            <td><a title="Descargar" href="{{ url_for('download_transaction_doc',  client_id=client_id, transaction_id=transaction.transactionId) }}"><span class="glyphicon glyphicon-download-alt"></span></a></td>
         </tr>
         {% endfor %}
     </tbody>

@@ -425,7 +425,6 @@ def upload_transactions(client_id):
             )
         )
 
-        # raw_data = request.files["file"].read()
         raw_data = form.file_path.data.read()
         dataset = Dataset().load(raw_data)
         transactions = json.loads(dataset.export("json"))
@@ -578,3 +577,16 @@ def download_sheet():
     return send_from_directory(
         directory=app.config["EXAMPLE_FOLDER"], filename="hoja de transacciones.xls"
     )
+
+@app.route("/<string:client_id>/download_documentation/<string:transaction_id>", methods=["GET"])
+@login_required
+def download_transaction_doc(client_id, transaction_id):
+    client_id_folder = secure_filename(client_id)
+    DOCS_CLIENT_AUDIT_FOLDER = os.path.join(
+        app.config["UPLOAD_DOC_FOLDER"], client_id_folder
+    )
+    TRANSACTION_FOLDER = os.path.join(DOCS_CLIENT_AUDIT_FOLDER, transaction_id)
+    for entry in os.listdir(TRANSACTION_FOLDER):
+        transaction_file = entry
+    return send_from_directory(directory=TRANSACTION_FOLDER, filename=transaction_file)
+
