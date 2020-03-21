@@ -410,6 +410,21 @@ def upload_audit_results(client_id):
 def upload_transactions(client_id):
     form = XslTransactionsForm()
     if form.validate_on_submit():
+        file = form.zip_file_path.data
+
+        client_id_folder = secure_filename(client_id)
+        if not os.path.isdir(
+            os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder)
+        ):
+            os.makedirs(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder))
+        filename = secure_filename(file.filename)
+        file.save(
+            os.path.join(
+                os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id_folder),
+                filename,
+            )
+        )
+
         # raw_data = request.files["file"].read()
         raw_data = form.file_path.data.read()
         dataset = Dataset().load(raw_data)
@@ -429,6 +444,7 @@ def upload_transactions(client_id):
                 transaction["fecha_movimiento"],
                 transaction["monto"],
             )
+            print(transaction["fecha_movimiento"])
         return redirect(url_for("transaction_table", client_id=client_id))
     return render_template("upload_xsl_transactions.html", form=form)
 
