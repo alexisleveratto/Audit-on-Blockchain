@@ -610,6 +610,7 @@ def accounts():
         return render_template("admin_page.html")
     return render_template("accounts.html", form=form, accounts=accounts)
 
+
 @app.route("/audits", methods=["GET", "POST"])
 @login_required
 def audits():
