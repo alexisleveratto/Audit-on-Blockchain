@@ -219,10 +219,12 @@ def new_client():
         )
         client.add_cliente()
         TransaccionManager.add_transaccion(
-            BlockchainManager.getSingle(ns_name="/Compania", id="/" + str(form.cuit.data)),
+            BlockchainManager.getSingle(
+                ns_name="/Compania", id="/" + str(form.cuit.data)
+            ),
             " - ",
             " - ",
-            'D',
+            "D",
             0,
             "Asiento Apertura Ejercicio",
             "Asiento Apertura Ejercicio",
@@ -336,7 +338,9 @@ def record_transaction(client_id, filename=None):
         (account.id, account.name_account) for account in Account.query.all()
     ]
     if form.validate_on_submit():
-        client = BlockchainManager.getSingle(ns_name="/Compania", id=str("/" + client_id))
+        client = BlockchainManager.getSingle(
+            ns_name="/Compania", id=str("/" + client_id)
+        )
         added_transaction = TransaccionManager.add_transaccion(
             client,
             form.nombre_cuenta.data,
