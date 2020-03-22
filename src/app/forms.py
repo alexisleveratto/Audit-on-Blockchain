@@ -12,6 +12,7 @@ from wtforms import (
     RadioField,
     IntegerField,
     SelectField,
+    DateField,
 )
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
@@ -135,7 +136,7 @@ class AddTransaccionForm(FlaskForm):
     numero_minuta = IntegerField("Numero Minuta", validators=[DataRequired()])
     concepto = StringField("Concepto", validators=[DataRequired()])
     detalle = StringField("Detalle", validators=[DataRequired()])
-    fecha_movimiento = StringField("Fecha Movimiento", validators=[DataRequired()])
+    fecha_movimiento = DateField("Fecha Movimiento", format='%d/%m/%Y', validators=[DataRequired()], render_kw={"placeholder": "dd/mm/AAAA"})
     monto = FloatField("Monto", validators=[DataRequired()])
     documentation = StringField(
         "Factura", validators=[DataRequired()], render_kw={"disabled": ""},

@@ -578,7 +578,11 @@ def download_sheet():
         directory=app.config["EXAMPLE_FOLDER"], filename="hoja de transacciones.xls"
     )
 
-@app.route("/<string:client_id>/download_documentation/<string:transaction_id>", methods=["GET"])
+
+@app.route(
+    "/<string:client_id>/download_documentation/<string:transaction_id>",
+    methods=["GET"],
+)
 @login_required
 def download_transaction_doc(client_id, transaction_id):
     client_id_folder = secure_filename(client_id)
@@ -589,4 +593,3 @@ def download_transaction_doc(client_id, transaction_id):
     for entry in os.listdir(TRANSACTION_FOLDER):
         transaction_file = entry
     return send_from_directory(directory=TRANSACTION_FOLDER, filename=transaction_file)
-
