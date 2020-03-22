@@ -92,6 +92,14 @@ class Cliente:
         )
         return response
 
+    def update_client_balance(self, amount):
+        self.companiaBalance += amount
+        payload = self.set_update_payload()
+        response = BlockchainManager.update(
+            ns_name="/Compania", id=str("/" + self.companiaId), payload=payload,
+        )
+        return response
+
     def delete_cliente(self):
         BlockchainManager.delete("/Compania", self.companiaId)
 
