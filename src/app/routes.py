@@ -320,14 +320,18 @@ def delete_client(client_id):
 def record_transaction(client_id, filename=None):
     form = AddTransaccionForm()
     form.documentation.data = filename
+    form.nombre_cuenta.choices = [
+        (account.id, account.name_account) for account in Account.query.all()
+    ]
     if form.validate_on_submit():
         client = BlockchainManager.getSingle(
             ns_name="/Compania", id=str("/" + client_id)
         )
         added_transaction = TransaccionManager.add_transaccion(
             client,
-            form.codigo_cuenta.data,
-            form.nombre_cuenta.data,
+            form.nombre_cuenta.data, 
+            Account.query.filter_by(id=form.nombre_cuenta.data).first().name_account,
+            # form.nombre_cuenta.data,
             form.d_h.data,
             form.numero_minuta.data,
             form.concepto.data,

@@ -7,16 +7,10 @@
     {{ form.hidden_tag() }}
     <p><a href="javascript:UploadFactura(this)">Subir Factura</a></p>
     <p><a href="{{ url_for('upload_transactions', client_id=client_id) }}">Subir .xsl</a></p>
-    <p>
-        {{ form.codigo_cuenta.label }}<br>
-        {{ form.codigo_cuenta(size=32) }}<br>
-        {% for error in form.codigo_cuenta.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
+    
     <p>
         {{ form.nombre_cuenta.label }}<br>
-        {{ form.nombre_cuenta(size=32) }}<br>
+        {{ form.nombre_cuenta }}<br>
         {% for error in form.nombre_cuenta.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
