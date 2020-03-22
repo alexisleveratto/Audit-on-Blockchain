@@ -219,7 +219,7 @@ def new_client():
         )
         client.add_cliente()
         TransaccionManager.add_transaccion(
-            BlockchainManager.getSingle(ns_name="/Compania", id=str("/" + form.cuit.data)),
+            BlockchainManager.getSingle(ns_name="/Compania", id="/" + str(form.cuit.data)),
             " - ",
             " - ",
             'D',
