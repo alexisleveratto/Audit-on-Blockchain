@@ -1,6 +1,7 @@
 from app import app, db, posta
 from app.forms import (
     AddAccountForm,
+    AddAuditForm,
     AddCityForm,
     AddCountryForm,
     AddOfficeForm,
@@ -608,3 +609,19 @@ def accounts():
     if form.cancel.data:
         return render_template("admin_page.html")
     return render_template("accounts.html", form=form, accounts=accounts)
+
+@app.route("/audits", methods=["GET", "POST"])
+@login_required
+def audits():
+    form = AddAuditForm()
+    audits = User.query.filter_by(role="Audit").all()
+    if form.validate_on_submit():
+        audit = User(username=form.username.data, email=form.email.data)
+        audit.set_password("audit")
+        audit.set_role("Audit")
+        db.session.add(audit)
+        db.session.commit()
+
+    if form.cancel.data:
+        return render_template("admin_page.html")
+    return render_template("audits.html", form=form, audits=audits)

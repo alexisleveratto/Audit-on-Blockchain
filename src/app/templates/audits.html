@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<h1>Ususarios</h1>
+<table style="width:100%">
+    <tr>
+        <th>Nombre de Usuario</th>
+        <th>Email</th>
+        <th>Rol</th>
+    </tr>
+    <tbody>
+        {% for audit in audits %}
+        <tr>
+            <td title="{{ audit.username }}">{{ audit.username }}</td>
+            <td title="{{ audit.email }}">{{ audit.email }}</td>
+            <td title="{{ audit.role }}">{{ audit.role }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<br>
+
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.username.label }}<br>
+        {{ form.username(size=32) }}<br>
+        {% for error in form.username.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email(size=32) }}<br>
+        {% for error in form.email.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+    <p>{{ form.cancel() }}</p>
+</form>
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+</style>
+{% endblock %}

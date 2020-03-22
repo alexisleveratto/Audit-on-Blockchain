@@ -180,6 +180,11 @@ class AddAccountForm(FlaskForm):
     submit = SubmitField("Agregar")
     cancel = SubmitField("Cancelar")
 
+class AddAuditForm(FlaskForm):
+    username = StringField("Nombre de Usuario", validators=[DataRequired()])
+    email = StringField("Email de Usuario", validators=[DataRequired()])
+    submit = SubmitField("Agregar")
+    cancel = SubmitField("Cancelar")
 
 class XslTransactionsForm(FlaskForm):
     file_path = FileField(
