@@ -72,7 +72,7 @@ class Contract(UserMixin, db.Model):
 
 class Account(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name_account = db.Column(db.String(128), index=True)
+    name_account = db.Column(db.String(128), index=True, unique=True)
 
 
 @login.user_loader

@@ -331,7 +331,6 @@ def record_transaction(client_id, filename=None):
             client,
             form.nombre_cuenta.data, 
             Account.query.filter_by(id=form.nombre_cuenta.data).first().name_account,
-            # form.nombre_cuenta.data,
             form.d_h.data,
             form.numero_minuta.data,
             form.concepto.data,
@@ -365,6 +364,7 @@ def record_transaction(client_id, filename=None):
 @app.route("/clients/<string:client_id>/transactions", methods=["GET", "POST"])
 @login_required
 def transaction_table(client_id):
+    cliente = BlockchainManager.getSingle(ns_name="/Compania", id="/" + client_id)
     transactions = TransaccionManager.get_transaction_for_client(client_id)
     documentation = False
     if os.path.isdir(os.path.join(app.config["UPLOAD_DOC_FOLDER"], client_id)):
@@ -373,6 +373,7 @@ def transaction_table(client_id):
         "transactions_table.html",
         transactions=transactions,
         client_id=client_id,
+        client_balance=cliente["companiaBalance"],
         documentation=documentation,
     )
 

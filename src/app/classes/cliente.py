@@ -98,8 +98,11 @@ class Cliente:
     def set_descripcion(self, descripcion):
         self.descripcion = descripcion
 
-    def get_cliente(self):
-        return self.companiaId
+    def get_cliente(self, client_id=None):
+        if not client_id:
+            client_id=self.companiaId
+        response = BlockchainManager.getSingle("/Compania", id="/" + client_id)
+        return response.json()
 
     def set_auditor(self, id_auditor):
         self.id_auditor = id_auditor
