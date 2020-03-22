@@ -108,7 +108,7 @@ class Cliente:
 
     def get_cliente(self, client_id=None):
         if not client_id:
-            client_id=self.companiaId
+            client_id = self.companiaId
         response = BlockchainManager.getSingle("/Compania", id="/" + client_id)
         return response.json()
 

@@ -131,7 +131,9 @@ class ModifyClientForm(FlaskForm):
 
 class AddTransaccionForm(FlaskForm):
     # codigo_cuenta = SelectField("Codigo de Cuenta", coerce=int, choices=[], validators=[DataRequired()])
-    nombre_cuenta = SelectField("Nombre de Cuenta", coerce=int, choices=[], validators=[DataRequired()])
+    nombre_cuenta = SelectField(
+        "Nombre de Cuenta", coerce=int, choices=[], validators=[DataRequired()]
+    )
     d_h = RadioField("Tipo de Cuenta", choices=[("D", "Debe"), ("H", "Haber")])
     numero_minuta = IntegerField("Numero Minuta", validators=[DataRequired()])
     concepto = StringField("Concepto", validators=[DataRequired()])

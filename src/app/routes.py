@@ -329,7 +329,7 @@ def record_transaction(client_id, filename=None):
         )
         added_transaction = TransaccionManager.add_transaccion(
             client,
-            form.nombre_cuenta.data, 
+            form.nombre_cuenta.data,
             Account.query.filter_by(id=form.nombre_cuenta.data).first().name_account,
             form.d_h.data,
             form.numero_minuta.data,
@@ -339,7 +339,17 @@ def record_transaction(client_id, filename=None):
             form.monto.data,
         )
         client_address = client["companiaAddres"].split(", ")
-        client_object = Cliente(client_cuit=client["companiaId"], client_name=client["companiaName"], client_email=client_address[0], client_address=client_address[1], client_localidad=client_address[2], client_codPostal=client_address[3], client_provincia=client_address[4], country=client["companiaConutry"], initial_balance=client["companiaBalance"])
+        client_object = Cliente(
+            client_cuit=client["companiaId"],
+            client_name=client["companiaName"],
+            client_email=client_address[0],
+            client_address=client_address[1],
+            client_localidad=client_address[2],
+            client_codPostal=client_address[3],
+            client_provincia=client_address[4],
+            country=client["companiaConutry"],
+            initial_balance=client["companiaBalance"],
+        )
         client_object.update_client_balance(amount=form.monto.data)
         # CREATE TRANSACTION DOC FOLDER
         client_id_folder = secure_filename(client_id)
