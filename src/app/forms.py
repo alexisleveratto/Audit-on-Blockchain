@@ -136,7 +136,12 @@ class AddTransaccionForm(FlaskForm):
     numero_minuta = IntegerField("Numero Minuta", validators=[DataRequired()])
     concepto = StringField("Concepto", validators=[DataRequired()])
     detalle = StringField("Detalle", validators=[DataRequired()])
-    fecha_movimiento = DateField("Fecha Movimiento", format='%d/%m/%Y', validators=[DataRequired()], render_kw={"placeholder": "dd/mm/AAAA"})
+    fecha_movimiento = DateField(
+        "Fecha Movimiento",
+        format="%d/%m/%Y",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "dd/mm/AAAA"},
+    )
     monto = FloatField("Monto", validators=[DataRequired()])
     documentation = StringField(
         "Factura", validators=[DataRequired()], render_kw={"disabled": ""},
@@ -166,6 +171,12 @@ class AddOfficeForm(FlaskForm):
     city_name = SelectField(
         "Ciudad", coerce=int, choices=[], validators=[DataRequired()]
     )
+    submit = SubmitField("Agregar")
+    cancel = SubmitField("Cancelar")
+
+
+class AddAccountForm(FlaskForm):
+    account_name = StringField("Nombre Cuenta", validators=[DataRequired()])
     submit = SubmitField("Agregar")
     cancel = SubmitField("Cancelar")
 

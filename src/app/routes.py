@@ -1,5 +1,6 @@
 from app import app, db, posta
 from app.forms import (
+    AddAccountForm,
     AddCityForm,
     AddCountryForm,
     AddOfficeForm,
@@ -16,7 +17,7 @@ from app.forms import (
     VerifyClientForm,
     XslTransactionsForm,
 )
-from app.models import City, Country, Office, User
+from app.models import Account, City, Country, Office, User
 from app.utilsfunctions import allowed_file, get_random_string
 from .classes import AfipManager, BlockchainManager, TransaccionManager
 from .classes.cliente import Cliente
@@ -593,3 +594,17 @@ def download_transaction_doc(client_id, transaction_id):
     for entry in os.listdir(TRANSACTION_FOLDER):
         transaction_file = entry
     return send_from_directory(directory=TRANSACTION_FOLDER, filename=transaction_file)
+
+
+@app.route("/accounts", methods=["GET", "POST"])
+@login_required
+def accounts():
+    form = AddAccountForm()
+    accounts = Account.query.all()
+    if form.validate_on_submit():
+        account = Account(name_account=form.account_name.data)
+        db.session.add(account)
+        db.session.commit()
+    if form.cancel.data:
+        return render_template("admin_page.html")
+    return render_template("accounts.html", form=form, accounts=accounts)

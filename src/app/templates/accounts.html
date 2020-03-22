@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<h1>Cuentas</h1>
+<table style="width:100%">
+    <tr>
+        <th>Codigo Cuenta</th>
+        <th>Nombre</th>
+    </tr>
+    <tbody>
+        {% for account in accounts %}
+        <tr>
+            <td title="{{ account.id }}">{{ account.id }}</td>
+            <td title="{{ account.name_account }}">{{ account.name_account }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<br>
+
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.account_name.label }}<br>
+        {{ form.account_name(size=32) }}<br>
+        {% for error in form.account_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+    <p>{{ form.cancel() }}</p>
+</form>
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+</style>
+{% endblock %}
