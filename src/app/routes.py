@@ -22,6 +22,7 @@ from app.models import Account, City, Country, Office, User
 from app.utilsfunctions import allowed_file, get_random_string
 from .classes import AfipManager, BlockchainManager, TransaccionManager
 from .classes.cliente import Cliente
+from datetime import date
 from flask import (
     flash,
     redirect,
@@ -217,6 +218,17 @@ def new_client():
             initial_balance=form.initial_balance.data,
         )
         client.add_cliente()
+        TransaccionManager.add_transaccion(
+            BlockchainManager.getSingle(ns_name="/Compania", id=str("/" + form.cuit.data)),
+            " - ",
+            " - ",
+            'D',
+            0,
+            "Asiento Apertura Ejercicio",
+            "Asiento Apertura Ejercicio",
+            str(date.today()),
+            form.initial_balance.data,
+        )
         return redirect(url_for("index"))
     if form.cancel.data:
         return redirect(url_for("index"))
@@ -324,9 +336,7 @@ def record_transaction(client_id, filename=None):
         (account.id, account.name_account) for account in Account.query.all()
     ]
     if form.validate_on_submit():
-        client = BlockchainManager.getSingle(
-            ns_name="/Compania", id=str("/" + client_id)
-        )
+        client = BlockchainManager.getSingle(ns_name="/Compania", id=str("/" + client_id))
         added_transaction = TransaccionManager.add_transaccion(
             client,
             form.nombre_cuenta.data,
