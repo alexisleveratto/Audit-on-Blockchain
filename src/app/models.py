@@ -69,7 +69,7 @@ class Contract(UserMixin, db.Model):
     def __repr__(self):
         return "<Contract {}>".format(self.init_date)
 
-class Accounts(UserMixin, db.Model):
+class Account(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name_account = db.Column(db.String(128), index=True)
 
