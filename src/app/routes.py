@@ -12,6 +12,7 @@ from app.forms import (
     IndexForm,
     LoginForm,
     ModifyClientForm,
+    NewLedgerForm,
     PasswordForm,
     RegisterClientForm,
     RegistrationForm,
@@ -659,3 +660,19 @@ def audits():
     if form.cancel.data:
         return render_template("admin_page.html")
     return render_template("audits.html", form=form, audits=audits)
+
+@app.route("/clients/<string:client_id>/new-ledger", methods=["GET", "POST"])
+@login_required
+def new_ledger(client_id):
+    form = NewLedgerForm()
+    form.account_name.choices = [(account.id, account.name_account) for account in Account.query.all()]
+    if form.validate_on_submit():
+        client = User.query.filter_by(username=client_id).first()
+        account = Account.query.filter_by(id=form.account_name.data)
+        ledger = Balance(balance=form.initial_balance.data)
+        ledger.account = account
+        ledge.user = client
+
+        db.session.add(ledger)
+        db.session.commit()
+

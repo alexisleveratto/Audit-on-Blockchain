@@ -81,7 +81,7 @@ class Account(UserMixin, db.Model):
 
 class Balance(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    balance = db.Column(db.Float)
+    balance = db.Column(db.Float, index=True)
     client_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     account_id = db.Column(db.Integer, db.ForeignKey("account.id"))
 

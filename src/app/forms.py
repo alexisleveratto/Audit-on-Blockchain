@@ -220,3 +220,10 @@ class XslTransactionsForm(FlaskForm):
         ],
     )
     submit = SubmitField("Subir")
+
+class NewLedgerForm(FlaskForm):
+    initial_balance = FloatField("Saldo Inicial", validators=[DataRequired()])
+    account_name = SelectField(
+        "Nombre de Cuenta", coerce=int, choices=[], validators=[DataRequired()]
+    )
+    submit = SubmitField("Agregar Mayor")
