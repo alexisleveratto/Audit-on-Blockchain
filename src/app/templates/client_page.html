@@ -17,6 +17,7 @@
     {% endif %}
     <p><a href="{{ url_for('transaction_table', client_id=client.companiaId) }}">Libro Mayor</a></p>
     {% if current_user.role == "Audit" %}
+    <p><a href="{{ url_for('new_ledger', client_id=client.companiaId) }}">Nuevo Libro Mayor</a></p>
     <p><a href="{{ url_for('modify_client', client_id=client.companiaId) }}">Modificar</a></p>
     <p><a onclick="ConfirmDelete(this)">Eliminar</a></p>
     <p>{{ form.cancel() }}</p>

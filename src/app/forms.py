@@ -222,6 +222,12 @@ class XslTransactionsForm(FlaskForm):
     submit = SubmitField("Subir")
 
 class NewLedgerForm(FlaskForm):
+    initial_date = DateField(
+        "Fecha Movimiento",
+        format="%d/%m/%Y",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "dd/mm/AAAA"},
+    )
     initial_balance = FloatField("Saldo Inicial", validators=[DataRequired()])
     account_name = SelectField(
         "Nombre de Cuenta", coerce=int, choices=[], validators=[DataRequired()]

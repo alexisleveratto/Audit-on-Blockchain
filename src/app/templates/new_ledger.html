@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>Nuevo Libro Mayor</h1>
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.initial_date.label }}<br>
+            {{ form.initial_date(size=32) }}<br>
+            {% for error in form.initial_date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.account_name.label }}<br>
+            {{ form.account_name }}<br>
+            {% for error in form.account_name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.initial_balance.label }}<br>
+            {{ form.initial_balance(size=32) }}<br>
+            {% for error in form.initial_balance.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

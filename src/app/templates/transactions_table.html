@@ -4,7 +4,23 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/table.css">
+    <style>
+         * {
+    box-sizing: border-box;
+  }
+  
+  #searchAccount {
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+  }
+    </style>
 </head>
+<input type="text" id="searchAccount" onkeyup="searchFunction()" placeholder="Busqueda por cuenta.." title="Escriba el nombre de cuenta">
 <table id="TransactionTable" style="width:100%">
     <tr>
         <th>Codigo Cuenta</th>
@@ -60,4 +76,24 @@
 </div>
 
 <script src="/static/js/transactions_table.js"></script>
+<script>
+    function searchFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchAccount");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("TransactionTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+</script>
 {% endblock %}

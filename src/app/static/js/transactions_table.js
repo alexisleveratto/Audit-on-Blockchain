@@ -32,3 +32,5 @@ function exportTableToExcel(tableID, filename = ''){
 function UploadResults(elm){
     $('#uploadModal').modal();
 }
+
+

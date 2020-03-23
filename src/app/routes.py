@@ -19,7 +19,7 @@ from app.forms import (
     VerifyClientForm,
     XslTransactionsForm,
 )
-from app.models import Account, City, Country, Office, User
+from app.models import Account, Balance, City, Country, Office, User
 from app.utilsfunctions import allowed_file, get_random_string
 from .classes import AfipManager, BlockchainManager, TransaccionManager
 from .classes.cliente import Cliente
@@ -668,11 +668,24 @@ def new_ledger(client_id):
     form.account_name.choices = [(account.id, account.name_account) for account in Account.query.all()]
     if form.validate_on_submit():
         client = User.query.filter_by(username=client_id).first()
-        account = Account.query.filter_by(id=form.account_name.data)
+        account = Account.query.filter_by(id=form.account_name.data).first()
         ledger = Balance(balance=form.initial_balance.data)
         ledger.account = account
-        ledge.user = client
-
+        ledger.user = client
         db.session.add(ledger)
         db.session.commit()
-
+        TransaccionManager.add_transaccion(
+            BlockchainManager.getSingle(
+                ns_name="/Compania", id="/" + str(client_id)
+            ),
+            account.id,
+            account.name_account,
+            "D",
+            0,
+            "Asiento Apertura Ejercicio",
+            "Asiento Apertura Ejercicio",
+            form.initial_date.data,
+            form.initial_balance.data
+        )
+        return redirect(url_for('client_page', client_id=client_id))
+    return render_template("new_ledger.html", form=form)
