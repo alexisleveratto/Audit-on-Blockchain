@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     role = db.Column(db.String(50), unique=False)
 
     contract = db.relationship("Contract", backref="client", lazy="dynamic")
+    balance = db.relationship("Balance", backref="user", lazy="dynamic")
 
     def __repr__(self):
         return "<User {}>".format(self.username)
@@ -73,7 +74,19 @@ class Contract(UserMixin, db.Model):
 class Account(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name_account = db.Column(db.String(128), index=True, unique=True)
+    balance = db.relationship("Balance", backref="account", lazy="dynamic")
 
+    def __repr__(self):
+        return "<Account {}>".format(self.name_account)
+
+class Balance(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    balance = db.Column(db.Float)
+    client_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    account_id = db.Column(db.Integer, db.ForeignKey("account.id"))
+
+    def __repr__(self):
+        return "<Balance {}>".format(self.client_id)
 
 @login.user_loader
 def load_user(id):

@@ -71,7 +71,6 @@ class IndexForm(FlaskForm):
     RegistrarCliente = SubmitField("Registrar Cliente")
     GestionarClientes = SubmitField("Gestionar Clientes")
     ClientMainPage = SubmitField("Tu Cuenta")
-    ManagerPage = SubmitField("Administrar Sitio")
 
 
 class VerifyClientForm(FlaskForm):
@@ -93,9 +92,9 @@ class RegisterClientForm(FlaskForm):
     client_codPostal = TextField("Codigo Postal", validators=[DataRequired()])
     client_provincia = StringField("Provincia", validators=[DataRequired()])
     country = StringField("País", validators=[DataRequired()])
-    initial_balance = FloatField(
-        "Saldo Inicial de la Cuenta Deudores por Venta", validators=[DataRequired()]
-    )
+    # initial_balance = FloatField(
+    #     "Saldo Inicial de la Cuenta Deudores por Venta", validators=[DataRequired()]
+    # )
     submit = SubmitField("Registrar Cliente")
     cancel = SubmitField("Cancelar")
 

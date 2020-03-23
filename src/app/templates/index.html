@@ -31,12 +31,14 @@
         </p>
         {% endif %}
         {% if current_user.role == "Admin" %}
-        <p>
-            {{ form.ManagerPage(size=32) }}<br>
-            {% for error in form.ManagerPage.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+        <form action="" method="POST">
+            <p><a href="{{ url_for('offices') }}">Gestionar Oficinas</a></p>
+            <p><a href="{{ url_for('cities') }}">Gestionar Ciudades</a></p>
+            <p><a href="{{ url_for('countries') }}">Gestionar Paises</a></p>
+            <p><a href="{{ url_for('accounts') }}">Gestionar Cuentas</a></p>
+            <p><a href="{{ url_for('audits') }}">Gestionar Usuarios</a></p>
+            <p><a href="{{ url_for('audits') }}">Gestionar Contratos</a></p>
+        </form>
         {% endif %}
     </form>
 {% endblock %}

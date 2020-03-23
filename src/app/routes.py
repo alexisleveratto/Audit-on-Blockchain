@@ -118,7 +118,6 @@ def forgot():
                 recipients=[mail],
             )
             msg.body = (
-                # "Hello,\nWe've received a request to reset your password. If you want to reset your password, click the link below and enter your new password\n http://127.0.0.1:5000/"
                 "Recibimos su pedido de cambio de contraseña. Si desea hacerlo, haga clic en el siguiente link e ingrese su nueva contraseña\n http://127.0.0.1:5000/"
                 + check_mail.hashCode
             )
@@ -215,21 +214,23 @@ def new_client():
             client_codPostal=form.client_codPostal.data,
             client_provincia=form.client_provincia.data,
             country=form.country.data,
-            initial_balance=form.initial_balance.data,
+            # initial_balance=form.initial_balance.data,
+            initial_balance=0,
         )
         client.add_cliente()
         TransaccionManager.add_transaccion(
             BlockchainManager.getSingle(
                 ns_name="/Compania", id="/" + str(form.cuit.data)
             ),
-            " - ",
-            " - ",
+            " Codigo Cuenta ",
+            " Nombre Cuenta ",
             "D",
             0,
             "Asiento Apertura Ejercicio",
             "Asiento Apertura Ejercicio",
             str(date.today()),
-            form.initial_balance.data,
+            # form.initial_balance.data,
+            0
         )
         return redirect(url_for("index"))
     if form.cancel.data:
