@@ -222,6 +222,7 @@ class XslTransactionsForm(FlaskForm):
     )
     submit = SubmitField(_l("Subir"))
 
+
 class NewLedgerForm(FlaskForm):
     initial_date = DateField(
         _l("Fecha Movimiento"),
@@ -235,6 +236,7 @@ class NewLedgerForm(FlaskForm):
     )
     submit = SubmitField(_l("Agregar Mayor"))
 
+
 class NewContractForm(FlaskForm):
     fees = FloatField(_l("Honorarios"), validator=[DataRequired()])
     initial_date = DateField(
@@ -244,13 +246,9 @@ class NewContractForm(FlaskForm):
         render_kw={"placeholder": "dd/mm/AAAA"},
     )
     final_date = initial_date = DateField(
-        _l("Fecha Fin"),
-        format="%d/%m/%Y",
-        render_kw={"placeholder": "dd/mm/AAAA"},
+        _l("Fecha Fin"), format="%d/%m/%Y", render_kw={"placeholder": "dd/mm/AAAA"},
     )
     client_name = SelectField(
         _l("Nombre Cliente"), coerce=int, choices=[], validators=[DataRequired()]
     )
     submit = SubmitField(_l("Agregar"))
-
-

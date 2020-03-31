@@ -4,7 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
-    LANGUAGES = ['en', 'es']
+    LANGUAGES = ["en", "es"]
 
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 465

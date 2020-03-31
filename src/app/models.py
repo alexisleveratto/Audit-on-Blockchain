@@ -79,6 +79,7 @@ class Account(UserMixin, db.Model):
     def __repr__(self):
         return "<Account {}>".format(self.name_account)
 
+
 class Balance(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     balance = db.Column(db.Float, index=True)
@@ -87,6 +88,7 @@ class Balance(UserMixin, db.Model):
 
     def __repr__(self):
         return "<Balance {}>".format(self.client_id)
+
 
 @login.user_loader
 def load_user(id):

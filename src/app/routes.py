@@ -32,6 +32,7 @@ from flask import (
     send_from_directory,
     url_for,
 )
+from flask_babel import _
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 import json
@@ -47,7 +48,7 @@ from zipfile import ZipFile
 @app.route("/index", methods=["GET", "POST"])
 @login_required
 def index():
-    title = "Menu Principal"
+    title = _("Menu Principal")
     form = IndexForm()
     if form.validate_on_submit():
         if form.RegistrarCliente.data:
@@ -70,7 +71,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash("Usuario o Contraseña Invalidos")
+            flash(_("Usuario o Contraseña Invalidos"))
             return redirect(url_for("login"))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get("next")
@@ -96,7 +97,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash("Registrado")
+        flash(_("Registrado"))
         return redirect(url_for("login"))
     return render_template("register.html", title="Registro", form=form)
 
@@ -114,19 +115,21 @@ def forgot():
             check_mail.hashCode = hashCode
             db.session.commit()
             msg = Message(
-                "Confirm Password Change",
+                _("Cambio de Contraseña"),
                 sender="alexis.leveratto@github.com",
                 recipients=[mail],
             )
             msg.body = (
-                "Recibimos su pedido de cambio de contraseña. Si desea hacerlo, haga clic en el siguiente link e ingrese su nueva contraseña\n http://127.0.0.1:5000/"
+                _(
+                    "Recibimos su pedido de cambio de contraseña. Si desea hacerlo, haga clic en el siguiente link e ingrese su nueva contraseña\n http://127.0.0.1:5000/"
+                )
                 + check_mail.hashCode
             )
             posta.send(msg)
-            flash("Revise su email")
+            flash(_("Revise su email"))
             return redirect(url_for("forgot"))
     return render_template(
-        "forgot_password.html", title="Recuperar Contraseña", form=form
+        "forgot_password.html", title=_("Recuperar Contraseña"), form=form
     )
 
 
@@ -141,10 +144,10 @@ def hashcode(hashCode):
             check_by_hashCode.set_password(form.password.data)
             check_by_hashCode.hashCode = None
             db.session.commit()
-            flash("Contraseña Recuperada con Éxito")
+            flash(_("Contraseña Recuperada con Éxito"))
             return redirect(url_for("login"))
         return render_template(
-            "change_password.html", title="Cambiar Contraseña", form=form
+            "change_password.html", title=_("Cambiar Contraseña"), form=form
         )
     return redirect(url_for("index"))
 
@@ -161,7 +164,7 @@ def change():
             logout_user()
             return redirect(url_for("index"))
         else:
-            flash("Repita correctamente su contraseña anterior")
+            flash(_("Repita correctamente su contraseña anterior"))
     return render_template(
         "user_change_password.html", title="Cambiar Contraseña", form=form
     )
@@ -177,7 +180,7 @@ def verify_client():
             if AfipManager.get_persona_juridica(form.cuit.data):
                 return redirect(url_for("new_client"))
             else:
-                flash("No se encuentra ninguna persona con el CUIT brindado")
+                flash(_("No se encuentra ninguna persona con el CUIT brindado"))
     if form.cancel.data:
         return redirect(url_for("index"))
     return render_template("verify_client.html", form=form)
@@ -236,7 +239,7 @@ def new_client():
         return redirect(url_for("index"))
     if form.cancel.data:
         return redirect(url_for("index"))
-    flash("Verifique y complete la información de su cliente")
+    flash(_("Verifique y complete la información de su cliente"))
     return render_template("client_register.html", form=form)
 
 
@@ -300,7 +303,7 @@ def modify_client(client_id):
             client_provincia=form.client_provincia.data,
             country=form.country.data,
             # initial_balance=form.initial_balance.data,
-            initial_balance=0
+            initial_balance=0,
         )
         client.update_cliente(
             companiaName=form.client_name.data,
@@ -383,7 +386,7 @@ def record_transaction(client_id, filename=None):
         file_new_path = os.path.join(transaction_folder, filename)
         os.rename(file_current_path, file_new_path)
 
-        flash("Transaccion Agregada con el ID " + added_transaction["transactionId"])
+        flash(_("Transaccion Agregada con el ID ") + added_transaction["transactionId"])
         return redirect(url_for("client_page", client_id=client_id))
     if form.cancel.data:
         return redirect(url_for("index"))
@@ -414,14 +417,14 @@ def upload_audit_results(client_id):
     if request.method == "POST":
         # check if the post request has the file part
         if "file" not in request.files:
-            flash("No hay ningún archivo seleccionado")
+            flash(_("No hay ningún archivo seleccionado"))
             return redirect(request.url)
         file = request.files["file"]
 
         # if user does not select file, browser also
         # submit an empty part without filename
         if file.filename == "":
-            flash("No se seleccionó ningún archivo")
+            flash(_("No se seleccionó ningún archivo"))
             return redirect(request.url)
         client_id_folder = secure_filename(client_id)
         if not os.path.isdir(
@@ -438,7 +441,7 @@ def upload_audit_results(client_id):
                     os.path.join(app.config["UPLOAD_AUDIT_FOLDER"], client_id), filename
                 )
             )
-            flash("Documento Guardado con Exito")
+            flash(_("Documento Guardado con Exito"))
     return redirect(url_for("transaction_table", client_id=client_id))
 
 
@@ -480,7 +483,6 @@ def upload_transactions(client_id):
                 transaction["fecha_movimiento"],
                 transaction["monto"],
             )
-            print(transaction["fecha_movimiento"])
         return redirect(url_for("transaction_table", client_id=client_id))
     return render_template("upload_xsl_transactions.html", form=form)
 
@@ -490,14 +492,14 @@ def upload_transactions(client_id):
 def upload_documentation(client_id):
     # check if the post request has the file part
     if "file" not in request.files:
-        flash("No hay ningún archivo seleccionado")
+        flash(_("No hay ningún archivo seleccionado"))
         return redirect(request.url)
     file = request.files["file"]
 
     # if user does not select file, browser also
     # submit an empty part without filename
     if file.filename == "":
-        flash("No se seleccionó ningún archivo")
+        flash(_("No se seleccionó ningún archivo"))
         return redirect(request.url)
 
     client_id_folder = secure_filename(client_id)
@@ -514,9 +516,9 @@ def upload_documentation(client_id):
                 filename,
             )
         )
-        flash("Factura Guardada con Exito")
+        flash(_("Factura Guardada con Exito"))
     else:
-        flash("La extension de la documentación no es aceptada")
+        flash(_("La extension de la documentación no es aceptada"))
 
     return redirect(
         url_for("record_transaction", client_id=client_id, filename=filename)
@@ -662,11 +664,14 @@ def audits():
         return render_template("admin_page.html")
     return render_template("audits.html", form=form, audits=audits)
 
+
 @app.route("/clients/<string:client_id>/new-ledger", methods=["GET", "POST"])
 @login_required
 def new_ledger(client_id):
     form = NewLedgerForm()
-    form.account_name.choices = [(account.id, account.name_account) for account in Account.query.all()]
+    form.account_name.choices = [
+        (account.id, account.name_account) for account in Account.query.all()
+    ]
     if form.validate_on_submit():
         client = User.query.filter_by(username=client_id).first()
         account = Account.query.filter_by(id=form.account_name.data).first()
@@ -676,9 +681,7 @@ def new_ledger(client_id):
         db.session.add(ledger)
         db.session.commit()
         TransaccionManager.add_transaccion(
-            BlockchainManager.getSingle(
-                ns_name="/Compania", id="/" + str(client_id)
-            ),
+            BlockchainManager.getSingle(ns_name="/Compania", id="/" + str(client_id)),
             account.id,
             account.name_account,
             "D",
@@ -686,7 +689,7 @@ def new_ledger(client_id):
             "Asiento Apertura Ejercicio",
             "Asiento Apertura Ejercicio",
             form.initial_date.data,
-            form.initial_balance.data
+            form.initial_balance.data,
         )
-        return redirect(url_for('client_page', client_id=client_id))
+        return redirect(url_for("client_page", client_id=client_id))
     return render_template("new_ledger.html", form=form)
