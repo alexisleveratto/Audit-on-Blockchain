@@ -60,13 +60,6 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
-    <p>
-        {{ form.initial_balance.label }}<br>
-        {{ form.initial_balance(size=32) }}<br>
-        {% for error in form.initial_balance.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
     <p>{{ form.submit() }}</p>
     <p>{{ form.cancel() }}</p>
 </form>

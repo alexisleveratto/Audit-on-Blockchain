@@ -219,20 +219,20 @@ def new_client():
             initial_balance=0,
         )
         client.add_cliente()
-        TransaccionManager.add_transaccion(
-            BlockchainManager.getSingle(
-                ns_name="/Compania", id="/" + str(form.cuit.data)
-            ),
-            " Codigo Cuenta ",
-            " Nombre Cuenta ",
-            "D",
-            0,
-            "Asiento Apertura Ejercicio",
-            "Asiento Apertura Ejercicio",
-            str(date.today()),
-            # form.initial_balance.data,
-            0
-        )
+        # TransaccionManager.add_transaccion(
+        #     BlockchainManager.getSingle(
+        #         ns_name="/Compania", id="/" + str(form.cuit.data)
+        #     ),
+        #     " Codigo Cuenta ",
+        #     " Nombre Cuenta ",
+        #     "D",
+        #     0,
+        #     "Asiento Apertura Ejercicio",
+        #     "Asiento Apertura Ejercicio",
+        #     str(date.today()),
+        #     # form.initial_balance.data,
+        #     0
+        # )
         return redirect(url_for("index"))
     if form.cancel.data:
         return redirect(url_for("index"))
@@ -287,8 +287,8 @@ def modify_client(client_id):
         form.client_provincia.data = client_address[4]
     if not form.country.data:
         form.country.data = client["companiaConutry"]
-    if not form.initial_balance.data:
-        form.initial_balance.data = client["companiaBalance"]
+    # if not form.initial_balance.data:
+    #     form.initial_balance.data = client["companiaBalance"]
     if form.validate_on_submit():
         client = Cliente(
             client_cuit=form.cuit.data,
@@ -299,7 +299,8 @@ def modify_client(client_id):
             client_codPostal=form.client_codPostal.data,
             client_provincia=form.client_provincia.data,
             country=form.country.data,
-            initial_balance=form.initial_balance.data,
+            # initial_balance=form.initial_balance.data,
+            initial_balance=0
         )
         client.update_cliente(
             companiaName=form.client_name.data,

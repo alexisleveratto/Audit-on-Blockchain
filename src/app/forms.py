@@ -119,11 +119,11 @@ class ModifyClientForm(FlaskForm):
     client_codPostal = TextField("Codigo Postal", validators=[DataRequired()])
     client_provincia = StringField("Provincia", validators=[DataRequired()])
     country = StringField("País", validators=[DataRequired()])
-    initial_balance = FloatField(
-        "Saldo Inicial de la Cuenta Deudores por Venta",
-        validators=[DataRequired()],
-        render_kw={"disabled": ""},
-    )
+    # initial_balance = FloatField(
+    #     "Saldo Inicial de la Cuenta Deudores por Venta",
+    #     validators=[DataRequired()],
+    #     render_kw={"disabled": ""},
+    # )
     submit = SubmitField("Modificar Cliente")
     cancel = SubmitField("Cancelar")
 
@@ -233,3 +233,23 @@ class NewLedgerForm(FlaskForm):
         "Nombre de Cuenta", coerce=int, choices=[], validators=[DataRequired()]
     )
     submit = SubmitField("Agregar Mayor")
+
+class NewContractForm(FlaskForm):
+    fees = FloatField("Honorarios", validator=[DataRequired()])
+    initial_date = DateField(
+        "Fecha Inicio",
+        format="%d/%m/%Y",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "dd/mm/AAAA"},
+    )
+    final_date = initial_date = DateField(
+        "Fecha Fin",
+        format="%d/%m/%Y",
+        render_kw={"placeholder": "dd/mm/AAAA"},
+    )
+    client_name = SelectField(
+        "Nombre Cliente", coerce=int, choices=[], validators=[DataRequired()]
+    )
+    submit = SubmitField("Agregar")
+
+

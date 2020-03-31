@@ -12,7 +12,7 @@
         <th>Nombre</th>
         <th>Contacto</th>
         <th>País</th>
-        <th>Saldo - Deudores por Venta</th>
+        <!-- <th>Saldo - Deudores por Venta</th> -->
         <th>Accion</th>
     </tr>
     <tbody>
@@ -22,7 +22,7 @@
             <td title="{{ cliente.companiaName }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaName }}</td>
             <td title="{{ cliente.companiaAddres }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaAddres }}</td>
             <td title="{{ cliente.companiaConutry }}">{{ cliente.companiaConutry }}</td>
-            <td title="{{ cliente.companiaBalance }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaBalance }}</td>
+            <!-- <td title="{{ cliente.companiaBalance }}" style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:1px;">{{ cliente.companiaBalance }}</td> -->
             <td>
                 <a title="Modificar" href="{{ url_for('modify_client', client_id=cliente.companiaId) }}"><span class="glyphicon glyphicon-pencil"></span></a>
                 <a title="Eliminar" href="" onclick="ConfirmDelete(this)"><span class="glyphicon glyphicon-trash"></span></a>

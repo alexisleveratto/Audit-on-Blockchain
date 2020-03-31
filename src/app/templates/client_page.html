@@ -11,11 +11,11 @@
     <p> Saldo Actual: {{ client.companiaBalance }} </p>
     {% if current_user.role == "Client" %}
     <p><a href="{{ url_for('record_transaction', client_id=client.companiaId) }}">Registrar Transaccion</a></p>
-        {% if results %}
-        <p><a href="{{ url_for('download_docs', client_id=client.companiaId) }}">Descargar Resultados Auditoría</a></p>
-        {% endif %}
+        
+    <p><a href="{{ url_for('download_docs', client_id=client.companiaId) }}">Descargar Resultados Auditoría</a></p>
+        
     {% endif %}
-    <p><a href="{{ url_for('transaction_table', client_id=client.companiaId) }}">Libro Mayor</a></p>
+    <p><a href="{{ url_for('transaction_table', client_id=client.companiaId) }}">Libros Mayores</a></p>
     {% if current_user.role == "Audit" %}
     <p><a href="{{ url_for('new_ledger', client_id=client.companiaId) }}">Nuevo Libro Mayor</a></p>
     <p><a href="{{ url_for('modify_client', client_id=client.companiaId) }}">Modificar</a></p>
