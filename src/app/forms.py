@@ -101,10 +101,10 @@ class RegisterClientForm(FlaskForm):
 
 
 class ClientPageForm(FlaskForm):
-    ledger = SubmitField(_l"Libro Mayor"))
-    modify = SubmitField(_l"Modificar"))
-    delete = SubmitField(_l"Eliminar"))
-    cancel = SubmitField(_l"Cancelar"))
+    ledger = SubmitField(_l("Libro Mayor"))
+    modify = SubmitField(_l("Modificar"))
+    delete = SubmitField(_l("Eliminar"))
+    cancel = SubmitField(_l("Cancelar"))
 
 
 class ModifyClientForm(FlaskForm):
@@ -125,8 +125,8 @@ class ModifyClientForm(FlaskForm):
     #     validators=[DataRequired()],
     #     render_kw={"disabled": ""},
     # )
-    submit = SubmitField(_l"Modificar Cliente"))
-    cancel = SubmitField(_l"Cancelar"))
+    submit = SubmitField(_l("Modificar Cliente"))
+    cancel = SubmitField(_l("Cancelar"))
 
 
 class AddTransaccionForm(FlaskForm):
@@ -148,8 +148,8 @@ class AddTransaccionForm(FlaskForm):
     documentation = StringField(
         _l("Factura"), validators=[DataRequired()], render_kw={"disabled": ""},
     )
-    submit = SubmitField(_l"Grabar Transaccion"))
-    cancel = SubmitField(_l"Cancelar"))
+    submit = SubmitField(_l("Grabar Transaccion"))
+    cancel = SubmitField(_l("Cancelar"))
 
 
 class AddCountryForm(FlaskForm):
