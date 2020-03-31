@@ -1,4 +1,5 @@
 from app.models import User
+from flask_babel import lazy_gettext as _l
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileRequired
 from wtforms import (
@@ -18,180 +19,180 @@ from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 
 class LoginForm(FlaskForm):
-    username = StringField("Usuario", validators=[DataRequired()])
-    password = PasswordField("Contraseña", validators=[DataRequired()])
-    remember_me = BooleanField("Recuerdame")
-    submit = SubmitField("Iniciar Sesion")
+    username = StringField(_l("Usuario"), validators=[DataRequired()])
+    password = PasswordField(_l("Contraseña"), validators=[DataRequired()])
+    remember_me = BooleanField(_l("Recuerdame"))
+    submit = SubmitField(_l("Iniciar Sesion"))
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField("Usuario", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Contraseña", validators=[DataRequired()])
+    username = StringField(_l("Usuario"), validators=[DataRequired()])
+    email = StringField(_l("Email"), validators=[DataRequired(), Email()])
+    password = PasswordField(_l("Contraseña"), validators=[DataRequired()])
     password2 = PasswordField(
-        "Repita Contraseña", validators=[DataRequired(), EqualTo("password")]
+        _l("Repita Contraseña"), validators=[DataRequired(), EqualTo("password")]
     )
-    submit = SubmitField("Registrarse")
+    submit = SubmitField(_l("Registrarse"))
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError("Utilice otro nombre de usuario.")
+            raise ValidationError(_l("Utilice otro nombre de usuario."))
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError("Utilice otro email.")
+            raise ValidationError(_l("Utilice otro email."))
 
 
 class EmailForm(FlaskForm):
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    submit = SubmitField("Recuperar Contraseña")
+    email = StringField(_l("Email"), validators=[DataRequired(), Email()])
+    submit = SubmitField(_l("Recuperar Contraseña"))
 
 
 class PasswordForm(FlaskForm):
-    password = PasswordField("Contraseña", validators=[DataRequired()])
+    password = PasswordField(_l("Contraseña"), validators=[DataRequired()])
     password2 = PasswordField(
-        "Repita Contraseña", validators=[DataRequired(), EqualTo("password")]
+        _l("Repita Contraseña"), validators=[DataRequired(), EqualTo("password")]
     )
-    submit = SubmitField("Cambiar Contraseña")
+    submit = SubmitField(_l("Cambiar Contraseña"))
 
 
 class ChangePasswordForm(FlaskForm):
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    old_password = PasswordField("Antigua Contraseña", validators=[DataRequired()])
-    password = PasswordField("Contraseña Nueva", validators=[DataRequired()])
+    email = StringField(_l("Email"), validators=[DataRequired(), Email()])
+    old_password = PasswordField(_l("Antigua Contraseña"), validators=[DataRequired()])
+    password = PasswordField(_l("Contraseña Nueva"), validators=[DataRequired()])
     password2 = PasswordField(
-        "Repita Contraseña", validators=[DataRequired(), EqualTo("password")]
+        _l("Repita Contraseña"), validators=[DataRequired(), EqualTo("password")]
     )
-    submit = SubmitField("Cambiar Contraseña")
+    submit = SubmitField(_l("Cambiar Contraseña"))
 
 
 class IndexForm(FlaskForm):
-    RegistrarCliente = SubmitField("Registrar Cliente")
-    GestionarClientes = SubmitField("Gestionar Clientes")
-    ClientMainPage = SubmitField("Tu Cuenta")
+    RegistrarCliente = SubmitField(_l("Registrar Cliente"))
+    GestionarClientes = SubmitField(_l("Gestionar Clientes"))
+    ClientMainPage = SubmitField(_l("Tu Cuenta"))
 
 
 class VerifyClientForm(FlaskForm):
-    cuit = StringField("CUIT Cliente", validators=[DataRequired()])
-    submit = SubmitField("Verificar")
-    cancel = SubmitField("Cancelar")
+    cuit = StringField(_l("CUIT Cliente"), validators=[DataRequired()])
+    submit = SubmitField(_l("Verificar"))
+    cancel = SubmitField(_l("Cancelar"))
 
 
 class RegisterClientForm(FlaskForm):
     cuit = StringField(
-        "CUIT Cliente", validators=[DataRequired()], render_kw={"disabled": ""}
+        _l("CUIT Cliente"), validators=[DataRequired()], render_kw={"disabled": ""}
     )
-    client_name = StringField("Nombre Cliente", validators=[DataRequired()])
+    client_name = StringField(_l("Nombre Cliente"), validators=[DataRequired()])
     client_email = StringField(
-        "Email de Contacto", validators=[DataRequired(), Email()]
+        _l("Email de Contacto"), validators=[DataRequired(), Email()]
     )
-    client_address = StringField("Domicilio Fiscal", validators=[DataRequired()])
-    client_localidad = StringField("Localidad", validators=[DataRequired()])
-    client_codPostal = TextField("Codigo Postal", validators=[DataRequired()])
-    client_provincia = StringField("Provincia", validators=[DataRequired()])
-    country = StringField("País", validators=[DataRequired()])
+    client_address = StringField(_l("Domicilio Fiscal"), validators=[DataRequired()])
+    client_localidad = StringField(_l("Localidad"), validators=[DataRequired()])
+    client_codPostal = TextField(_l("Codigo Postal"), validators=[DataRequired()])
+    client_provincia = StringField(_l("Provincia"), validators=[DataRequired()])
+    country = StringField(_l("País"), validators=[DataRequired()])
     # initial_balance = FloatField(
     #     "Saldo Inicial de la Cuenta Deudores por Venta", validators=[DataRequired()]
     # )
-    submit = SubmitField("Registrar Cliente")
-    cancel = SubmitField("Cancelar")
+    submit = SubmitField(_l("Registrar Cliente"))
+    cancel = SubmitField(_l("Cancelar"))
 
 
 class ClientPageForm(FlaskForm):
-    ledger = SubmitField("Libro Mayor")
-    modify = SubmitField("Modificar")
-    delete = SubmitField("Eliminar")
-    cancel = SubmitField("Cancelar")
+    ledger = SubmitField(_l"Libro Mayor"))
+    modify = SubmitField(_l"Modificar"))
+    delete = SubmitField(_l"Eliminar"))
+    cancel = SubmitField(_l"Cancelar"))
 
 
 class ModifyClientForm(FlaskForm):
     cuit = StringField(
-        "CUIT Cliente", validators=[DataRequired()], render_kw={"disabled": ""}
+        _l("CUIT Cliente"), validators=[DataRequired()], render_kw={"disabled": ""}
     )
-    client_name = StringField("Nombre Cliente", validators=[DataRequired()])
+    client_name = StringField(_l("Nombre Cliente"), validators=[DataRequired()])
     client_email = StringField(
-        "Email de Contacto", validators=[DataRequired(), Email()]
+        _l("Email de Contacto"), validators=[DataRequired(), Email()]
     )
-    client_address = StringField("Domicilio Fiscal", validators=[DataRequired()])
-    client_localidad = StringField("Localidad", validators=[DataRequired()])
-    client_codPostal = TextField("Codigo Postal", validators=[DataRequired()])
-    client_provincia = StringField("Provincia", validators=[DataRequired()])
-    country = StringField("País", validators=[DataRequired()])
+    client_address = StringField(_l("Domicilio Fiscal"), validators=[DataRequired()])
+    client_localidad = StringField(_l("Localidad"), validators=[DataRequired()])
+    client_codPostal = TextField(_l("Codigo Postal"), validators=[DataRequired()])
+    client_provincia = StringField(_l("Provincia"), validators=[DataRequired()])
+    country = StringField(_l("País"), validators=[DataRequired()])
     # initial_balance = FloatField(
     #     "Saldo Inicial de la Cuenta Deudores por Venta",
     #     validators=[DataRequired()],
     #     render_kw={"disabled": ""},
     # )
-    submit = SubmitField("Modificar Cliente")
-    cancel = SubmitField("Cancelar")
+    submit = SubmitField(_l"Modificar Cliente"))
+    cancel = SubmitField(_l"Cancelar"))
 
 
 class AddTransaccionForm(FlaskForm):
     # codigo_cuenta = SelectField("Codigo de Cuenta", coerce=int, choices=[], validators=[DataRequired()])
     nombre_cuenta = SelectField(
-        "Nombre de Cuenta", coerce=int, choices=[], validators=[DataRequired()]
+        _l("Nombre de Cuenta"), coerce=int, choices=[], validators=[DataRequired()]
     )
-    d_h = RadioField("Tipo de Cuenta", choices=[("D", "Debe"), ("H", "Haber")])
-    numero_minuta = IntegerField("Numero Minuta", validators=[DataRequired()])
-    concepto = StringField("Concepto", validators=[DataRequired()])
-    detalle = StringField("Detalle", validators=[DataRequired()])
+    d_h = RadioField(_l("Tipo de Cuenta"), choices=[("D", "Debe"), ("H", "Haber")])
+    numero_minuta = IntegerField(_l("Numero Minuta"), validators=[DataRequired()])
+    concepto = StringField(_l("Concepto"), validators=[DataRequired()])
+    detalle = StringField(_l("Detalle"), validators=[DataRequired()])
     fecha_movimiento = DateField(
-        "Fecha Movimiento",
+        _l("Fecha Movimiento"),
         format="%d/%m/%Y",
         validators=[DataRequired()],
         render_kw={"placeholder": "dd/mm/AAAA"},
     )
-    monto = FloatField("Monto", validators=[DataRequired()])
+    monto = FloatField(_l("Monto"), validators=[DataRequired()])
     documentation = StringField(
-        "Factura", validators=[DataRequired()], render_kw={"disabled": ""},
+        _l("Factura"), validators=[DataRequired()], render_kw={"disabled": ""},
     )
-    submit = SubmitField("Grabar Transaccion")
-    cancel = SubmitField("Cancelar")
+    submit = SubmitField(_l"Grabar Transaccion"))
+    cancel = SubmitField(_l"Cancelar"))
 
 
 class AddCountryForm(FlaskForm):
-    country_name = StringField("Nombre Pais", validators=[DataRequired()])
-    submit = SubmitField("Agregar")
-    cancel = SubmitField("Cancelar")
+    country_name = StringField(_l("Nombre Pais"), validators=[DataRequired()])
+    submit = SubmitField(_l("Agregar"))
+    cancel = SubmitField(_l("Cancelar"))
 
 
 class AddCityForm(FlaskForm):
-    zip_code = StringField("Codigo Postal", validators=[DataRequired()])
-    city_name = StringField("Nombre Ciudad", validators=[DataRequired()])
+    zip_code = StringField(_l("Codigo Postal"), validators=[DataRequired()])
+    city_name = StringField(_l("Nombre Ciudad"), validators=[DataRequired()])
     country_name = SelectField(
-        "Nombre Pais", coerce=int, choices=[], validators=[DataRequired()]
+        _l("Nombre Pais"), coerce=int, choices=[], validators=[DataRequired()]
     )
-    submit = SubmitField("Agregar")
-    cancel = SubmitField("Cancelar")
+    submit = SubmitField(_l("Agregar"))
+    cancel = SubmitField(_l("Cancelar"))
 
 
 class AddOfficeForm(FlaskForm):
-    address = StringField("Direccion Oficina", validators=[DataRequired()])
+    address = StringField(_l("Direccion Oficina"), validators=[DataRequired()])
     city_name = SelectField(
-        "Ciudad", coerce=int, choices=[], validators=[DataRequired()]
+        _l("Ciudad"), coerce=int, choices=[], validators=[DataRequired()]
     )
-    submit = SubmitField("Agregar")
-    cancel = SubmitField("Cancelar")
+    submit = SubmitField(_l("Agregar"))
+    cancel = SubmitField(_l("Cancelar"))
 
 
 class AddAccountForm(FlaskForm):
-    account_name = StringField("Nombre Cuenta", validators=[DataRequired()])
-    submit = SubmitField("Agregar")
-    cancel = SubmitField("Cancelar")
+    account_name = StringField(_l("Nombre Cuenta"), validators=[DataRequired()])
+    submit = SubmitField(_l("Agregar"))
+    cancel = SubmitField(_l("Cancelar"))
 
 
 class AddAuditForm(FlaskForm):
-    username = StringField("Nombre de Usuario", validators=[DataRequired()])
-    email = StringField("Email de Usuario", validators=[DataRequired()])
-    submit = SubmitField("Agregar")
-    cancel = SubmitField("Cancelar")
+    username = StringField(_l("Nombre de Usuario"), validators=[DataRequired()])
+    email = StringField(_l("Email de Usuario"), validators=[DataRequired()])
+    submit = SubmitField(_l("Agregar"))
+    cancel = SubmitField(_l("Cancelar"))
 
 
 class XslTransactionsForm(FlaskForm):
     file_path = FileField(
-        "Hoja de Cálcuĺo",
+        _l("Hoja de Cálcuĺo"),
         validators=[
             FileRequired(),
             FileAllowed(
@@ -208,48 +209,48 @@ class XslTransactionsForm(FlaskForm):
                     "xlw",
                     "csv",
                 ],
-                "Hoja de calculo",
+                _l("Hoja de calculo"),
             ),
         ],
     )
     zip_file_path = FileField(
-        "Facturas",
+        _l("Facturas"),
         validators=[
             FileRequired(),
-            FileAllowed(["jpg", "png", "zip", "pdf"], "No es una extension válida"),
+            FileAllowed(["jpg", "png", "zip", "pdf"], _l("No es una extension válida")),
         ],
     )
-    submit = SubmitField("Subir")
+    submit = SubmitField(_l("Subir"))
 
 class NewLedgerForm(FlaskForm):
     initial_date = DateField(
-        "Fecha Movimiento",
+        _l("Fecha Movimiento"),
         format="%d/%m/%Y",
         validators=[DataRequired()],
         render_kw={"placeholder": "dd/mm/AAAA"},
     )
-    initial_balance = FloatField("Saldo Inicial", validators=[DataRequired()])
+    initial_balance = FloatField(_l("Saldo Inicial"), validators=[DataRequired()])
     account_name = SelectField(
-        "Nombre de Cuenta", coerce=int, choices=[], validators=[DataRequired()]
+        _l("Nombre de Cuenta"), coerce=int, choices=[], validators=[DataRequired()]
     )
-    submit = SubmitField("Agregar Mayor")
+    submit = SubmitField(_l("Agregar Mayor"))
 
 class NewContractForm(FlaskForm):
-    fees = FloatField("Honorarios", validator=[DataRequired()])
+    fees = FloatField(_l("Honorarios"), validator=[DataRequired()])
     initial_date = DateField(
-        "Fecha Inicio",
+        _l("Fecha Inicio"),
         format="%d/%m/%Y",
         validators=[DataRequired()],
         render_kw={"placeholder": "dd/mm/AAAA"},
     )
     final_date = initial_date = DateField(
-        "Fecha Fin",
+        _l("Fecha Fin"),
         format="%d/%m/%Y",
         render_kw={"placeholder": "dd/mm/AAAA"},
     )
     client_name = SelectField(
-        "Nombre Cliente", coerce=int, choices=[], validators=[DataRequired()]
+        _l("Nombre Cliente"), coerce=int, choices=[], validators=[DataRequired()]
     )
-    submit = SubmitField("Agregar")
+    submit = SubmitField(_l("Agregar"))
 
 
