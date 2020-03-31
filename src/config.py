@@ -4,11 +4,12 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
+    LANGUAGES = ['en', 'es']
+
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 465
     MAIL_USERNAME = "chinoleveratto2@gmail.com"
-    # MAIL_PASSWORD = "password_bitch"
-    MAIL_PASSWORD = "jklUIO789"
+    MAIL_PASSWORD = "password_bitch"
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
 
