@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>Administrad Sitio</h1>
+    <h1>{{ _('Administrar Sitio') }}</h1>
     <form action="" method="POST">
-        <p><a href="{{ url_for('offices') }}">Gestionar Oficinas</a></p>
-        <p><a href="{{ url_for('cities') }}">Gestionar Ciudades</a></p>
-        <p><a href="{{ url_for('countries') }}">Gestionar Paises</a></p>
-        <p><a href="{{ url_for('accounts') }}">Gestionar Cuentas</a></p>
-        <p><a href="{{ url_for('audits') }}">Gestionar Usuarios</a></p>
+        <p><a href="{{ url_for('offices') }}">{{ _('Gestionar Oficinas') }}</a></p>
+        <p><a href="{{ url_for('cities') }}">{{ _('Gestionar Ciudades') }}</a></p>
+        <p><a href="{{ url_for('countries') }}">{{ _('Gestionar Paises') }}</a></p>
+        <p><a href="{{ url_for('accounts') }}">{{ _('Gestionar Cuentas') }}</a></p>
+        <p><a href="{{ url_for('audits') }}">{{ _('Gestionar Usuarios') }}</a></p>
     </form>
 {% endblock %}

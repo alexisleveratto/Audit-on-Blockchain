@@ -2,11 +2,11 @@
 
 {% block app_content %}
 
-<h1>Registrar Transacción</h1>
+<h1>{{ _('Registrar Transacción') }}</h1>
 <form action="" method="POST" novalidate>
     {{ form.hidden_tag() }}
-    <p><a href="javascript:UploadFactura(this)">Subir Factura</a></p>
-    <p><a href="{{ url_for('upload_transactions', client_id=client_id) }}">Subir .xsl</a></p>
+    <p><a href="javascript:UploadFactura(this)">{{ _('Subir Factura') }}</a></p>
+    <p><a href="{{ url_for('upload_transactions', client_id=client_id) }}">{{ _('Subir .xsl') }}</a></p>
     
     <p>
         {{ form.nombre_cuenta.label }}<br>
@@ -73,7 +73,7 @@
 <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <h1>Subir Transacciones</h1>
+            <h1>{{ _('Subir Transacciones') }}</h1>
             <form action="{{ url_for('upload_transactions', client_id=client_id) }}" method="POST" enctype=multipart/form-data>
                 <input type=file name=file>
                 <input type=submit value=Subir>
@@ -85,7 +85,7 @@
 <div class="modal fade" id="uploadFacturaModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <h1>Subir Factura</h1>
+            <h1>{{ _('Subir Factura') }}</h1>
             <form action="{{ url_for('upload_documentation', client_id=client_id) }}" method="POST" enctype=multipart/form-data>
                 <input type=file name=file>
                 <input type=submit value=Subir>

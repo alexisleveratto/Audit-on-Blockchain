@@ -8,12 +8,11 @@
 </head>
 <table style="width:100%">
     <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Contacto</th>
-        <th>País</th>
-        <!-- <th>Saldo - Deudores por Venta</th> -->
-        <th>Accion</th>
+        <th>{{ _('ID') }}</th>
+        <th>{{ _('Nombre') }}</th>
+        <th>{{ _('Contacto') }}</th>
+        <th>{{ _('País') }}</th>
+        <th>{{ _('Accion') }}</th>
     </tr>
     <tbody>
         {% for cliente in clientes %}
@@ -33,11 +32,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="text-align:center;">
-                        <h4 class="modal-title" id="deleteModalLabel">Desea Eliminar el cliente {{ cliente.companiaName }}</h4>
+                        <h4 class="modal-title" id="deleteModalLabel">{{ _(Desea Eliminar el cliente %(cliente), cliente=cliente.companiaName) }}</h4>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary"><a style="color:white;" href="{{ url_for('delete_client', client_id=cliente.companiaId) }}" method="POST">Eliminar</a></button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ _('Cancelar') }}</button>
+                        <button type="button" class="btn btn-primary"><a style="color:white;" href="{{ url_for('delete_client', client_id=cliente.companiaId) }}" method="POST">{{ _('Eliminar')}}</a></button>
                     </div>
                 </div>
             </div>

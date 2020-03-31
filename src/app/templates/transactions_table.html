@@ -23,16 +23,15 @@
 <input type="text" id="searchAccount" onkeyup="searchFunction()" placeholder="Busqueda por cuenta.." title="Escriba el nombre de cuenta">
 <table id="TransactionTable" style="width:100%">
     <tr>
-        <th>Codigo Cuenta</th>
-        <th>Nombre Cuenta</th>
-        <th>D/H</th>
-        <th>Número Minuta</th>
-        <th>Concepto</th>
-        <th>Detalle</th>
-        <th>Fecha Movimiento</th>
-        <th>Monto</th>
-        <!-- <th>Monto Acumulado</th> -->
-        <th>Factura</th>
+        <th>{{ _('Codigo Cuenta') }}</th>
+        <th>{{ _('Nombre Cuenta') }}</th>
+        <th>{{ _('D/H') }}</th>
+        <th>{{ _('Número Minuta') }}</th>
+        <th>{{ _('Concepto') }}</th>
+        <th>{{ _('Detalle') }}</th>
+        <th>{{ _('Fecha Movimiento')}}</th>
+        <th>{{ _('Monto')}}</th>
+        <th>{{ _('Factura') }}</th>
     </tr>
     <tbody>
         {% for transaction in transactions %}
@@ -54,19 +53,19 @@
 <br>
 {% if current_user.role == "Audit" %}
 {% if documentation %}
-<p><a href="{{ url_for('download_docs', client_id=client_id) }}">Descargar Facturas</a></p>
+<p><a href="{{ url_for('download_docs', client_id=client_id) }}">{{ _('Descargar Facturas') }}</a></p>
 <br>
 {% endif %}
-<button type="button" onclick="UploadResults(this)">Subir Resultados</button>
+<button type="button" onclick="UploadResults(this)">{{ _('Subir Resultados') }}</button>
 <br>
 {% endif %}
-<button type="button" onclick="exportTableToExcel('TransactionTable', 'libro-mayor - ' + {{ client_id }})">Descargar Libro Mayor</button>
+<button type="button" onclick="exportTableToExcel('TransactionTable', 'libro-mayor - ' + {{ client_id }})">{{ _('Descargar Libro Mayor') }}</button>
 <br>
 
 <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <h1>Subir Documentacion</h1>
+            <h1>{{ _('Subir Documentacion') }}</h1>
             <form action="{{ url_for('upload_audit_results', client_id=client_id) }}" method="POST" enctype=multipart/form-data>
                 <input type=file name=file>
                 <input type=submit value=Subir>

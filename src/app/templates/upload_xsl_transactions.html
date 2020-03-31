@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>Subir Hoja de Cálculo de Transacciones</h1>
+    <h1>{{ _('Subir Hoja de Cálculo de Transacciones') }}</h1>
     <form action="" method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
-        <p>Asegurese que la hoja de cálculo que suba tenga los siguientes nombres de columnas:</p>
+        <p>{{ _('Asegurese que la hoja de cálculo que suba tenga los siguientes nombres de columnas:') }}</p>
         <ul>
-            <li>codigo_cuenta</li>
-            <li>nombre_cuenta</li>
-            <li>D_H</li>
-            <li>numero_minuta</li>
-            <li>concepto</li>
-            <li>detalle</li>
-            <li>fecha_movimiento</li>
-            <li>monto</li>
+            <li>{{ _('codigo_cuenta') }}</li>
+            <li>{{ _('nombre_cuenta') }}</li>
+            <li>{{ _('D_H') }}</li>
+            <li>{{ _('numero_minuta') }}</li>
+            <li>{{ _('concepto') }}</li>
+            <li>{{ _('detalle') }}</li>
+            <li>{{ _('fecha_movimiento') }}</li>
+            <li>{{ _('monto') }}</li>
         </ul>
-        <small>Descargar una hoja de cálculo de ejemplo</small> <br>
-        <p><a href="{{ url_for('download_sheet')}}">Descargar</a></p>
+        <small>{{ _('Descargar una hoja de cálculo de ejemplo') }}</small> <br>
+        <p><a href="{{ url_for('download_sheet')}}">{{ _('Descargar') }}</a></p>
         <p>
             {{ form.file_path.label }}<br>
             {{ form.file_path(size=64) }}<br>
@@ -25,7 +25,7 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <small>Si desea facilitar nuestro trabajo: el nombre de cada archivo debe ser el número de fila de la transacción correspondiente en la hoja de cálculo subida.</small> <br>
+        <small>{{ _('Si desea facilitar nuestro trabajo: el nombre de cada archivo debe ser el número de fila de la transacción correspondiente en la hoja de cálculo subida.') }}</small> <br>
         <p>
             {{ form.zip_file_path.label }}<br>
             {{ form.zip_file_path(size=64) }}<br>

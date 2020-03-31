@@ -5,11 +5,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/table.css">
 </head>
-<h1>Paises</h1>
+<h1>{{ _('Paises') }}</h1>
 <table style="width:100%">
     <tr>
-        <th>ID</th>
-        <th>Nombre</th>
+        <th>{{ _('ID') }}</th>
+        <th>{{ _('Nombre') }}</th>
     </tr>
     <tbody>
         {% for country in countries %}

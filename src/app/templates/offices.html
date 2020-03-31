@@ -5,12 +5,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- <link href="{{ url_for('static', filename='css/table.css') }}" rel="stylesheet"> -->
 </head>
-<h1>Oficinas</h1>
+<h1>{{ _('Oficinas') }}</h1>
 <table style="width:100%">
     <tr>
-        <th>Dirección</th>
-        <th>Ciudad</th>
-        <th>Pais</th>
+        <th>{{ _('Dirección') }}</th>
+        <th>{{ _('Ciudad') }}</th>
+        <th>{{ _('Pais') }}</th>
     </tr>
     <tbody>
         {% for office in offices %}

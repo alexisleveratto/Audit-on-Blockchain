@@ -5,20 +5,20 @@
     {{ form.hidden_tag() }}
     <h1>{{ client.companiaName }}</h1>
     <hr>
-    <p> CUIT: {{ client.companiaId }} </p>
-    <p> Contacto: {{ client.companiaAddres }} </p>
-    <p> Pais: {{ client.companiaConutry }} </p>
-    <p> Saldo Actual: {{ client.companiaBalance }} </p>
+    <p> {{ _('CUIT:') }} {{ client.companiaId }} </p>
+    <p> {{ _('Contacto:') }} {{ client.companiaAddres }} </p>
+    <p> {{ _('Pais:') }} {{ client.companiaConutry }} </p>
+    <p> {{ _('Saldo Actual:') }} {{ client.companiaBalance }} </p>
     {% if current_user.role == "Client" %}
-    <p><a href="{{ url_for('record_transaction', client_id=client.companiaId) }}">Registrar Transaccion</a></p>
+    <p><a href="{{ url_for('record_transaction', client_id=client.companiaId) }}">{{ _('Registrar Transaccion') }}</a></p>
         
-    <p><a href="{{ url_for('download_docs', client_id=client.companiaId) }}">Descargar Resultados Auditoría</a></p>
+    <p><a href="{{ url_for('download_docs', client_id=client.companiaId) }}">{{ _('Descargar Resultados Auditoría') }}</a></p>
         
     {% endif %}
-    <p><a href="{{ url_for('transaction_table', client_id=client.companiaId) }}">Libros Mayores</a></p>
+    <p><a href="{{ url_for('transaction_table', client_id=client.companiaId) }}">{{ _('Libros Mayores') }}</a></p>
     {% if current_user.role == "Audit" %}
-    <p><a href="{{ url_for('new_ledger', client_id=client.companiaId) }}">Nuevo Libro Mayor</a></p>
-    <p><a href="{{ url_for('modify_client', client_id=client.companiaId) }}">Modificar</a></p>
+    <p><a href="{{ url_for('new_ledger', client_id=client.companiaId) }}">{{ _('Nuevo Libro Mayor') }}</a></p>
+    <p><a href="{{ url_for('modify_client', client_id=client.companiaId) }}">{{ _('Modificar') }}</a></p>
     <p><a onclick="ConfirmDelete(this)">Eliminar</a></p>
     <p>{{ form.cancel() }}</p>
     {% endif %}
@@ -28,10 +28,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="text-align:center;">
-                <h4 class="modal-title" id="deleteModalLabel">Desea Eliminar el cliente {{ clients }}</h4>
+                <h4 class="modal-title" id="deleteModalLabel"> {{  _(Desea Eliminar el cliente %(clients), clients=clients)}}</h4>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ _('Cancelar') }}</button>
                 <button type="button" class="btn btn-primary"><a style="color:white;" href="{{ url_for('delete_client', client_id=client.companiaId) }}" method="POST">Eliminar</a></button>
             </div>
         </div>
