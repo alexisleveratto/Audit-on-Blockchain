@@ -5,12 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Flask",
+            "name": "Flask (linux/osx)",
             "type": "python",
             "request": "launch",
-            "module": "flask",
+            "stopOnEntry": false,
+            //"pythonPath": "${config.python.pythonPath}",
+            "pythonPath": "${workspaceRoot}/../venv/bin/python",
+            "program": "${workspaceRoot}/../venv/bin/flask",
+            // "module": "flask",
             "env": {
-                "FLASK_APP": "blockchainaudit.py",
+                "FLASK_APP": "${workspaceRoot}/blockchainaudit.py",
                 "FLASK_ENV": "development",
                 "FLASK_DEBUG": "0"
             },
@@ -18,6 +22,11 @@
                 "run",
                 "--no-debugger",
                 "--no-reload"
+            ],
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit",
+                "RedirectOutput"
             ],
             "jinja": true
         }
