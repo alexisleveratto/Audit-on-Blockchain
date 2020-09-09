@@ -3,7 +3,8 @@ import requests
 
 class ManagerAfip:
     def __init__(self):
-        self.url = "https://afip.tangofactura.com/Rest/GetContribuyenteFull"
+        # self.url = "https://afip.tangofactura.com/Rest/GetContribuyenteFull"
+        self.url = "https://afip.tangofactura.com/Index/GetFullContribuyente"
         self.exception = None
         self.client_cuit = None
         self.client_name = None
@@ -18,7 +19,7 @@ class ManagerAfip:
         payload = '{\r\n\t"cuit": %s \r\n\t\r\n}' % str(cuit)
         headers = {"Content-Type": "application/json"}
 
-        response = requests.request("GET", self.url, headers=headers, data=payload)
+        response = requests.request("GET", self.url, headers=headers, data=payload, verify=False)
         if response.json()["errorGetData"]:
             return False
         self.client_cuit = response.json()["Contribuyente"]["idPersona"]
