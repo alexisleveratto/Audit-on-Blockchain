@@ -9,7 +9,7 @@ class Config(object):
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 465
     MAIL_USERNAME = "chinoleveratto2@gmail.com"
-    MAIL_PASSWORD = "password_bitch"
+    MAIL_PASSWORD = "fake_password"
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     ADMINS = ['chinoleveratto2@gmail.com']
