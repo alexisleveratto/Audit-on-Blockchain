@@ -1,4 +1,5 @@
 from app import app, db, posta
+from app.email import send_password_reset_email
 from app.forms import (
     AddAccountForm,
     AddAuditForm,
@@ -16,6 +17,7 @@ from app.forms import (
     PasswordForm,
     RegisterClientForm,
     RegistrationForm,
+    ResetPasswordForm,
     VerifyClientForm,
     XslTransactionsForm,
 )
@@ -111,46 +113,68 @@ def forgot():
         mail = form.email.data
         check_mail = User.query.filter_by(email=mail).first()
         if check_mail:
-            hashCode = get_random_string()
-            check_mail.hashCode = hashCode
-            db.session.commit()
-            msg = Message(
-                _("Cambio de Contraseña"),
-                sender="alexis.leveratto@github.com",
-                recipients=[mail],
-            )
-            msg.body = (
-                _(
-                    "Recibimos su pedido de cambio de contraseña. Si desea hacerlo, haga clic en el siguiente link e ingrese su nueva contraseña\n http://127.0.0.1:5000/"
-                )
-                + check_mail.hashCode
-            )
-            posta.send(msg)
-            flash(_("Revise su email"))
+            # hashCode = get_random_string()
+            # check_mail.hashCode = hashCode
+            # db.session.commit()
+            # msg = Message(
+            #     _("Cambio de Contraseña"),
+            #     # sender="alexis.leveratto@github.com",
+            #     sender="chinoleveratto2@gmail.com",
+            #     #recipients=[mail],
+            #     recipients=["chinoleveratto2@gmail.com"],
+            # )
+            # msg.body = (
+            #     _(
+            #         "Recibimos su pedido de cambio de contraseña. Si desea hacerlo, haga clic en el siguiente link e ingrese su nueva contraseña\n http://127.0.0.1:5000/"
+            #     )
+            #     + check_mail.hashCode
+            # )
+            # posta.send(msg)
+            send_password_reset_email(check_mail)
+            flash(_("Consulte su correo electrónico para obtener las instrucciones para restablecer su contraseña"))
+            return redirect(url_for("forgot"))
+        else: 
+            flash(_("No existen usuarios registrados con el mail ingresado"))
             return redirect(url_for("forgot"))
     return render_template(
         "forgot_password.html", title=_("Recuperar Contraseña"), form=form
     )
 
 
-@app.route("/<string:hashCode>", methods=["GET", "POST"])
+@app.route("/reset_password/<string:hashCode>", methods=["GET", "POST"])
 def hashcode(hashCode):
     if current_user.is_authenticated:
         return redirect(url_for("index"))
-    check_by_hashCode = User.query.filter_by(hashCode=hashCode).first()
+    # check_by_hashCode = User.query.filter_by(hashCode=hashCode).first()
+    check_by_hashCode = User.verify_reset_password_token(hashCode)
+
     if check_by_hashCode:
         form = PasswordForm()
         if form.validate_on_submit():
             check_by_hashCode.set_password(form.password.data)
             check_by_hashCode.hashCode = None
             db.session.commit()
-            flash(_("Contraseña Recuperada con Éxito"))
+            flash(_("Su Contraseña ha sido Restaurada"))
             return redirect(url_for("login"))
         return render_template(
-            "change_password.html", title=_("Cambiar Contraseña"), form=form
+            "change_password.html", title=_("Recuperar Contraseña"), form=form
         )
     return redirect(url_for("index"))
 
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
 
 @app.route("/change-password", methods=["GET", "POST"])
 @login_required

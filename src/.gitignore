@@ -1,2 +1,7 @@
 config.py
+venv/
+*.pdf
 *.pyc
+*.xls
+*.xlsx
+*.zip
