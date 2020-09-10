@@ -97,9 +97,14 @@ def register():
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash(_("Registrado"))
+        try:
+            db.session.add(user)
+            db.session.commit()
+            flash(_("Registrado"))
+        except:
+            db.session.rollback()
+            flash("Error en la Base de Datos")
+
         return redirect(url_for("login"))
     return render_template("register.html", title="Registro", form=form)
 
