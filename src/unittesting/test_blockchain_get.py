@@ -24,6 +24,16 @@ def delete_user(username):
     except:
         return False
 
+def test_login_client_ok():
+    test_client_username = "Client"
+    test_client_password = "Real-Password"
+    
+    add_user(username=test_client_username, email="test@email.com", password=test_client_password)
+    test_client = User.query.filter_by(username=test_client_username).first()
+    
+    assert test_client.check_password(test_client_password)
+    assert delete_user(test_client_username)
+
 
 def test_login_client_fail_username():
     test_client_username = "Not Client"
