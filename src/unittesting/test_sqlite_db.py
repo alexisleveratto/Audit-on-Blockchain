@@ -93,6 +93,7 @@ def test_login_audit_ok():
 # b. Rechazar el inicio de sesión cuando los datos sean incompletos: cuando el usuario no completa todos los campos, no
 # se debe permitir validar dichos datos posteriormente.
 
+
 def test_login_client_fail_username():
     test_client_username = "Not Client"
 
