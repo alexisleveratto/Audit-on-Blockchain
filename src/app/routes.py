@@ -501,7 +501,7 @@ def upload_transactions(client_id):
         )
 
         raw_data = form.file_path.data.read()
-        dataset = Dataset().load(raw_data)
+        dataset = Dataset(encode="utf-8").load(raw_data)
         transactions = json.loads(dataset.export("json"))
         client = BlockchainManager.getSingle(
             ns_name="/Compania", id=str("/" + client_id)
