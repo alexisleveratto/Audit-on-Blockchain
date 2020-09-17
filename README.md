@@ -1,16 +1,18 @@
-# APLICACIÓN WEB PARA REALIZAR AUDITORÍAS EXTERNAS BASADA EN BLOCKCHAIN
+## APLICACIÓN WEB PARA REALIZAR AUDITORÍAS EXTERNAS BASADA EN BLOCKCHAIN
 
-System description
+### System description
+------
 A System for the provision and contracting of external audit services.
 
-Project Owners
-Rodrigo Yanis | Ignacio Brasca | Gabriel Capitanelli
+Project Owner
+Alexis Leveratto
 
-Descripción del Sistema
+### Descripción del Sistema
+------
 Un Sistema para la prestación y contratación de servicios de auditoría externa.
 
-Propietarios del Proyecto
-Rodrigo Yanis | Ignacio Brasca | Gabriel Capitanelli
+Propietario del Proyecto
+Alexis Leveratto
 
 
 Final Project of Computer Engineering | Proyecto Final de Ingeniería en Informática
