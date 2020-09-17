@@ -26,5 +26,5 @@ Universidad Nacional del Litoral - Santa Fe - Santa Fe - Argentina.
 2019-2020
 </p>
 <p align="center">
-<img src="A-in-BC.jpg">(https://www.unl.edu.ar/carreras/ingenieria-en-informatica/
+<img src="UNL_Logo.jpg" href="https://www.unl.edu.ar/carreras/ingenieria-en-informatica/">
 </p>
