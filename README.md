@@ -2,18 +2,18 @@
 
 #### System description
 
-A System for the provision and contracting of external audit services.
+**A System for the provision and contracting of external audit services.**
 
 #### Project Owner
-Alexis Leveratto
+[Alexis Leveratto](https://github.com/alexisleveratto)
 
 ------
 #### Descripción del Sistema
 
-Un Sistema para la prestación y contratación de servicios de auditoría externa.
+**Un Sistema para la prestación y contratación de servicios de auditoría externa.**
 
 #### Propietario del Proyecto
-Alexis Leveratto
+[Alexis Leveratto](https://github.com/alexisleveratto)
 
 ------
 <p align="center">
