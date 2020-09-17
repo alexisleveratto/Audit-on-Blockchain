@@ -1,6 +1,23 @@
-FROM tiangolo/uwsgi-nginx-flask:flask-python3.5
-COPY ./requirements.txt /requirements.txt
-RUN pip install -r /requirements.txt
-RUN python -m spacy download en_core_web_sm
-COPY ./app /app
-RUN echo "uwsgi_read_timeout 1200s;" > /etc/nginx/conf.d/custom_timeout.conf
+FROM python:3.6-alpine
+
+RUN adduser -D blockchainaudit
+
+WORKDIR /home/blockchainaudit
+
+COPY requirements.txt requirements.txt
+RUN python -m venv venv
+RUN venv/bin/pip install -r requirements.txt
+RUN venv/bin/pip install gunicorn
+
+COPY app app
+COPY migrations migrations
+COPY blockchainaudit.py config.py boot.sh ./
+RUN chmod +x boot.sh
+
+ENV FLASK_APP blockchainaudit.py
+
+RUN chown -R blockchainaudit:blockchainaudit ./
+USER blockchainaudit
+
+EXPOSE 5000
+ENTRYPOINT ["./boot.sh"]
