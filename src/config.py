@@ -32,3 +32,5 @@ class Config(object):
         os.path.dirname(os.path.abspath(__file__)), "app/example_sheet"
     )
     MAX_CONTENT_LENGTH = os.environ.get("MAX_CONTENT_LENGTH") or 16 * 1024 * 1024
+
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
