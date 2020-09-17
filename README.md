@@ -18,8 +18,10 @@ Alexis Leveratto
 ------
 <p align="center">
 Final Project of Computer Engineering | Proyecto Final de Ingeniería en Informática
-
+</p>
+<p align="center">
 Universidad Nacional del Litoral - Santa Fe - Santa Fe - Argentina.
-
+</p>
+<p align="center">
 2019-2020
 </p>
