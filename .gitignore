@@ -4,4 +4,5 @@ venv/
 *.xls
 *.xlsx
 *.zip
+*-mp4
 config.py
