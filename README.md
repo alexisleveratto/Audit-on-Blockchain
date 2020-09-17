@@ -16,8 +16,8 @@ Un Sistema para la prestación y contratación de servicios de auditoría extern
 Alexis Leveratto
 
 ------
-<div align=”center”>
+<p align="center">
 Final Project of Computer Engineering | Proyecto Final de Ingeniería en Informática
 Universidad Nacional del Litoral - Santa Fe - Santa Fe - Argentina.
 2019-2020
-</div>
+</p>
