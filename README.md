@@ -26,5 +26,7 @@ Universidad Nacional del Litoral - Santa Fe - Santa Fe - Argentina.
 2019-2020
 </p>
 <p align="center">
-    <img width="100" height="100" src="https://www.unl.edu.ar/recorrido360/images/unl.png"> 
+    <a href="google.com">
+        <img width="100" height="100" src="https://www.unl.edu.ar/recorrido360/images/unl.png"> 
+    </a>
 </p>
