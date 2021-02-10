@@ -10,7 +10,7 @@ certifi==2019.11.28
 cffi==1.14.0
 chardet==3.0.4
 Click==7.0
-cryptography==3.2
+cryptography==3.3.2
 dominate==2.5.1
 et-xmlfile==1.0.1
 fabric-sdk-py==0.9.0
