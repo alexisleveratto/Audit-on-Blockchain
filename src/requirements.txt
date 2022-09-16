@@ -33,7 +33,7 @@ jdcal==1.4.1
 Jinja2==2.11.3
 lark-parser==0.7.1
 lazy-object-proxy==1.4.3
-Mako==1.1.2
+Mako==1.2.2
 MarkupSafe==1.1.1
 mccabe==0.6.1
 more-itertools==8.5.0
